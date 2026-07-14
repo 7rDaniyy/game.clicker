@@ -379,7 +379,7 @@
             display: flex;
             flex-direction: column;
             gap: 2px;
-            max-width: 65%;
+            max-width: 55%;
         }
 
         .upgrade-name {
@@ -400,6 +400,7 @@
             flex-direction: column;
             align-items: flex-end;
             gap: 4px;
+            flex-shrink: 0;
         }
 
         .upgrade-price {
@@ -413,21 +414,26 @@
             background: rgba(255, 255, 255, 0.015);
             border: 1px solid var(--primary);
             color: var(--primary);
-            padding: 6px 14px;
+            padding: 6px 10px;
             border-radius: 20px;
             font-weight: 700;
-            font-size: 12px;
+            font-size: 11px;
             cursor: pointer;
             transition: all 0.15s;
         }
 
-            .upgrade-btn.locked {
-                background: rgba(255,255,255,0.01) !important;
-                border-color: rgba(255,255,255,0.03) !important;
-                color: #4e4e66 !important;
-                cursor: not-allowed;
-                pointer-events: none;
-            }
+        .max-btn {
+            border-color: #fcd34d !important;
+            color: #fcd34d !important;
+        }
+
+        .upgrade-btn.locked {
+            background: rgba(255,255,255,0.01) !important;
+            border-color: rgba(255,255,255,0.03) !important;
+            color: #4e4e66 !important;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
 
         .upgrade.locked-panel {
             opacity: 0.55;
@@ -984,7 +990,10 @@
                     </div>
                     <div class="upgrade-action">
                         <span class="upgrade-price" id="clickPriceDisplay">10 💎</span>
-                        <button class="upgrade-btn" id="buyClick">Купить</button>
+                        <div style="display: flex; gap: 4px; margin-top: 4px;">
+                            <button class="upgrade-btn" id="buyClick">Купить</button>
+                            <button class="upgrade-btn max-btn" id="buyClickMax">MAX</button>
+                        </div>
                     </div>
                 </div>
 
@@ -995,7 +1004,10 @@
                     </div>
                     <div class="upgrade-action">
                         <span class="upgrade-price" id="syncPriceDisplay">500 💎</span>
-                        <button class="upgrade-btn" id="buySync">Купить</button>
+                        <div style="display: flex; gap: 4px; margin-top: 4px;">
+                            <button class="upgrade-btn" id="buySync">Купить</button>
+                            <button class="upgrade-btn max-btn" id="buySyncMax">MAX</button>
+                        </div>
                     </div>
                 </div>
 
@@ -1006,7 +1018,10 @@
                     </div>
                     <div class="upgrade-action">
                         <span class="upgrade-price" id="critPriceDisplay">1,000 💎</span>
-                        <button class="upgrade-btn" id="buyCrit">Купить</button>
+                        <div style="display: flex; gap: 4px; margin-top: 4px;">
+                            <button class="upgrade-btn" id="buyCrit">Купить</button>
+                            <button class="upgrade-btn max-btn" id="buyCritMax">MAX</button>
+                        </div>
                     </div>
                 </div>
 
@@ -1017,7 +1032,10 @@
                     </div>
                     <div class="upgrade-action">
                         <span class="upgrade-price" id="efficiencyPriceDisplay">300 💎</span>
-                        <button class="upgrade-btn" id="buyEfficiency">Купить</button>
+                        <div style="display: flex; gap: 4px; margin-top: 4px;">
+                            <button class="upgrade-btn" id="buyEfficiency">Купить</button>
+                            <button class="upgrade-btn max-btn" id="buyEfficiencyMax">MAX</button>
+                        </div>
                     </div>
                 </div>
 
@@ -1028,7 +1046,10 @@
                     </div>
                     <div class="upgrade-action">
                         <span class="upgrade-price" id="overdrivePriceDisplay">800 💎</span>
-                        <button class="upgrade-btn" id="buyOverdrive">Купить</button>
+                        <div style="display: flex; gap: 4px; margin-top: 4px;">
+                            <button class="upgrade-btn" id="buyOverdrive">Купить</button>
+                            <button class="upgrade-btn max-btn" id="buyOverdriveMax">MAX</button>
+                        </div>
                     </div>
                 </div>
 
@@ -1039,7 +1060,10 @@
                     </div>
                     <div class="upgrade-action">
                         <span class="upgrade-price" id="energyPriceDisplay">20 💎</span>
-                        <button class="upgrade-btn" id="buyEnergy">Купить</button>
+                        <div style="display: flex; gap: 4px; margin-top: 4px;">
+                            <button class="upgrade-btn" id="buyEnergy">Купить</button>
+                            <button class="upgrade-btn max-btn" id="buyEnergyMax">MAX</button>
+                        </div>
                     </div>
                 </div>
                 <div class="upgrade" id="upgrade-regen">
@@ -1049,7 +1073,10 @@
                     </div>
                     <div class="upgrade-action">
                         <span class="upgrade-price" id="regenPriceDisplay">30 💎</span>
-                        <button class="upgrade-btn" id="buyRegen">Купить</button>
+                        <div style="display: flex; gap: 4px; margin-top: 4px;">
+                            <button class="upgrade-btn" id="buyRegen">Купить</button>
+                            <button class="upgrade-btn max-btn" id="buyRegenMax">MAX</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1062,7 +1089,10 @@
                     </div>
                     <div class="upgrade-action">
                         <span class="upgrade-price" id="auto1PriceDisplay">50 💎</span>
-                        <button class="upgrade-btn" id="buyAuto1">Купить</button>
+                        <div style="display: flex; gap: 4px; margin-top: 4px;">
+                            <button class="upgrade-btn" id="buyAuto1">Купить</button>
+                            <button class="upgrade-btn max-btn" id="buyAuto1Max">MAX</button>
+                        </div>
                     </div>
                 </div>
                 <div class="upgrade" id="upgrade-auto2">
@@ -1072,7 +1102,10 @@
                     </div>
                     <div class="upgrade-action">
                         <span class="upgrade-price" id="auto2PriceDisplay">250 💎</span>
-                        <button class="upgrade-btn" id="buyAuto2">Купить</button>
+                        <div style="display: flex; gap: 4px; margin-top: 4px;">
+                            <button class="upgrade-btn" id="buyAuto2">Купить</button>
+                            <button class="upgrade-btn max-btn" id="buyAuto2Max">MAX</button>
+                        </div>
                     </div>
                 </div>
                 <div class="upgrade" id="upgrade-auto3">
@@ -1082,7 +1115,10 @@
                     </div>
                     <div class="upgrade-action">
                         <span class="upgrade-price" id="auto3PriceDisplay">1,200 💎</span>
-                        <button class="upgrade-btn" id="buyAuto3">Купить</button>
+                        <div style="display: flex; gap: 4px; margin-top: 4px;">
+                            <button class="upgrade-btn" id="buyAuto3">Купить</button>
+                            <button class="upgrade-btn max-btn" id="buyAuto3Max">MAX</button>
+                        </div>
                     </div>
                 </div>
 
@@ -1093,7 +1129,10 @@
                     </div>
                     <div class="upgrade-action">
                         <span class="upgrade-price" id="auto4PriceDisplay">5,000 💎</span>
-                        <button class="upgrade-btn" id="buyAuto4">Купить</button>
+                        <div style="display: flex; gap: 4px; margin-top: 4px;">
+                            <button class="upgrade-btn" id="buyAuto4">Купить</button>
+                            <button class="upgrade-btn max-btn" id="buyAuto4Max">MAX</button>
+                        </div>
                     </div>
                 </div>
 
@@ -1104,7 +1143,10 @@
                     </div>
                     <div class="upgrade-action">
                         <span class="upgrade-price" id="auto5PriceDisplay">25,000 💎</span>
-                        <button class="upgrade-btn" id="buyAuto5">Купить</button>
+                        <div style="display: flex; gap: 4px; margin-top: 4px;">
+                            <button class="upgrade-btn" id="buyAuto5">Купить</button>
+                            <button class="upgrade-btn max-btn" id="buyAuto5Max">MAX</button>
+                        </div>
                     </div>
                 </div>
 
@@ -1115,7 +1157,10 @@
                     </div>
                     <div class="upgrade-action">
                         <span class="upgrade-price" id="factoryPriceDisplay">1,500 💎</span>
-                        <button class="upgrade-btn" id="buyFactory">Купить</button>
+                        <div style="display: flex; gap: 4px; margin-top: 4px;">
+                            <button class="upgrade-btn" id="buyFactory">Купить</button>
+                            <button class="upgrade-btn max-btn" id="buyFactoryMax">MAX</button>
+                        </div>
                     </div>
                 </div>
 
@@ -1126,7 +1171,10 @@
                     </div>
                     <div class="upgrade-action">
                         <span class="upgrade-price" id="glitchPriceDisplay">400 💎</span>
-                        <button class="upgrade-btn" id="buyGlitch">Купить</button>
+                        <div style="display: flex; gap: 4px; margin-top: 4px;">
+                            <button class="upgrade-btn" id="buyGlitch">Купить</button>
+                            <button class="upgrade-btn max-btn" id="buyGlitchMax">MAX</button>
+                        </div>
                     </div>
                 </div>
 
@@ -1388,6 +1436,17 @@
                 glitch: { max: 15, key: 'glitchLevel' }
             };
 
+            // Преобразует числа в читаемый формат (K, M, B, T, Qa, Qi)
+            function formatNumber(num) {
+                if (num === null || num === undefined || isNaN(num)) return "0";
+                if (num < 1000) return Math.floor(num).toString();
+                const suffixes = ["", "K", "M", "B", "T", "Qa", "Qi"];
+                const i = Math.floor(Math.log10(num) / 3);
+                const suffix = suffixes[i] || "";
+                const formatted = (num / Math.pow(1000, i)).toFixed(2);
+                return formatted + suffix;
+            }
+
             // Функция расчета стоимости для перехода на каждый новый престиж (сильно прогрессивные ценники)
             function getPrestigeCost(prestigeLevel) {
                 const costs = [
@@ -1404,7 +1463,7 @@
                 return costs[costs.length - 1] * Math.pow(10, prestigeLevel - (costs.length - 1));
             }
 
-            // Исправленные дефолтные переменные (Добавлены syncCost, critCost, efficiencyCost, overdriveCost)
+            // Настройки дефолтного стейта
             const DEFAULT_STATE = {
                 userId: "",
                 username: "",
@@ -1437,7 +1496,6 @@
                 sound: true,
                 animations: true,
                 achievements: [],
-                // Исправленные поля
                 syncCost: 500,
                 critCost: 1000,
                 efficiencyCost: 300,
@@ -1591,7 +1649,7 @@
                                     <span class="leader-prestige-badge ${badgeClass}">${playerPrestige}</span>
                                     <span class="leader-name">${playerUsername} ${playerId === state.userId ? '(Вы)' : ''}</span>
                                 </div>
-                                <span class="leader-score">${Math.floor(player.score || 0).toLocaleString()} 💎</span>
+                                <span class="leader-score">${formatNumber(player.score || 0)} 💎</span>
                             `;
                         container.appendChild(row);
                         rank++;
@@ -1686,14 +1744,17 @@
                 return 1 + ((state.nanochips || 0) * (hasAch4 ? 0.024 : 0.02));
             }
 
-            // Смена на более аккуратный расчет с учетом перегрузки
+            // Расчет клика на основе СЛОЖНОГО ПРОЦЕНТА
             function getActualClickPower() {
                 let basePower = 1 + (state.clickLevel || 0);
                 let syncBonusFactor = 0.05;
                 if (state.achievements && state.achievements.includes('ach-m-sync')) syncBonusFactor += 0.05;
 
                 let passiveSynergy = Math.floor(getActualPassive() * syncBonusFactor * (state.syncLevel || 0));
-                let totalBase = basePower + passiveSynergy;
+
+                // Сложный процент для кликов (+1% дополнительной силы за каждый уровень клика)
+                const compoundClickMultiplier = Math.pow(1.01, state.clickLevel || 0);
+                let totalBase = Math.floor((basePower + passiveSynergy) * compoundClickMultiplier);
 
                 let clickMultiplier = 1;
                 if (state.achievements && state.achievements.includes('ach-1')) clickMultiplier += 0.10;
@@ -1703,6 +1764,7 @@
                 return Math.floor(totalBase * clickMultiplier * getMultiplier() * (duration > 0 ? 3 : 1));
             }
 
+            // Расчет пассивного дохода на основе СЛОЖНОГО ПРОЦЕНТА (Synergy Compound)
             function getActualPassive() {
                 let a1Bonus = (state.achievements && state.achievements.includes('ach-m-auto1')) ? 1.2 : 1;
                 let a2Bonus = (state.achievements && state.achievements.includes('ach-m-auto2')) ? 1.2 : 1;
@@ -1716,12 +1778,16 @@
                     (state.auto4 * 150 * a4Bonus) +
                     (state.auto5 * 1000 * a5Bonus));
 
+                // СЛОЖНЫЙ ПРОЦЕНТ: Каждый приобретенный завод любого типа увеличивает общий пассив на 1.2%
+                const totalGens = (state.auto1 || 0) + (state.auto2 || 0) + (state.auto3 || 0) + (state.auto4 || 0) + (state.auto5 || 0);
+                const compoundSynergy = Math.pow(1.012, totalGens);
+
                 let factoryStep = 0.1;
                 if (state.achievements && state.achievements.includes('ach-m-factory')) factoryStep += 0.05;
                 let factoryMultiplier = 1 + (state.factoryLevel * factoryStep);
 
                 const hasAch2 = state.achievements && state.achievements.includes('ach-2');
-                return Math.floor(rawBase * factoryMultiplier * (hasAch2 ? 1.15 : 1) * getMultiplier());
+                return Math.floor(rawBase * factoryMultiplier * compoundSynergy * (hasAch2 ? 1.15 : 1) * getMultiplier());
             }
 
             function getActualMemoryRegen() {
@@ -1733,8 +1799,8 @@
 
             function recalcPassive() {
                 state.passiveTotal = getActualPassive();
-                if (_cyber$('totalPassiveDisplay')) _cyber$('totalPassiveDisplay').textContent = state.passiveTotal.toLocaleString();
-                if (_cyber$('passiveDisplay')) _cyber$('passiveDisplay').textContent = state.passiveTotal.toLocaleString();
+                if (_cyber$('totalPassiveDisplay')) _cyber$('totalPassiveDisplay').textContent = formatNumber(state.passiveTotal);
+                if (_cyber$('passiveDisplay')) _cyber$('passiveDisplay').textContent = formatNumber(state.passiveTotal);
             }
 
             function updateSkillUI() {
@@ -1760,9 +1826,45 @@
                 }
             }
 
+            function getUpgradeCost(type) {
+                if (type === 'click') return state.clickCost;
+                if (type === 'sync') return state.syncCost;
+                if (type === 'crit') return state.critCost;
+                if (type === 'efficiency') return state.efficiencyCost;
+                if (type === 'overdrive') return state.overdriveCost;
+                if (type === 'energy') return state.energyCost;
+                if (type === 'regen') return state.regenCost;
+                if (type === 'auto1') return state.auto1Cost;
+                if (type === 'auto2') return state.auto2Cost;
+                if (type === 'auto3') return state.auto3Cost;
+                if (type === 'auto4') return state.auto4Cost;
+                if (type === 'auto5') return state.auto5Cost;
+                if (type === 'factory') return state.factoryCost;
+                if (type === 'glitch') return state.glitchCost;
+                return 0;
+            }
+
+            function incrementUpgradeCost(type) {
+                if (type === 'click') state.clickCost = Math.floor(state.clickCost * 1.35) + 3;
+                else if (type === 'sync') state.syncCost = Math.floor(state.syncCost * 1.8) + 30;
+                else if (type === 'crit') state.critCost = Math.floor(state.critCost * 2.1) + 80;
+                else if (type === 'efficiency') state.efficiencyCost = Math.floor(state.efficiencyCost * 1.7) + 100;
+                else if (type === 'overdrive') state.overdriveCost = Math.floor(state.overdriveCost * 2.0) + 150;
+                else if (type === 'energy') state.energyCost = Math.floor(state.energyCost * 1.4) + 4;
+                else if (type === 'regen') state.regenCost = Math.floor(state.regenCost * 1.45) + 6;
+                else if (type === 'auto1') state.auto1Cost = Math.floor(state.auto1Cost * 1.25) + 8;
+                else if (type === 'auto2') state.auto2Cost = Math.floor(state.auto2Cost * 1.3) + 20;
+                else if (type === 'auto3') state.auto3Cost = Math.floor(state.auto3Cost * 1.35) + 60;
+                else if (type === 'auto4') state.auto4Cost = Math.floor(state.auto4Cost * 1.4) + 250;
+                else if (type === 'auto5') state.auto5Cost = Math.floor(state.auto5Cost * 1.5) + 800;
+                else if (type === 'factory') state.factoryCost = Math.floor(state.factoryCost * 2.4) + 400;
+                else if (type === 'glitch') state.glitchCost = Math.floor(state.glitchCost * 1.8) + 80;
+            }
+
             function updateUpgradeRow(id, currentLevel, maxLevel, cost) {
                 const block = _cyber$(`upgrade-${id}`);
                 const btn = _cyber$(`buy${id.charAt(0).toUpperCase() + id.slice(1)}`);
+                const btnMax = _cyber$(`buy${id.charAt(0).toUpperCase() + id.slice(1)}Max`);
                 const priceDisp = _cyber$(`${id}PriceDisplay`);
                 const lvlDisp = _cyber$(`${id}Lvl`);
 
@@ -1777,19 +1879,27 @@
                         btn.textContent = 'ФУЛЛ';
                         btn.className = 'upgrade-btn locked';
                     }
+                    if (btnMax) {
+                        btnMax.style.display = 'none'; // Скрываем Max кнопку, если уровень максимален
+                    }
                     if (priceDisp) priceDisp.textContent = 'МАКСИМУМ';
                 } else {
                     if (block) block.classList.remove('maxed-gold');
                     if (btn) btn.textContent = 'Купить';
-                    // Предотвращение падения, если cost не определен
-                    const formattedCost = (cost !== undefined && cost !== null) ? cost.toLocaleString() : '0';
+                    if (btnMax) {
+                        btnMax.style.display = 'inline-block';
+                    }
+
+                    const formattedCost = (cost !== undefined && cost !== null) ? formatNumber(cost) : '0';
                     if (priceDisp) priceDisp.textContent = `${formattedCost} 💎`;
 
                     if (state.score < cost) {
                         if (btn) { btn.className = 'upgrade-btn locked'; }
+                        if (btnMax) { btnMax.className = 'upgrade-btn max-btn locked'; }
                         if (block) block.classList.add('locked-panel');
                     } else {
                         if (btn) { btn.className = 'upgrade-btn'; }
+                        if (btnMax) { btnMax.className = 'upgrade-btn max-btn'; }
                         if (block) block.classList.remove('locked-panel');
                     }
                 }
@@ -1799,30 +1909,15 @@
                 let extraMaxEnergy = (state.achievements && state.achievements.includes('ach-m-energy')) ? 50 : 0;
                 state.maxEnergy = 100 + (state.energyLevel * 10) + extraMaxEnergy;
 
-                if (_cyber$('scoreDisplay')) _cyber$('scoreDisplay').textContent = Math.floor(state.score).toLocaleString();
+                if (_cyber$('scoreDisplay')) _cyber$('scoreDisplay').textContent = formatNumber(state.score);
                 if (_cyber$('energyDisplay')) _cyber$('energyDisplay').textContent = Math.floor(state.energy);
                 if (_cyber$('energyFill')) _cyber$('energyFill').style.width = Math.max(0, Math.min(100, (state.energy / state.maxEnergy) * 100)) + '%';
-                if (_cyber$('clickPowerLabel')) _cyber$('clickPowerLabel').textContent = `+${getActualClickPower()} ⚡`;
+                if (_cyber$('clickPowerLabel')) _cyber$('clickPowerLabel').textContent = `+${formatNumber(getActualClickPower())} ⚡`;
 
                 for (let key in UPGRADE_CONFIGS) {
                     const conf = UPGRADE_CONFIGS[key];
                     const currentLevel = state[conf.key];
-                    let cost = 0;
-                    if (key === 'click') cost = state.clickCost;
-                    else if (key === 'sync') cost = state.syncCost;
-                    else if (key === 'crit') cost = state.critCost;
-                    else if (key === 'efficiency') cost = state.efficiencyCost;
-                    else if (key === 'overdrive') cost = state.overdriveCost;
-                    else if (key === 'energy') cost = state.energyCost;
-                    else if (key === 'regen') cost = state.regenCost;
-                    else if (key === 'auto1') cost = state.auto1Cost;
-                    else if (key === 'auto2') cost = state.auto2Cost;
-                    else if (key === 'auto3') cost = state.auto3Cost;
-                    else if (key === 'auto4') cost = state.auto4Cost;
-                    else if (key === 'auto5') cost = state.auto5Cost;
-                    else if (key === 'factory') cost = state.factoryCost;
-                    else if (key === 'glitch') cost = state.glitchCost;
-
+                    let cost = getUpgradeCost(key);
                     updateUpgradeRow(key, currentLevel, conf.max, cost);
                 }
 
@@ -1835,17 +1930,17 @@
                 }
 
                 if (_cyber$('eraTitle')) _cyber$('eraTitle').textContent = `ЭРА ${prestigeLevel}: ${(ERAS[levelClass] || ERAS[5]).name.split(': ')[1]}`;
-                if (_cyber$('chipsHeaderDisplay')) _cyber$('chipsHeaderDisplay').textContent = `${(state.nanochips || 0).toLocaleString()} (Lvl ${prestigeLevel})`;
+                if (_cyber$('chipsHeaderDisplay')) _cyber$('chipsHeaderDisplay').textContent = `${formatNumber(state.nanochips || 0)} (Lvl ${prestigeLevel})`;
 
-                // ДИНАМИЧЕСКИЙ РАСЧЕТ ПРОГРЕССА ДЛЯ ВКЛАДКИ ЭВОЛЮЦИИ ПО НОВОЙ СТОИМОСТИ
+                // Расчет прогресса квантового перехода
                 const pending = getPendingChips();
                 const targetCost = getPrestigeCost(prestigeLevel);
                 const progressPercent = Math.min(100, Math.floor((state.score / targetCost) * 100));
 
                 if (_cyber$('evoProgressLabel')) _cyber$('evoProgressLabel').textContent = `${progressPercent}%`;
                 if (_cyber$('evoProgressBar')) _cyber$('evoProgressBar').style.width = `${progressPercent}%`;
-                if (_cyber$('evoCurrentScore')) _cyber$('evoCurrentScore').textContent = `${Math.floor(state.score).toLocaleString()} 💎`;
-                if (_cyber$('evoRequiredScore')) _cyber$('evoRequiredScore').textContent = `Требуется: ${targetCost.toLocaleString()} 💎`;
+                if (_cyber$('evoCurrentScore')) _cyber$('evoCurrentScore').textContent = `${formatNumber(state.score)} 💎`;
+                if (_cyber$('evoRequiredScore')) _cyber$('evoRequiredScore').textContent = `Требуется: ${formatNumber(targetCost)} 💎`;
 
                 // Бейджи фаз эволюции
                 const curBadge = _cyber$('evoCurrentEraBadge');
@@ -1863,7 +1958,7 @@
 
                 const nextEra = ERAS[nextLevelClass] || ERAS[5];
                 if (_cyber$('nextEraTooltip')) _cyber$('nextEraTooltip').textContent = `Перенос в Эра ${prestigeLevel + 1}: ${nextEra.name.split(': ')[1]}`;
-                if (_cyber$('pendingChipsLabel')) _cyber$('pendingChipsLabel').textContent = `+${pending.toLocaleString()} 🧬`;
+                if (_cyber$('pendingChipsLabel')) _cyber$('pendingChipsLabel').textContent = `+${formatNumber(pending)} 🧬`;
 
                 if (_cyber$('evoCurrentBonus')) _cyber$('evoCurrentBonus').textContent = `+${Math.round((getMultiplier() - 1) * 100)}%`;
 
@@ -1875,15 +1970,15 @@
                 if (prestigeBtn) {
                     if (state.score >= targetCost && pending > 0) {
                         prestigeBtn.classList.remove('disabled');
-                        prestigeBtn.textContent = `СИНХРОНИЗИРОВАТЬ ЯДРО (+${pending})`;
+                        prestigeBtn.textContent = `СИНХРОНИЗИРОВАТЬ ЯДРО (+${formatNumber(pending)})`;
                     } else {
                         prestigeBtn.classList.add('disabled');
-                        prestigeBtn.textContent = state.score < targetCost ? `Мало Кристаллов (нужно ${targetCost.toLocaleString()} 💎)` : "Мало чипов / Кап";
+                        prestigeBtn.textContent = state.score < targetCost ? `Мало Кристаллов (нужно ${formatNumber(targetCost)} 💎)` : "Мало чипов / Кап";
                     }
                 }
 
-                if (_cyber$('statClicks')) _cyber$('statClicks').textContent = state.clicksCount.toLocaleString();
-                if (_cyber$('statTotalEarned')) _cyber$('statTotalEarned').textContent = Math.floor(state.totalScoreEarned).toLocaleString();
+                if (_cyber$('statClicks')) _cyber$('statClicks').textContent = formatNumber(state.clicksCount);
+                if (_cyber$('statTotalEarned')) _cyber$('statTotalEarned').textContent = formatNumber(state.totalScoreEarned);
                 if (_cyber$('statEvos')) _cyber$('statEvos').textContent = state.prestigeCount;
 
                 const soundToggle = _cyber$('soundToggle');
@@ -1974,7 +2069,7 @@
 
                 if (state.animations) {
                     const el = document.createElement('div'); el.className = 'float-text';
-                    el.textContent = isCrit ? `💥 КРИТ x${MathCritMult}! +${gain}` : `+${gain}`;
+                    el.textContent = isCrit ? `💥 КРИТ x${MathCritMult}! +${formatNumber(gain)}` : `+${formatNumber(gain)}`;
                     if (isCrit) {
                         el.style.color = '#fcd34d'; el.style.textShadow = '0 0 15px rgba(252, 211, 77, 0.6), 0 0 5px #fff'; el.style.fontSize = '26px';
                     } else if (ovr) {
@@ -1993,23 +2088,44 @@
                     return;
                 }
 
-                if (type === 'click' && state.score >= state.clickCost) { state.score -= state.clickCost; state.clickLevel++; state.clickCost = Math.floor(state.clickCost * 1.5) + 2; }
-                if (type === 'sync' && state.score >= state.syncCost) { state.score -= state.syncCost; state.syncLevel++; state.syncCost = Math.floor(state.syncCost * 2.2) + 50; }
-                if (type === 'crit' && state.score >= state.critCost) { state.score -= state.critCost; state.critLevel++; state.critCost = Math.floor(state.critCost * 2.5) + 100; }
-                if (type === 'efficiency' && state.score >= state.efficiencyCost) { state.score -= state.efficiencyCost; state.efficiencyLevel++; state.efficiencyCost = Math.floor(state.efficiencyCost * 2.0) + 150; }
-                if (type === 'overdrive' && state.score >= state.overdriveCost) { state.score -= state.overdriveCost; state.overdriveLevel++; state.overdriveCost = Math.floor(state.overdriveCost * 2.4) + 200; }
+                const cost = getUpgradeCost(type);
+                if (state.score >= cost) {
+                    state.score -= cost;
+                    state[conf.key]++;
+                    incrementUpgradeCost(type);
+                    recalcPassive();
+                    updateUI();
+                }
+            }
 
-                if (type === 'energy' && state.score >= state.energyCost) { state.score -= state.energyCost; state.energyLevel++; state.energyCost = Math.floor(state.energyCost * 1.6) + 5; }
-                if (type === 'regen' && state.score >= state.regenCost) { state.score -= state.regenCost; state.regenLevel++; state.regenCost = Math.floor(state.regenCost * 1.7) + 8; }
-                if (type === 'auto1' && state.score >= state.auto1Cost) { state.score -= state.auto1Cost; state.auto1++; state.auto1Cost = Math.floor(state.auto1Cost * 1.4) + 10; }
-                if (type === 'auto2' && state.score >= state.auto2Cost) { state.score -= state.auto2Cost; state.auto2++; state.auto2Cost = Math.floor(state.auto2Cost * 1.5) + 30; }
-                if (type === 'auto3' && state.score >= state.auto3Cost) { state.score -= state.auto3Cost; state.auto3++; state.auto3Cost = Math.floor(state.auto3Cost * 1.6) + 100; }
-                if (type === 'auto4' && state.score >= state.auto4Cost) { state.score -= state.auto4Cost; state.auto4++; state.auto4Cost = Math.floor(state.auto4Cost * 1.7) + 400; }
-                if (type === 'auto5' && state.score >= state.auto5Cost) { state.score -= state.auto5Cost; state.auto5++; state.auto5Cost = Math.floor(state.auto5Cost * 1.8) + 1500; }
-                if (type === 'factory' && state.score >= state.factoryCost) { state.score -= state.factoryCost; state.factoryLevel++; state.factoryCost = Math.floor(state.factoryCost * 3.0) + 500; }
-                if (type === 'glitch' && state.score >= state.glitchCost) { state.score -= state.glitchCost; state.glitchLevel++; state.glitchCost = Math.floor(state.glitchCost * 2.1) + 100; }
+            // Механика массовой покупки (MAX) уровней улучшайзеров
+            function buyUpgradeMax(type) {
+                const conf = UPGRADE_CONFIGS[type];
+                if (!conf) return;
 
-                recalcPassive(); updateUI();
+                let boughtAny = false;
+                let levelsBought = 0;
+
+                while (state[conf.key] < conf.max) {
+                    let cost = getUpgradeCost(type);
+                    if (state.score >= cost) {
+                        state.score -= cost;
+                        state[conf.key]++;
+                        incrementUpgradeCost(type);
+                        boughtAny = true;
+                        levelsBought++;
+                    } else {
+                        break;
+                    }
+                }
+
+                if (boughtAny) {
+                    recalcPassive();
+                    updateUI();
+                    showFloatingNotification(`🚀 Куплено уровней: +${levelsBought}`);
+                } else {
+                    showFloatingNotification("❌ Недостаточно кристаллов");
+                }
             }
 
             function spawnCyberGlitch() {
@@ -2030,7 +2146,7 @@
 
                     state.score += reward; state.totalScoreEarned += reward;
                     if (state.animations) {
-                        const el = document.createElement('div'); el.className = 'float-text'; el.textContent = `⚡ Взлом: +${reward} 💎`;
+                        const el = document.createElement('div'); el.className = 'float-text'; el.textContent = `⚡ Взлом: +${formatNumber(reward)} 💎`;
                         el.style.color = '#e879f9'; el.style.left = e.clientX + 'px'; el.style.top = e.clientY + 'px';
                         document.body.appendChild(el); setTimeout(() => el.remove(), 1000);
                     }
@@ -2045,7 +2161,6 @@
                 const overlay = _cyber$('confirmOverlay');
                 const textEl = _cyber$('confirmModalText');
                 if (!overlay || !textEl) {
-                    // Safe auto-approve fallback inside offline sandbox environments
                     console.log("Safe auto-confirm fallback approved: ", text);
                     callback();
                     return;
@@ -2060,7 +2175,7 @@
                 const cost = getPrestigeCost(state.prestigeCount);
                 if (state.score < cost || pending < 1) return;
 
-                showCustomConfirm(`Вы уверены? Это обнулит текущий баланс и заводы, но выдаст +${pending} Нейрочипов.`, () => {
+                showCustomConfirm(`Вы уверены? Это обнулит текущий баланс и заводы, но выдаст +${formatNumber(pending)} Нейрочипов.`, () => {
                     const nanos = state.nanochips + pending; const evos = state.prestigeCount + 1;
                     const historyScore = state.totalScoreEarned; const clicks = state.clicksCount;
                     const uid = state.userId; const uname = state.username; const achs = [...(state.achievements || [])];
@@ -2074,15 +2189,77 @@
                 });
             }
 
+            // Автоклик при удержании (активируется с 5 уровня престижа)
+            let autoclickInterval = null;
+            function startAutoclick() {
+                if (state.prestigeCount < 5) return;
+                if (autoclickInterval) return;
+
+                // Первый клик сразу
+                handleClick();
+                autoclickInterval = setInterval(() => {
+                    handleClick();
+                }, 100); // 10 кликов в секунду
+            }
+
+            function stopAutoclick() {
+                if (autoclickInterval) {
+                    clearInterval(autoclickInterval);
+                    autoclickInterval = null;
+                }
+            }
+
+            // Инициализация удержания на главном ядре
+            function initAutoclicker() {
+                const clickBtn = _cyber$('clickButton');
+                if (!clickBtn) return;
+
+                const onDown = (e) => {
+                    if (state.prestigeCount >= 5) {
+                        e.preventDefault();
+                        startAutoclick();
+                    }
+                };
+
+                const onUp = (e) => {
+                    stopAutoclick();
+                };
+
+                clickBtn.addEventListener('mousedown', onDown);
+                clickBtn.addEventListener('mouseup', onUp);
+                clickBtn.addEventListener('mouseleave', onUp);
+
+                clickBtn.addEventListener('touchstart', onDown, { passive: false });
+                clickBtn.addEventListener('touchend', onUp);
+                clickBtn.addEventListener('touchcancel', onUp);
+            }
+
+            function triggerPrestigeCelebration(chips, era) {
+                const overlay = _cyber$('prestigeOverlay');
+                const flash = _cyber$('flashBang');
+                if (flash) { flash.className = 'active'; setTimeout(() => flash.className = '', 600); }
+                if (overlay) {
+                    overlay.style.display = 'flex';
+                    setTimeout(() => overlay.classList.add('triggered'), 50);
+                    if (_cyber$('modalNewEraName')) _cyber$('modalNewEraName').textContent = `ЭРА ${era}: ${(ERAS[Math.min(era, 5)] || ERAS[5]).name.split(': ')[1]}`;
+                    if (_cyber$('modalChipsGained')) _cyber$('modalChipsGained').textContent = `+${formatNumber(chips)} 🧬`;
+
+                    const hasAch4 = state.achievements && state.achievements.includes('ach-4');
+                    const bonusGained = (1 + (state.nanochips * (hasAch4 ? 0.024 : 0.02))) - 1;
+                    if (_cyber$('modalNewBonus')) _cyber$('modalNewBonus').textContent = `+${Math.round(bonusGained * 100)}%`;
+                }
+            }
+
             // НАДЕЖНОЕ ДЕЛЕГИРОВАНИЕ КЛИКОВ (ЗАЩИТА ВНУТРИ КОДА)
             function initEventDelegation() {
-                // Привязываем слушатель событий к document, чтобы ловить клики и по модальным окнам вне #app
                 document.addEventListener('click', function (e) {
                     const target = e.target;
 
-                    // Клик по главному ядру (с поддержкой внутренних дочерних элементов)
+                    // Клик по главному ядру (если зажим ещё не работает на <5 престиже)
                     if (target.id === 'clickButton' || target.closest('#clickButton')) {
-                        handleClick();
+                        if (state.prestigeCount < 5) {
+                            handleClick();
+                        }
                         return;
                     }
 
@@ -2107,8 +2284,14 @@
                     // Покупка улучшений по их ID (безопасное делегирование с closest)
                     const buyBtn = target.closest('button[id^="buy"]');
                     if (buyBtn) {
-                        const type = buyBtn.id.replace('buy', '').toLowerCase();
-                        buyUpgrade(type);
+                        // Определение: обычная покупка или опция MAX
+                        if (buyBtn.id.endsWith('Max')) {
+                            const type = buyBtn.id.replace('buy', '').replace('Max', '').toLowerCase();
+                            buyUpgradeMax(type);
+                        } else {
+                            const type = buyBtn.id.replace('buy', '').toLowerCase();
+                            buyUpgrade(type);
+                        }
                         return;
                     }
 
@@ -2187,6 +2370,7 @@
                 checkPWAUpdates();
                 updateUI();
                 initEventDelegation();
+                initAutoclicker();
 
                 setInterval(() => {
                     state.energy = Math.min(state.maxEnergy, state.energy + getActualMemoryRegen());
