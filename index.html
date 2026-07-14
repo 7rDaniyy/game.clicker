@@ -904,7 +904,7 @@
 
     <div id="flashBang"></div>
 
-    <!-- Кастомное модальное окно подтверждения (вместо проблемного браузерного confirm) -->
+    <!-- Кастомное модальное окно подтверждения -->
     <div id="confirmOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 10, 18, 0.96); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); z-index: 2500; display: none; justify-content: center; align-items: center; padding: 24px;">
         <div class="celebration-modal" style="max-width: 340px; width: 100%; text-align: center; display: flex; flex-direction: column; gap: 16px; transform: scale(1); opacity: 1;">
             <div style="font-size: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; color: #fb7185; text-shadow: 0 0 12px rgba(251, 113, 133, 0.35);">Квантовый Сброс</div>
@@ -1143,7 +1143,7 @@
                 </div>
             </div>
 
-            <!-- НОВАЯ ИНТУИТИВНО ПОНЯТНАЯ ВКЛАДКА ЭВОЛЮЦИИ -->
+            <!-- ИНТУИТИВНО ПОНЯТНАЯ ВКЛАДКА ЭВОЛЮЦИИ -->
             <div class="panel" id="panel-evolution">
                 <div class="evolution-card">
                     <h3 style="font-size: 16px; color:var(--primary); text-transform:uppercase; letter-spacing:1px; margin-bottom: 2px;">🔮 Квантовый Переход</h3>
@@ -1206,7 +1206,7 @@
                         </div>
                         <div style="flex: 1; background: rgba(52, 211, 153, 0.04); border: 1px solid rgba(52, 211, 153, 0.12); padding: 8px; border-radius: 12px; display:flex; flex-direction:column; gap:2px;">
                             <b style="color: #34d399; font-size:11px;">🟢 Сохраняется:</b>
-                            <span style="color:#aaaacf; line-height: 1.3;">Все Нейрочипы, достижения, рекорды и настройки логов.</span>
+                            <span style="color:#aaaacf; line-height: 1.3;">Все Нейрочипы, achievements, рекорды и настройки логов.</span>
                         </div>
                     </div>
 
@@ -1391,7 +1391,7 @@
             // Функция расчета стоимости для перехода на каждый новый престиж (сильно прогрессивные ценники)
             function getPrestigeCost(prestigeLevel) {
                 const costs = [
-                    25000,         // Эра 0 ➔ Эра 1: 25,000 (увеличено с 5,000)
+                    25000,         // Эра 0 ➔ Эра 1: 25,000
                     500000,        // Эра 1 ➔ Эра 2: 500,000
                     15000000,      // Эра 2 ➔ Эра 3: 15,000,000 (15 млн)
                     500000000,     // Эра 3 ➔ Эра 4: 500,000,000 (500 млн)
@@ -1686,6 +1686,7 @@
                 return 1 + ((state.nanochips || 0) * (hasAch4 ? 0.024 : 0.02));
             }
 
+            // Смена на более аккуратный расчет с учетом перегрузки
             function getActualClickPower() {
                 let basePower = 1 + (state.clickLevel || 0);
                 let syncBonusFactor = 0.05;
@@ -2075,10 +2076,8 @@
 
             // НАДЕЖНОЕ ДЕЛЕГИРОВАНИЕ КЛИКОВ (ЗАЩИТА ВНУТРИ КОДА)
             function initEventDelegation() {
-                const app = _cyber$('app');
-                if (!app) return;
-
-                app.addEventListener('click', function (e) {
+                // Привязываем слушатель событий к document, чтобы ловить клики и по модальным окнам вне #app
+                document.addEventListener('click', function (e) {
                     const target = e.target;
 
                     // Клик по главному ядру (с поддержкой внутренних дочерних элементов)
