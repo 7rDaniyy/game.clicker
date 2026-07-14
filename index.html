@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Кибер-Эволюция: Сингулярность</title>
+    <!-- Валидный манифест PWA -->
     <link rel="manifest" href='data:application/json,{"name":"Кибер-Эволюция","short_name":"Кибер","display":"standalone","orientation":"portrait","icons":[{"src":"data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22100%22 fill=%22%230a0a1a%22 /%3E%3Ccircle cx=%22256%22 cy=%22256%22 r=%22180%22 fill=%22none%22 stroke=%22%2300f0ff%22 stroke-width=%2220%22 /%3E%3Cpath d=%22M256 76 L256 436 M76 256 L436 256%22 stroke=%22%2300f0ff%22 stroke-width=%2220%22 /%3E%3Ccircle cx=%22256%22 cy=%22256%22 r=%2240%22 fill=%22%2300f0ff%22 /%3E%3C/svg%3E","sizes":"512x512","type":"image/svg+xml"}]}'>
     
+    <!-- Подключение SDK Firebase (Compat-версия) -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
@@ -367,7 +369,7 @@
             opacity: 0.6;
         }
 
-        /* ===== НАСТРОЯЩИЙ ОНЛАЙН РЕЙТИНГ (БЕЗ БОТОВ) ===== */
+        /* ===== НАСТОЯЩИЙ ОНЛАЙН РЕЙТИНГ ===== */
         .leaderboard-list {
             display: flex;
             flex-direction: column;
@@ -540,7 +542,7 @@
             -webkit-backdrop-filter: blur(8px);
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             padding: 10px 6px;
-            margin: 4px -12px -20px; /* Растягивание до границ экрана */
+            margin: 4px -12px -20px;
             flex-shrink: 0;
             z-index: 10;
         }
@@ -588,8 +590,8 @@
             100% { filter: hue-rotate(360deg); }
         }
 
-        /* ===== КИНЕМАТОГРАФИЧНОЕ ОКНО ПРЕСТИЖА (ТРИУМФ) ===== */
-         King-престиж оверлей */
+        /* ===== КИНЕМАТОГРАФИЧНОЕ ОКНО ПРЕСТИЖА ===== */
+        /* /* King-престиж оверлей */
         #prestigeOverlay {
             position: fixed;
             top: 0; left: 0;
@@ -722,6 +724,7 @@
 
     <div id="flashBang"></div>
 
+    <!-- ТРИУМФ ОВЕРЛЕЙ -->
     <div id="prestigeOverlay">
         <div class="celebration-modal">
             <div class="evo-title-glitch">Синхронизация Успешна!</div>
@@ -748,6 +751,7 @@
     </div>
 
     <div id="app" class="p-level-0">
+        <!-- ШАПКА -->
         <header>
             <div class="stat">
                 <span class="stat-label">💎 Кристаллы</span>
@@ -767,6 +771,7 @@
             </div>
         </header>
 
+        <!-- КЛИК-ЗОНА -->
         <div class="click-area" id="clickArea">
             <button id="clickButton">
                 💥 КЛИК
@@ -779,8 +784,10 @@
             <button id="skillBtn">🔥 ПЕРЕГРУЗКА ЯДРА</button>
         </div>
 
+        <!-- СКРОЛЛИРУЕМЫЙ СРЕДНИЙ БЛОК -->
         <div class="panels-container">
             
+            <!-- ПАНЕЛЬ 1: ПРОКАЧКА КЛИКА -->
             <div class="panel active" id="panel-upgrades">
                 <div class="upgrade" id="upgrade-click">
                     <div class="upgrade-info">
@@ -814,6 +821,7 @@
                 </div>
             </div>
 
+            <!-- ПАНЕЛЬ 2: ГЕНЕРАТОРЫ (ПАССИВ) -->
             <div class="panel" id="panel-passive">
                 <div class="upgrade" id="upgrade-auto1">
                     <div class="upgrade-info">
@@ -850,6 +858,7 @@
                 </div>
             </div>
 
+            <!-- ПАНЕЛЬ 3: НАСТОЯЩИЙ ОНЛАЙН ТОП -->
             <div class="panel" id="panel-leaderboard">
                 <div style="font-size: 13px; font-weight:700; color:var(--primary); text-transform:uppercase; margin-bottom: 4px; text-align:center;">👑 Глобальная Сеть Сингулярности</div>
                 <p style="font-size:10px; color:#8888bb; text-align:center; margin-bottom: 8px;">Ранжирование по общему количеству собранных кристаллов</p>
@@ -858,6 +867,7 @@
                 </div>
             </div>
 
+            <!-- ПАНЕЛЬ 4: ЭВОЛЮЦИЯ -->
             <div class="panel" id="panel-evolution">
                 <div class="evolution-card">
                     <h3 style="font-size: 15px; color:var(--primary); transition: color 0.5s;">🔮 Квантовый Переход</h3>
@@ -865,6 +875,7 @@
                         Перенесите своё цифровое сознание в новую кибер-форму. Вы выйдете на новый уровень симуляции!
                     </p>
 
+                    <!-- Подробное объяснение формулы синтеза нейрочипов -->
                     <div style="text-align: left; background: rgba(0, 240, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); padding: 8px 10px; border-radius: 12px; font-size: 11px; display: flex; flex-direction: column; gap: 4px; line-height: 1.35;">
                         <span style="color: var(--primary); font-weight: 700; display: block;">🧬 Логика синтеза чипов:</span>
                         Чипы генерируются на основе <b>ВСЕХ</b> заработанных кристаллов за историю аккаунта.
@@ -912,9 +923,10 @@
                 </div>
             </div>
 
+            <!-- ПАНЕЛЬ 5: ДОСТИЖЕНИЯ -->
             <div class="panel" id="panel-achievements">
                 <div class="achieve-item" id="ach-1">
-                    <div class="achieve-icon">🖱️</div>
+                    <div class="achieve-icon">⌨️</div>
                     <div class="achieve-info">
                         <span class="achieve-title">Юный Взломщик</span>
                         <span class="achieve-desc">Сделать 100 кликов по ядру</span>
@@ -947,6 +959,7 @@
                 </div>
             </div>
 
+            <!-- ПАНЕЛЬ 6: НАСТРОЙКИ -->
             <div class="panel" id="panel-settings">
                 <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); border-radius:14px; padding:12px; display:flex; flex-direction:column; gap:4px;">
                     <span style="font-size:12px; font-weight:700; color:var(--primary); text-transform:uppercase;">🏷️ Идентификатор Сети</span>
@@ -970,12 +983,13 @@
                     <div class="stats-line"><span>Пройдено Эволюций:</span> <span id="statEvos">0</span></div>
                 </div>
                 <div style="margin-top:12px; font-size:11px; color:#444477; text-align:center;" id="versionFooter">
-                    Кибер-Эволюция v2.7 • Облачная Сингулярность
+                    Кибер-Эволюция v2.8 • Облачная Сингулярность
                 </div>
             </div>
 
         </div>
 
+        <!-- ПОСТОЯННОЕ МЕНЮ СНИЗУ -->
         <div class="tabs">
             <button class="tab active" data-tab="upgrades" title="Клик">🖱️</button>
             <button class="tab" data-tab="passive" title="Генераторы">🏭</button>
@@ -988,23 +1002,32 @@
 
     <script>
     // ============================================================
-    //  КОНФИГУРАЦИЯ И СИНХРОНИЗАЦИЯ FIREBASE CLOUD FIRESTORE
+    //  БЕЗОПАСНАЯ КЛИЕНТСКАЯ АРХИТЕКТУРА v2.8 (ИММУНИТЕТ К КРАШАМ)
     // ============================================================
-    const CURRENT_VERSION = "2.7";
+    const CURRENT_VERSION = "2.8";
 
-    // Вставь сюда данные своего проекта из панели Firebase:
     const firebaseConfig = {
-        apiKey: "YOUR_API_KEY",
-        authDomain: "YOUR_AUTH_DOMAIN",
-        projectId: "YOUR_PROJECT_ID",
-        storageBucket: "YOUR_STORAGE_BUCKET",
-        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-        appId: "YOUR_APP_ID"
+        apiKey: "AIzaSyAbh1fvh_dCYgyl6MzgfcAevEeklMF_dAs",
+        authDomain: "game-clicker-c0612.firebaseapp.com",
+        databaseURL: "https://game-clicker-c0612-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "game-clicker-c0612",
+        storageBucket: "game-clicker-c0612.firebasestorage.app",
+        messagingSenderId: "250793504991",
+        appId: "1:250793504991:web:59244a3394eacbb904f96a",
+        measurementId: "G-NLCCGML1SL"
     };
 
-    // Инициализация Firebase
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+    // Безопасное подключение Firestore
+    let db = null;
+    try {
+        if (typeof firebase !== 'undefined') {
+            firebase.initializeApp(firebaseConfig);
+            db = firebase.firestore();
+            console.log("☁️ Облачная подсистема Firebase успешно запущена.");
+        }
+    } catch (e) {
+        console.warn("⚠️ Firestore отключен или не активирован. Игра запущена в автономном режиме.", e);
+    }
 
     const ERAS = [
         { name: "Эпоха 0: Аналоговая Система" },
@@ -1062,108 +1085,96 @@
     const auto3PriceDisplay = $('auto3PriceDisplay');
     const skillBtn = $('skillBtn');
 
-    // --- ПРИНУДИТЕЛЬНЫЙ ОБХОД КЭША SAFARI PWA ---
     async function checkPWAUpdates() {
         if (!navigator.onLine) return;
         try {
             const rawUrl = window.location.href.split('?')[0];
             const nocacheUrl = `${rawUrl}?cb_detect=${Date.now()}`;
-            
             const response = await fetch(nocacheUrl, { cache: 'no-store' });
             if (!response.ok) return;
             const text = await response.text();
-            
             const versionMatch = text.match(/const\s+CURRENT_VERSION\s*=\s*["']([^"']+)["']/);
-            if (versionMatch && versionMatch[1]) {
-                const serverVersion = versionMatch[1];
-                if (serverVersion !== CURRENT_VERSION) {
-                    showFloatingNotification("🔄 Установка обновления...");
-                    setTimeout(() => {
-                        window.location.replace(`${rawUrl}?forced_update=${Date.now()}`);
-                    }, 1200);
-                }
+            if (versionMatch && versionMatch[1] && versionMatch[1] !== CURRENT_VERSION) {
+                showFloatingNotification("🔄 Установка обновления...");
+                setTimeout(() => window.location.replace(`${rawUrl}?forced_update=${Date.now()}`), 1200);
             }
         } catch(e) {}
     }
 
-    // --- ИНИЦИАЛИЗАЦИЯ И СТРОГАЯ ТРАНЗАКЦИЯ ПОРЯДКОВЫХ ID ---
     async function initNetworkProfile() {
+        // Если база данных недоступна, создаем локальный профиль по умолчанию
+        if (!db) {
+            if (!state.userId) {
+                state.userId = "offline-user";
+                state.username = "Автономный Сборщик";
+                save();
+            }
+            $('displayUserId').textContent = state.userId;
+            $('usernameInput').value = state.username;
+            return;
+        }
+
         if (!state.userId) {
             try {
-                // Ссылка на единый счетчик пользователей в Firestore
                 const counterRef = db.collection('metadata').doc('counters');
-                
                 await db.runTransaction(async (transaction) => {
                     const counterDoc = await transaction.get(counterRef);
-                    
                     let newCount = 1;
                     if (counterDoc.exists) {
                         newCount = (counterDoc.data().count || 0) + 1;
                     }
-                    
-                    // Обновляем глобальный счетчик в базе данных
                     transaction.set(counterRef, { count: newCount }, { merge: true });
-                    
-                    // Форматируем ID по порядку: user-00001, user-00002...
                     const paddedNumber = String(newCount).padStart(5, '0');
                     state.userId = `user-${paddedNumber}`;
                     state.username = state.userId;
                     
-                    // Создаем карточку пользователя в базе данных
-                    const userRef = db.collection('users').doc(state.userId);
-                    transaction.set(userRef, {
+                    transaction.set(db.collection('users').doc(state.userId), {
                         id: state.userId,
                         username: state.username,
                         score: 0
                     });
                 });
-                
                 save();
-                console.log("Успешная облачная регистрация:", state.userId);
             } catch(e) {
-                console.error("Критическая ошибка создания профиля в Firebase", e);
+                console.error("Ошибка транзакции ID, переход в локальный режим", e);
+                state.userId = "user-" + Math.floor(10000 + Math.random() * 90000);
+                state.username = state.userId;
+                save();
             }
         }
-        
-        $('displayUserId').textContent = state.userId || "Автономный режим";
-        $('usernameInput').value = state.username || "";
+        $('displayUserId').textContent = state.userId;
+        $('usernameInput').value = state.username;
         syncWithDatabase();
     }
 
-    // Отправка рекорда в Firebase
     async function syncWithDatabase() {
-        if (!state.userId || !navigator.onLine) return;
+        if (!db || !state.userId || state.userId === "offline-user" || !navigator.onLine) return;
         try {
             await db.collection('users').doc(state.userId).set({
+                id: state.userId,
                 username: state.username,
                 score: Math.floor(state.totalScoreEarned)
             }, { merge: true });
-        } catch(e) {
-            console.error("Ошибка облачной синхронизации очков", e);
-        }
+        } catch(e) {}
     }
 
-    // Загрузка реального ТОП лидеров из Firestore Cloud
     async function fetchLeaderboard() {
         const container = $('leaderboardContainer');
-        if (!navigator.onLine) {
-            container.innerHTML = `<div style="text-align:center;color:#f87171;padding:20px;font-size:12px;">Вы отключены от сети.</div>`;
+        if (!db || !navigator.onLine) {
+            container.innerHTML = `<div style="text-align:center;color:#8888bb;padding:20px;font-size:11px;">Работает автономно. Подключите сеть и активируйте Firestore для просмотра ТОП.</div>`;
             return;
         }
         try {
             const snapshot = await db.collection('users').orderBy('score', 'desc').limit(50).get();
             container.innerHTML = "";
-            
             let rank = 1;
             snapshot.forEach((doc) => {
                 const player = doc.data();
                 let placeClass = "";
                 let medal = "";
-                
                 if (rank === 1) { placeClass = "place-1"; medal = "🥇 "; }
                 else if (rank === 2) { placeClass = "place-2"; medal = "🥈 "; }
                 else if (rank === 3) { placeClass = "place-3"; medal = "🥉 "; }
-                
                 if (player.id === state.userId) placeClass += " current-user";
 
                 const row = document.createElement('div');
@@ -1178,20 +1189,14 @@
                 container.appendChild(row);
                 rank++;
             });
-            
-            if (rank === 1) {
-                container.innerHTML = `<div style="text-align:center;color:#8888bb;padding:20px;font-size:12px;">База данных пуста. Станьте первым!</div>`;
-            }
         } catch(e) {
-            console.error("Ошибка чтения топ листов", e);
-            container.innerHTML = `<div style="text-align:center;color:#f87171;padding:20px;font-size:12px;">Ошибка синхронизации рейтингов.</div>`;
+            container.innerHTML = `<div style="text-align:center;color:#f87171;padding:20px;font-size:11px;">Не удалось прочесть Cloud Firestore. Проверьте вкладку Rules.</div>`;
         }
     }
 
     function sanitizeState(loaded) {
         const base = JSON.parse(JSON.stringify(DEFAULT_STATE));
         if (!loaded || typeof loaded !== 'object') return base;
-        
         const sanitized = {};
         for (let key in base) {
             if (loaded.hasOwnProperty(key) && loaded[key] !== undefined && loaded[key] !== null) {
@@ -1211,71 +1216,24 @@
         return sanitized;
     }
 
-    function save() {
-        try {
-            localStorage.setItem('cyberClicker_v2_net', JSON.stringify(state));
-        } catch(e) {}
-    }
-
+    function save() { try { localStorage.setItem('cyberClicker_v2_net', JSON.stringify(state)); } catch(e) {} }
     function load() {
         try {
             const raw = localStorage.getItem('cyberClicker_v2_net');
-            if (raw) {
-                const saved = JSON.parse(raw);
-                state = sanitizeState(saved);
-            } else {
-                state = JSON.parse(JSON.stringify(DEFAULT_STATE));
-            }
-        } catch(e) {
-            state = JSON.parse(JSON.stringify(DEFAULT_STATE));
-        }
+            if (raw) state = sanitizeState(JSON.parse(raw));
+        } catch(e) {}
         recalcPassive();
     }
 
     function getPendingChips() {
         if (!state.totalScoreEarned || state.totalScoreEarned < 5000) return 0;
-        let totalChips = Math.floor(Math.sqrt(state.totalScoreEarned / 2000) * 3);
-        return Math.max(0, totalChips - (state.nanochips || 0));
+        return Math.max(0, Math.floor(Math.sqrt(state.totalScoreEarned / 2000) * 3) - (state.nanochips || 0));
     }
 
-    function getMultiplier() {
-        let chipBase = 0.02;
-        if ((state.achievements || []).includes('ach-4')) {
-            chipBase = 0.024;
-        }
-        return 1 + ((state.nanochips || 0) * chipBase);
-    }
-
-    function getActualClickPower() {
-        let base = state.clickPower || 1;
-        let mult = 1;
-        if ((state.achievements || []).includes('ach-1')) {
-            mult += 0.10;
-        }
-        mult *= getMultiplier();
-        if (state.skillDuration > 0) {
-            mult *= 3;
-        }
-        return Math.floor(base * mult);
-    }
-
-    function getActualPassive() {
-        let base = ((state.auto1 || 0) * 1) + ((state.auto2 || 0) * 5) + ((state.auto3 || 0) * 25);
-        let mult = 1;
-        if ((state.achievements || []).includes('ach-2')) {
-            mult += 0.15;
-        }
-        mult *= getMultiplier();
-        return Math.floor(base * mult);
-    }
-
-    function getActualEnergyRegen() {
-        let base = state.energyRegen || 0.5;
-        if ((state.achievements || []).includes('ach-3')) {
-            base += 1.0;
-        }
-        return base;
-    }
+    function getMultiplier() { return 1 + ((state.nanochips || 0) * (state.achievements.includes('ach-4') ? 0.024 : 0.02)); }
+    function getActualClickPower() { return Math.floor((state.clickPower || 1) * (state.achievements.includes('ach-1') ? 1.1 : 1) * getMultiplier() * (state.skillDuration > 0 ? 3 : 1)); }
+    function getActualPassive() { return Math.floor(((state.auto1 * 1) + (state.auto2 * 5) + (state.auto3 * 25)) * (state.achievements.includes('ach-2') ? 1.15 : 1) * getMultiplier()); }
+    function getActualMemoryRegen() { return (state.energyRegen || 0.5) + (state.achievements.includes('ach-3') ? 1.0 : 0); }
 
     function recalcPassive() {
         state.passiveTotal = getActualPassive();
@@ -1303,10 +1261,7 @@
     function updateUI() {
         scoreDisplay.textContent = Math.floor(state.score).toLocaleString();
         energyDisplay.textContent = Math.floor(state.energy);
-        
-        const pct = Math.max(0, Math.min(100, (state.energy / state.maxEnergy) * 100));
-        energyFill.style.width = pct + '%';
-        
+        energyFill.style.width = Math.max(0, Math.min(100, (state.energy / state.maxEnergy) * 100)) + '%';
         clickPowerLabel.textContent = `+${getActualClickPower()} ⚡`;
 
         clickPriceDisplay.textContent = `${state.clickCost.toLocaleString()} 💎`;
@@ -1326,14 +1281,10 @@
         const app = $('app');
         const prestigeLevel = state.prestigeCount || 0;
         const levelClass = Math.min(prestigeLevel, 5);
-        
-        for (let i = 0; i <= 5; i++) {
-            app.classList.remove('p-level-' + i);
-        }
+        for (let i = 0; i <= 5; i++) app.classList.remove('p-level-' + i);
         app.classList.add('p-level-' + levelClass);
 
-        const currentEra = ERAS[levelClass] || ERAS[5];
-        $('eraTitle').textContent = `ЭРА ${prestigeLevel}: ${currentEra.name.split(': ')[1]}`;
+        $('eraTitle').textContent = `ЭРА ${prestigeLevel}: ${(ERAS[levelClass] || ERAS[5]).name.split(': ')[1]}`;
         $('chipsHeaderDisplay').textContent = `${(state.nanochips || 0).toLocaleString()} (Lvl ${prestigeLevel})`;
 
         const pending = getPendingChips();
@@ -1343,36 +1294,26 @@
 
         const nextLevelClass = Math.min(prestigeLevel + 1, 5);
         const nextEra = ERAS[nextLevelClass] || ERAS[5];
-        $('nextEraTooltip').textContent = `Следующая эра: Lvl ${prestigeLevel + 1} (${nextEra.name.split(': ')[1]})`;
+        $('nextEraTooltip').textContent = `Следующая эра: Lvl ${prestigeLevel + 1} (${nextEra.name})`;
 
-        const currentBonusPct = Math.round((getMultiplier() - 1) * 100);
-        $('evoCurrentBonus').textContent = `+${currentBonusPct}%`;
-        
-        const nextChipsTotal = (state.nanochips || 0) + pending;
-        let chipBase = 0.02;
-        if ((state.achievements || []).includes('ach-4')) {
-            chipBase = 0.024;
-        }
-        const nextBonusPct = Math.round((nextChipsTotal * chipBase) * 100);
-        $('evoNextBonus').textContent = `+${nextBonusPct}%`;
+        $('evoCurrentBonus').textContent = `+${Math.round((getMultiplier() - 1) * 100)}%`;
+        $('evoNextBonus').textContent = `+${Math.round(((1 + ((state.nanochips + pending) * (state.achievements.includes('ach-4') ? 0.024 : 0.02))) - 1) * 100)}%`;
         
         const prestBtn = $('prestigeBtn');
         if (state.score >= 5000 && pending > 0) {
             prestBtn.classList.remove('disabled');
-            prestBtn.textContent = `СОВЕРШИТЬ ЭВОЛЮЦИЮ (+${pending} чипов)`;
+            prestBtn.textContent = `ЭВОЛЮЦИОНИРОВАТЬ (+${pending})`;
         } else {
             prestBtn.classList.add('disabled');
-            prestBtn.textContent = state.score < 5000 ? "ЭВОЛЮЦИОНИРОВАТЬ (Нужно 5k 💎)" : "Слишком мало новых чипов";
+            prestBtn.textContent = state.score < 5000 ? "Нужно 5k 💎" : "Мало чипов";
         }
 
-        $('statClicks').textContent = (state.clicksCount || 0).toLocaleString();
-        $('statTotalEarned').textContent = Math.floor(state.totalScoreEarned || 0).toLocaleString();
-        $('statEvos').textContent = (state.prestigeCount || 0).toLocaleString();
+        $('statClicks').textContent = state.clicksCount.toLocaleString();
+        $('statTotalEarned').textContent = Math.floor(state.totalScoreEarned).toLocaleString();
+        $('statEvos').textContent = state.prestigeCount;
 
         if (state.sound) $('soundToggle').classList.add('on'); else $('soundToggle').classList.remove('on');
         if (state.animations) $('animToggle').classList.add('on'); else $('animToggle').classList.remove('on');
-
-        $('versionFooter').innerHTML = `Кибер-Эволюция v${CURRENT_VERSION} • Облачная Сингулярность<br>Хранилище Firestore синхронизировано.`;
 
         updateSkillUI();
         checkAchievements();
@@ -1383,30 +1324,20 @@
         const btn = $(`buy${id.charAt(0).toUpperCase() + id.slice(1)}`);
         const block = $(`upgrade-${id}`);
         if (!btn) return;
-        
-        if (state.score < cost) {
-            btn.classList.add('locked');
-            if (block) block.classList.add('locked-panel');
-        } else {
-            btn.classList.remove('locked');
-            if (block) block.classList.remove('locked-panel');
-        }
+        if (state.score < cost) { btn.classList.add('locked'); if (block) block.classList.add('locked-panel'); }
+        else { btn.classList.remove('locked'); if (block) block.classList.remove('locked-panel'); }
     }
 
     function checkAchievements() {
         const checkAndUnlock = (id, condition) => {
-            if (condition && !(state.achievements || []).includes(id)) {
+            if (condition && !state.achievements.includes(id)) {
                 state.achievements.push(id);
-                const card = $(id);
-                if (card) card.classList.add('unlocked');
-                showFloatingNotification(`🏆 Ачивка открыта!`);
-                save();
-            } else if ((state.achievements || []).includes(id)) {
-                const card = $(id);
-                if (card) card.classList.add('unlocked');
+                const card = $(id); if (card) card.classList.add('unlocked');
+                showFloatingNotification(`🏆 Ачивка открыта!`); save();
+            } else if (state.achievements.includes(id)) {
+                const card = $(id); if (card) card.classList.add('unlocked');
             }
         };
-
         checkAndUnlock('ach-1', state.clicksCount >= 100);
         checkAndUnlock('ach-2', state.totalScoreEarned >= 25000);
         checkAndUnlock('ach-3', state.maxEnergy >= 150);
@@ -1415,288 +1346,81 @@
 
     function showFloatingNotification(text) {
         const notif = document.createElement('div');
-        notif.style.cssText = `
-            position: fixed;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(135deg, var(--accent), var(--primary));
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 700;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-            z-index: 1001;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.3s;
-        `;
-        notif.textContent = text;
-        document.body.appendChild(notif);
+        notif.style.cssText = `position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--accent), var(--primary)); color: white; padding: 8px 16px; border-radius: 20px; font-size: 11px; font-weight: 700; box-shadow: 0 4px 15px rgba(0,0,0,0.4); z-index: 1001; pointer-events: none; opacity: 0; transition: opacity 0.3s;`;
+        notif.textContent = text; document.body.appendChild(notif);
         setTimeout(() => notif.style.opacity = '1', 50);
-        setTimeout(() => {
-            notif.style.opacity = '0';
-            setTimeout(() => notif.remove(), 300);
-        }, 1800);
+        setTimeout(() => { notif.style.opacity = '0'; setTimeout(() => notif.remove(), 300); }, 1800);
     }
 
     function handleClick() {
-        const inOverdrive = state.skillDuration > 0;
-        
-        if (!inOverdrive && state.energy < 1) {
-            const btn = $('clickButton');
-            btn.style.boxShadow = '0 0 30px rgba(255,50,50,0.8)';
-            setTimeout(() => btn.style.boxShadow = '', 150);
+        const ovr = state.skillDuration > 0;
+        if (!ovr && state.energy < 1) {
+            clickButton.style.boxShadow = '0 0 30px rgba(255,50,50,0.8)';
+            setTimeout(() => clickButton.style.boxShadow = '', 150);
             return;
         }
-
-        if (!inOverdrive) {
-            state.energy = Math.max(0, state.energy - 1);
-        }
-
+        if (!ovr) state.energy = Math.max(0, state.energy - 1);
         const gain = getActualClickPower();
-        state.score += gain;
-        state.totalScoreEarned += gain;
-        state.clicksCount += 1;
+        state.score += gain; state.totalScoreEarned += gain; state.clicksCount++;
         updateUI();
 
         if (state.animations) {
-            const el = document.createElement('div');
-            el.className = 'float-text';
-            el.textContent = `+${gain}`;
-            if (inOverdrive) {
-                el.style.color = '#ff007f';
-                el.style.textShadow = '0 0 15px rgba(255, 0, 127, 0.8)';
-            }
-            const rect = $('clickButton').getBoundingClientRect();
-            el.style.left = (rect.left + rect.width/2 - 20 + (Math.random()-0.5)*30) + 'px';
-            el.style.top = (rect.top) + 'px';
-            document.body.appendChild(el);
-            setTimeout(() => el.remove(), 650);
+            const el = document.createElement('div'); el.className = 'float-text'; el.textContent = `+${gain}`;
+            if (ovr) { el.style.color = '#ff007f'; el.style.textShadow = '0 0 15px #ff007f'; }
+            const rect = clickButton.getBoundingClientRect();
+            el.style.left = (rect.left + rect.width/2 - 20 + (Math.random()-0.5)*30) + 'px'; el.style.top = rect.top + 'px';
+            document.body.appendChild(el); setTimeout(() => el.remove(), 650);
         }
     }
 
     function buyUpgrade(type) {
-        switch(type) {
-            case 'click': {
-                if (state.score < state.clickCost) return;
-                state.score -= state.clickCost;
-                state.clickPower += 1;
-                state.clickCost = Math.floor(state.clickCost * 1.5) + 2;
-                break;
-            }
-            case 'energy': {
-                if (state.score < state.energyCost) return;
-                state.score -= state.energyCost;
-                state.maxEnergy += 10;
-                state.energy = Math.min(state.energy + 10, state.maxEnergy);
-                state.energyCost = Math.floor(state.energyCost * 1.6) + 5;
-                break;
-            }
-            case 'regen': {
-                if (state.score < state.regenCost) return;
-                state.score -= state.regenCost;
-                state.energyRegen += 0.5;
-                state.regenCost = Math.floor(state.regenCost * 1.7) + 8;
-                break;
-            }
-            case 'auto1': {
-                if (state.score < state.auto1Cost) return;
-                state.score -= state.auto1Cost;
-                state.auto1 += 1;
-                state.auto1Cost = Math.floor(state.auto1Cost * 1.4) + 10;
-                break;
-            }
-            case 'auto2': {
-                if (state.score < state.auto2Cost) return;
-                state.score -= state.auto2Cost;
-                state.auto2 += 1;
-                state.auto2Cost = Math.floor(state.auto2Cost * 1.5) + 30;
-                break;
-            }
-            case 'auto3': {
-                if (state.score < state.auto3Cost) return;
-                state.score -= state.auto3Cost;
-                state.auto3 += 1;
-                state.auto3Cost = Math.floor(state.auto3Cost * 1.6) + 100;
-                break;
-            }
-        }
-        recalcPassive();
-        updateUI();
-    }
-
-    function activateSkill() {
-        if (state.skillCooldown > 0) return;
-        state.skillDuration = 10;
-        state.skillCooldown = 60;
-        updateUI();
-    }
-
-    function triggerPrestigeCelebration(chipsGained, nextLvl) {
-        const flash = $('flashBang');
-        flash.classList.add('active');
-        setTimeout(() => flash.classList.remove('active'), 600);
-
-        const levelIndex = Math.min(nextLvl, 5);
-        const eraData = ERAS[levelIndex] || ERAS[5];
-        
-        $('modalNewEraName').textContent = `ЭРА ${nextLvl}: ${eraData.name}`;
-        $('modalChipsGained').textContent = `+${chipsGained.toLocaleString()} 🧬`;
-        
-        let chipBase = 0.02;
-        if ((state.achievements || []).includes('ach-4')) chipBase = 0.024;
-        const finalBonusPct = Math.round((state.nanochips * chipBase) * 100);
-        $('modalNewBonus').textContent = `+${finalBonusPct}%`;
-
-        const overlay = $('prestigeOverlay');
-        overlay.style.display = 'flex';
-        setTimeout(() => overlay.classList.add('triggered'), 50);
+        if (type === 'click' && state.score >= state.clickCost) { state.score -= state.clickCost; state.clickPower++; state.clickCost = Math.floor(state.clickCost * 1.5) + 2; }
+        if (type === 'energy' && state.score >= state.energyCost) { state.score -= state.energyCost; state.maxEnergy += 10; state.energy += 10; state.energyCost = Math.floor(state.energyCost * 1.6) + 5; }
+        if (type === 'regen' && state.score >= state.regenCost) { state.score -= state.regenCost; state.energyRegen += 0.5; state.regenCost = Math.floor(state.regenCost * 1.7) + 8; }
+        if (type === 'auto1' && state.score >= state.auto1Cost) { state.score -= state.auto1Cost; state.auto1++; state.auto1Cost = Math.floor(state.auto1Cost * 1.4) + 10; }
+        if (type === 'auto2' && state.score >= state.auto2Cost) { state.score -= state.auto2Cost; state.auto2++; state.auto2Cost = Math.floor(state.auto2Cost * 1.5) + 30; }
+        if (type === 'auto3' && state.score >= state.auto3Cost) { state.score -= state.auto3Cost; state.auto3++; state.auto3Cost = Math.floor(state.auto3Cost * 1.6) + 100; }
+        recalcPassive(); updateUI();
     }
 
     function doPrestige() {
         const pending = getPendingChips();
         if (state.score < 5000 || pending < 1) return;
-
-        if (confirm(`Вы уверены? Это сотрет ваши текущие кристаллы и улучшения, но взамен вы получите ${pending} Нейрочипов!`)) {
-            const currentNanos = (state.nanochips || 0) + pending;
-            const currentEvos = (state.prestigeCount || 0) + 1;
-            const totalEarnedHistory = state.totalScoreEarned;
-            const totalClicksHistory = state.clicksCount;
-            const achievementsSaved = [...(state.achievements || [])];
+        if (confirm(`Вы уверены? Это обнулит текущий баланс и заводы, но выдаст +${pending} Нейрочипов.`)) {
+            const nanos = state.nanochips + pending; const evos = state.prestigeCount + 1;
+            const historyScore = state.totalScoreEarned; const clicks = state.clicksCount;
+            const uid = state.userId; const uname = state.username; const achs = [...state.achievements];
 
             state = JSON.parse(JSON.stringify(DEFAULT_STATE));
-            
-            state.userId = localStorage.getItem('cyberUserId_v2') || ""; 
-            state.username = localStorage.getItem('cyberUsername_v2') || "";
-            state.nanochips = currentNanos;
-            state.prestigeCount = currentEvos;
-            state.totalScoreEarned = totalEarnedHistory;
-            state.clicksCount = totalClicksHistory;
-            state.achievements = achievementsSaved;
+            state.userId = uid; state.username = uname; state.nanochips = nanos; state.prestigeCount = evos;
+            state.totalScoreEarned = historyScore; state.clicksCount = clicks; state.achievements = achs;
 
-            save();
-            recalcPassive();
-            updateUI();
-            syncWithDatabase(); // отправляем обновленные данные рекордов престижа
-            
-            triggerPrestigeCelebration(pending, currentEvos);
+            save(); recalcPassive(); updateUI(); syncWithDatabase();
+            triggerPrestigeCelebration(pending, evos);
         }
     }
 
-    $('closeCelebrationBtn').addEventListener('click', () => {
-        const overlay = $('prestigeOverlay');
-        overlay.classList.remove('triggered');
-        setTimeout(() => overlay.style.display = 'none', 500);
-        
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-        document.querySelector('[data-tab="upgrades"]').classList.add('active');
-        $('panel-upgrades').classList.add('active');
-    });
-
-    // Смена ника с мгновенным апдейтом в Firebase
-    $('usernameInput').addEventListener('input', function() {
-        let cleanName = this.value.trim().substring(0, 14);
-        if (cleanName) {
-            state.username = cleanName;
-            localStorage.setItem('cyberUsername_v2', cleanName);
-            save();
-            syncWithDatabase();
-        }
-    });
-
-    let activeGlitch = null;
-    function spawnCyberGlitch() {
-        if (activeGlitch) return;
-        
-        const area = $('clickArea');
-        if (!area) return;
-        const glitch = document.createElement('div');
-        glitch.className = 'cyber-glitch';
-        
-        const widthLimit = Math.max(50, area.clientWidth - 50);
-        const heightLimit = Math.max(50, area.clientHeight - 50);
-        glitch.style.left = Math.floor(Math.random() * widthLimit) + 'px';
-        glitch.style.top = Math.floor(Math.random() * heightLimit) + 'px';
-        
-        area.appendChild(glitch);
-        activeGlitch = glitch;
-
-        glitch.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const reward = Math.max(150, Math.floor(getActualPassive() * 25));
-            state.score += reward;
-            state.totalScoreEarned += reward;
-            
-            if (state.animations) {
-                const el = document.createElement('div');
-                el.className = 'float-text';
-                el.textContent = `⚡ Взлом: +${reward} 💎`;
-                el.style.color = '#ff00ff';
-                el.style.left = e.clientX + 'px';
-                el.style.top = e.clientY + 'px';
-                document.body.appendChild(el);
-                setTimeout(() => el.remove(), 1000);
-            }
-            
-            glitch.remove();
-            activeGlitch = null;
-        });
-
-        setTimeout(() => {
-            if (glitch.parentNode) {
-                glitch.remove();
-                activeGlitch = null;
-            }
-        }, 7000);
-    }
-
-    // ============================================================
-    //  ЗАПУСК И ТАЙМЕРЫ ИГРЫ
-    // ============================================================
-
+    // ТАЙМЕРЫ И ИНИЦИАЛИЗАЦИЯ
     load();
     updateUI();
-    
-    // Включение отклика :active для iOS Safari
     document.body.addEventListener('touchstart', () => {}, { passive: true });
     
-    // Запуск профиля и проверка PWA
     initNetworkProfile();
     checkPWAUpdates();
 
-    // Системный таймер игры (1 сек)
     setInterval(() => {
-        state.energy = Math.min(state.maxEnergy, state.energy + getActualEnergyRegen());
-        
-        state.score += (getActualPassive() / 1);
-        state.totalScoreEarned += (getActualPassive() / 1);
-
-        if (state.skillDuration > 0) {
-            state.skillDuration--;
-        } else if (state.skillCooldown > 0) {
-            state.skillCooldown--;
-        }
-
+        state.energy = Math.min(state.maxEnergy, state.energy + getActualMemoryRegen());
+        state.score += (getActualPassive() / 1); state.totalScoreEarned += (getActualPassive() / 1);
+        if (state.skillDuration > 0) state.skillDuration--; else if (state.skillCooldown > 0) state.skillCooldown--;
         updateUI();
     }, 1000);
 
-    // Автосинхронизация рекорда с Firebase раз в 15 сек
     setInterval(syncWithDatabase, 15000);
+    setInterval(() => { if (Math.random() < 0.15) spawnCyberGlitch(); }, 15000);
 
-    // Шанс появления глитча
-    setInterval(() => {
-        if (Math.random() < 0.15) {
-            spawnCyberGlitch();
-        }
-    }, 15000);
-
-    // Слушатели событий
-    $('clickButton').addEventListener('click', handleClick);
-    skillBtn.addEventListener('click', activateSkill);
-    $('prestigeBtn').addEventListener('click', doPrestige);
+    clickButton.addEventListener('click', handleClick);
+    skillBtn.addEventListener('click', () => { if (state.skillCooldown === 0) { state.skillDuration = 10; state.skillCooldown = 60; updateUI(); } });
+    prestigeBtn.addEventListener('click', doPrestige);
 
     $('buyClick').addEventListener('click', () => buyUpgrade('click'));
     $('buyEnergy').addEventListener('click', () => buyUpgrade('energy'));
@@ -1705,43 +1429,26 @@
     $('buyAuto2').addEventListener('click', () => buyUpgrade('auto2'));
     $('buyAuto3').addEventListener('click', () => buyUpgrade('auto3'));
 
-    // Нижнее меню табов
     document.querySelectorAll('.tab').forEach(tab => {
         tab.addEventListener('click', () => {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
             tab.classList.add('active');
-            const panelId = 'panel-' + tab.dataset.tab;
-            const panel = document.getElementById(panelId);
-            if (panel) panel.classList.add('active');
-            
-            // Если игрок открывает вкладку ТОП, подгружаем реальные данные из Firestore
-            if (tab.dataset.tab === 'leaderboard') {
-                fetchLeaderboard();
-            }
+            $('panel-' + tab.dataset.tab).classList.add('active');
+            if (tab.dataset.tab === 'leaderboard') fetchLeaderboard();
         });
     });
 
-    $('soundToggle').addEventListener('click', function() {
-        state.sound = !state.sound;
-        this.classList.toggle('on');
+    $('soundToggle').addEventListener('click', function() { state.sound = !state.sound; this.classList.toggle('on'); });
+    $('animToggle').addEventListener('click', function() { state.animations = !state.animations; this.classList.toggle('on'); });
+    $('closeCelebrationBtn').addEventListener('click', () => {
+        $('prestigeOverlay').classList.remove('triggered'); setTimeout(() => $('prestigeOverlay').style.display = 'none', 500);
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        document.querySelector('[data-tab="upgrades"]').classList.add('active'); $('panel-upgrades').classList.add('active');
     });
-    $('animToggle').addEventListener('click', function() {
-        state.animations = !state.animations;
-        this.classList.toggle('on');
-    });
-
-    // Безопасное автосохранение локально
     setInterval(save, 3000);
-
-    document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-            save();
-            syncWithDatabase();
-        }
-    });
-
-    console.log(`🚀 Облачное ядро Кибер-Эволюции v${CURRENT_VERSION} успешно инициализировано.`);
+    document.addEventListener('visibilitychange', () => { if (document.hidden) { save(); syncWithDatabase(); } });
     </script>
 </body>
 </html>
