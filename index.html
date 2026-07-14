@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Кибер-Эволюция: Сингулярность</title>
-    <!-- Валидный манифест PWA -->
     <link rel="manifest" href='data:application/json,{"name":"Кибер-Эволюция","short_name":"Кибер","display":"standalone","orientation":"portrait","icons":[{"src":"data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22100%22 fill=%22%230a0a1a%22 /%3E%3Ccircle cx=%22256%22 cy=%22256%22 r=%22180%22 fill=%22none%22 stroke=%22%2300f0ff%22 stroke-width=%2220%22 /%3E%3Cpath d=%22M256 76 L256 436 M76 256 L436 256%22 stroke=%22%2300f0ff%22 stroke-width=%2220%22 /%3E%3Ccircle cx=%22256%22 cy=%22256%22 r=%2240%22 fill=%22%2300f0ff%22 /%3E%3C/svg%3E","sizes":"512x512","type":"image/svg+xml"}]}'>
-    
-    <!-- Подключение SDK Firebase (Compat-версия) -->
+
+    <!-- Firebase v10 SDK в compat-режиме (библиотека авторизации и бд) -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
     <style>
@@ -23,8 +23,8 @@
 
         body {
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: #030308;
-            color: #e0e0ff;
+            background: #080810;
+            color: #d1d1f0;
             height: 100vh;
             height: 100dvh;
             width: 100%;
@@ -35,71 +35,104 @@
             overflow: hidden;
         }
 
-        /* ===== ТЕМЫ ПРЕСТИЖЕЙ С ГЛУБОКИМИ ГРАДИЕНТАМИ ДЛЯ АНИМАЦИИ ===== */
+        /* ===== ТЕМЫ ПРЕСТИЖЕЙ ===== */
         #app.p-level-0 {
-            --primary: #8a7a6e;
-            --accent: #5a4f47;
-            --bg: linear-gradient(135deg, #131211, #221f1c, #1a1816, #141312);
-            --glow: rgba(138, 122, 110, 0.05);
-            --btn-grad: radial-gradient(circle at 30% 30%, #5a524b, #2b2622);
-            --btn-glow: rgba(138, 122, 110, 0.1);
+            --primary: #a39284;
+            --accent: #665b53;
+            --bg: linear-gradient(135deg, #161514, #24211e, #1c1a18, #161514);
+            --glow: rgba(163, 146, 132, 0.03);
+            --btn-grad: radial-gradient(circle at 30% 30%, #5c554e, #2d2723);
+            --btn-glow: rgba(163, 146, 132, 0.05);
         }
+
         #app.p-level-1 {
-            --primary: #00f0ff;
-            --accent: #a855f7;
-            --bg: linear-gradient(135deg, #040412, #120524, #08031a, #02020a);
-            --glow: rgba(0, 240, 255, 0.15);
-            --btn-grad: radial-gradient(circle at 30% 30%, #00f0ff, #0052cc);
-            --btn-glow: rgba(0, 240, 255, 0.3);
+            --primary: #38bdf8;
+            --accent: #818cf8;
+            --bg: linear-gradient(135deg, #090915, #160f2d, #0f0b24, #090915);
+            --glow: rgba(56, 189, 248, 0.1);
+            --btn-grad: radial-gradient(circle at 30% 30%, #38bdf8, #1e40af);
+            --btn-glow: rgba(56, 189, 248, 0.15);
         }
+
         #app.p-level-2 {
-            --primary: #10b981;
-            --accent: #8b5cf6;
-            --bg: linear-gradient(135deg, #020b05, #0d041a, #031410, #010408);
-            --glow: rgba(16, 185, 129, 0.2);
-            --btn-grad: radial-gradient(circle at 30% 30%, #10b981, #064e3b);
-            --btn-glow: rgba(16, 185, 129, 0.35);
+            --primary: #34d399;
+            --accent: #a78bfa;
+            --bg: linear-gradient(135deg, #06120b, #170d2b, #0a1f1a, #06120b);
+            --glow: rgba(52, 211, 153, 0.1);
+            --btn-grad: radial-gradient(circle at 30% 30%, #34d399, #0f766e);
+            --btn-glow: rgba(52, 211, 153, 0.15);
         }
+
         #app.p-level-3 {
-            --primary: #f43f5e;
-            --accent: #3b82f6;
-            --bg: linear-gradient(135deg, #14010a, #030a1c, #1a0215, #02050f);
-            --glow: rgba(244, 63, 94, 0.25);
-            --btn-grad: radial-gradient(circle at 30% 30%, #f43f5e, #881337);
-            --btn-glow: rgba(244, 63, 94, 0.45);
+            --primary: #fb7185;
+            --accent: #60a5fa;
+            --bg: linear-gradient(135deg, #1a0811, #0a1329, #210d1c, #0a1329);
+            --glow: rgba(251, 113, 133, 0.1);
+            --btn-grad: radial-gradient(circle at 30% 30%, #fb7185, #9f1239);
+            --btn-glow: rgba(251, 113, 133, 0.15);
         }
+
         #app.p-level-4 {
-            --primary: #fbbf24;
-            --accent: #ec4899;
-            --bg: linear-gradient(135deg, #100a01, #080808, #1c1002, #020202);
-            --glow: rgba(251, 191, 36, 0.35);
-            --btn-grad: radial-gradient(circle at 30% 30%, #fbbf24, #78350f);
-            --btn-glow: rgba(251, 191, 36, 0.55);
+            --primary: #fcd34d;
+            --accent: #f472b6;
+            --bg: linear-gradient(135deg, #141006, #0e0e0e, #21160c, #0e0e0e);
+            --glow: rgba(252, 211, 77, 0.12);
+            --btn-grad: radial-gradient(circle at 30% 30%, #fcd34d, #92400e);
+            --btn-glow: rgba(252, 211, 77, 0.18);
         }
+
         #app.p-level-5 {
-            --primary: #d946ef;
-            --accent: #06b6d4;
-            --bg: linear-gradient(135deg, #090110, #010d14, #0f0119, #010f17);
-            --glow: rgba(217, 70, 239, 0.5);
-            --btn-grad: linear-gradient(135deg, #d946ef, #06b6d4, #a855f7);
-            --btn-glow: rgba(217, 70, 239, 0.7);
+            --primary: #e879f9;
+            --accent: #2dd4bf;
+            --bg: linear-gradient(135deg, #10051e, #03141a, #150626, #03141a);
+            --glow: rgba(232, 121, 249, 0.15);
+            --btn-grad: linear-gradient(135deg, #e879f9, #2dd4bf, #c084fc);
+            --btn-glow: rgba(232, 121, 249, 0.2);
         }
 
         /* Динамические темы для престиж-бейджей в топе */
-        .p-badge-0 { background: rgba(138, 122, 110, 0.15); border: 1px solid #8a7a6e; color: #8a7a6e; box-shadow: 0 0 6px rgba(138, 122, 110, 0.2); }
-        .p-badge-1 { background: rgba(0, 240, 255, 0.15); border: 1px solid #00f0ff; color: #00f0ff; box-shadow: 0 0 6px rgba(0, 240, 255, 0.3); }
-        .p-badge-2 { background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; color: #10b981; box-shadow: 0 0 6px rgba(16, 185, 129, 0.3); }
-        .p-badge-3 { background: rgba(244, 63, 94, 0.15); border: 1px solid #f43f5e; color: #f43f5e; box-shadow: 0 0 6px rgba(244, 63, 94, 0.3); }
-        .p-badge-4 { background: rgba(251, 191, 36, 0.15); border: 1px solid #fbbf24; color: #fbbf24; box-shadow: 0 0 6px rgba(251, 191, 36, 0.3); }
-        .p-badge-5 { background: rgba(217, 70, 239, 0.15); border: 1px solid #d946ef; color: #d946ef; box-shadow: 0 0 6px rgba(217, 70, 239, 0.3); }
-
-        @keyframes soft-bg-glow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        .p-badge-0 {
+            background: rgba(163, 146, 132, 0.15);
+            border: 1px solid #a39284;
+            color: #a39284;
+            box-shadow: 0 0 6px rgba(163, 146, 132, 0.15);
         }
 
-        /* Основной контейнер */
+        .p-badge-1 {
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid #38bdf8;
+            color: #38bdf8;
+            box-shadow: 0 0 6px rgba(56, 189, 248, 0.2);
+        }
+
+        .p-badge-2 {
+            background: rgba(52, 211, 153, 0.15);
+            border: 1px solid #34d399;
+            color: #34d399;
+            box-shadow: 0 0 6px rgba(52, 211, 153, 0.2);
+        }
+
+        .p-badge-3 {
+            background: rgba(251, 113, 133, 0.15);
+            border: 1px solid #fb7185;
+            color: #fb7185;
+            box-shadow: 0 0 6px rgba(251, 113, 133, 0.2);
+        }
+
+        .p-badge-4 {
+            background: rgba(252, 211, 77, 0.15);
+            border: 1px solid #fcd34d;
+            color: #fcd34d;
+            box-shadow: 0 0 6px rgba(252, 211, 77, 0.2);
+        }
+
+        .p-badge-5 {
+            background: rgba(232, 121, 249, 0.15);
+            border: 1px solid #e879f9;
+            color: #e879f9;
+            box-shadow: 0 0 6px rgba(232, 121, 249, 0.2);
+        }
+
         #app {
             width: 100%;
             max-width: 420px;
@@ -126,7 +159,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 4px 0px 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             flex-shrink: 0;
             gap: 4px;
         }
@@ -168,17 +201,17 @@
             transition: color 0.5s;
         }
 
-        .stat-value.energy {
-            font-size: 12px;
-            -webkit-text-fill-color: #fbbf24;
-            background: none;
-        }
+            .stat-value.energy {
+                font-size: 12px;
+                -webkit-text-fill-color: #fcd34d;
+                background: none;
+            }
 
-        .stat-value.chips {
-            font-size: 12px;
-            -webkit-text-fill-color: var(--primary);
-            background: none;
-        }
+            .stat-value.chips {
+                font-size: 12px;
+                -webkit-text-fill-color: var(--primary);
+                background: none;
+            }
 
         /* ===== КЛИК-ЗОНА ===== */
         .click-area {
@@ -198,7 +231,7 @@
             border-radius: 50%;
             border: none;
             background: var(--btn-grad);
-            box-shadow: 0 0 45px var(--btn-glow), inset 0 -8px 0 rgba(0,0,0,0.4);
+            box-shadow: 0 0 35px var(--btn-glow), inset 0 -8px 0 rgba(0,0,0,0.4);
             color: white;
             font-size: 22px;
             font-weight: 800;
@@ -214,35 +247,39 @@
             position: relative;
         }
 
-        #clickButton:active {
-            transform: scale(0.92);
-            box-shadow: 0 0 60px var(--btn-glow), inset 0 -4px 0 rgba(0,0,0,0.3);
-        }
+            #clickButton:active {
+                transform: scale(0.92);
+                box-shadow: 0 0 50px var(--btn-glow), inset 0 -4px 0 rgba(0,0,0,0.3);
+            }
 
-        #clickButton .sub {
-            font-size: 12px;
-            font-weight: 400;
-            opacity: 0.85;
-            margin-top: 4px;
-        }
+            #clickButton .sub {
+                font-size: 12px;
+                font-weight: 400;
+                opacity: 0.85;
+                margin-top: 4px;
+            }
 
-        /* Перегрузка ядра (Overdrive) */
-        #clickButton.overdrive-active {
-            background: radial-gradient(circle at 30% 30%, #ff007f, #990033) !important;
-            box-shadow: 0 0 60px rgba(255, 0, 127, 0.8), inset 0 -6px 0 rgba(0,0,0,0.4) !important;
-            animation: pulse-red 0.5s infinite alternate;
-        }
+            #clickButton.overdrive-active {
+                background: radial-gradient(circle at 30% 30%, #f472b6, #881337) !important;
+                box-shadow: 0 0 45px rgba(244, 114, 182, 0.4), inset 0 -6px 0 rgba(0,0,0,0.4) !important;
+                animation: pulse-red 0.5s infinite alternate;
+            }
 
         @keyframes pulse-red {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.04); }
+            0% {
+                transform: scale(1);
+            }
+
+            100% {
+                transform: scale(1.04);
+            }
         }
 
         .energy-bar {
             width: 75%;
             max-width: 240px;
             height: 8px;
-            background: #121230;
+            background: #0d0d21;
             border-radius: 10px;
             margin-top: 10px;
             overflow: hidden;
@@ -252,7 +289,7 @@
         .energy-fill {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, #fbbf24, #f59e0b);
+            background: linear-gradient(90deg, #fcd34d, #f59e0b);
             border-radius: 10px;
             transition: width 0.1s linear;
         }
@@ -272,21 +309,25 @@
             transition: all 0.5s ease;
             text-transform: uppercase;
         }
-        #skillBtn.cooldown {
-            background: #222230 !important;
-            color: #555 !important;
-            box-shadow: none !important;
-            pointer-events: none;
-        }
 
-        /* ===== СКРОЛЛИРУЕМЫЙ КОНТЕНТНЫЙ БЛОК (ПАНЕЛИ) ===== */
+            #skillBtn.cooldown {
+                background: #1a1a2b !important;
+                color: #4e4e66 !important;
+                box-shadow: none !important;
+                pointer-events: none;
+            }
+
+        /* ===== СКРОЛЛИРУЕМЫЙ КОНТЕНТНЫЙ БЛОК ===== */
         .panels-container {
             flex: 1;
             overflow-y: auto;
             margin: 10px 0;
             scrollbar-width: none;
         }
-        .panels-container::-webkit-scrollbar { display: none; }
+
+            .panels-container::-webkit-scrollbar {
+                display: none;
+            }
 
         .panel {
             display: none;
@@ -294,21 +335,45 @@
             gap: 8px;
         }
 
-        .panel.active {
-            display: flex;
-        }
+            .panel.active {
+                display: flex;
+            }
 
-        /* Карточка улучшения */
         .upgrade {
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.015);
+            border: 1px solid rgba(255,255,255,0.04);
             border-radius: 14px;
             padding: 10px 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: all 0.2s;
+            transition: all 0.25s ease-in-out;
         }
+
+            /* Золотой стиль максимальной прокачки */
+            .upgrade.maxed-gold {
+                border-color: #fcd34d !important;
+                background: linear-gradient(135deg, rgba(252, 211, 77, 0.05), rgba(8, 8, 14, 0.45)) !important;
+                box-shadow: 0 0 15px rgba(252, 211, 77, 0.12);
+            }
+
+                .upgrade.maxed-gold .upgrade-name {
+                    color: #fcd34d !important;
+                }
+
+                .upgrade.maxed-gold .upgrade-price {
+                    color: #fcd34d !important;
+                    font-weight: 800;
+                }
+
+                .upgrade.maxed-gold .upgrade-btn {
+                    background: #fcd34d !important;
+                    border-color: #fcd34d !important;
+                    color: #0a0a14 !important;
+                    cursor: default;
+                    pointer-events: none !important;
+                    box-shadow: 0 0 10px rgba(252, 211, 77, 0.25);
+                }
 
         .upgrade-info {
             display: flex;
@@ -321,6 +386,8 @@
             font-weight: 600;
             font-size: 14px;
             color: #fff;
+            display: flex;
+            align-items: center;
         }
 
         .upgrade-desc {
@@ -338,12 +405,12 @@
         .upgrade-price {
             font-size: 12px;
             font-weight: 700;
-            color: #fbbf24;
+            color: #fcd34d;
             white-space: nowrap;
         }
 
         .upgrade-btn {
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(255, 255, 255, 0.015);
             border: 1px solid var(--primary);
             color: var(--primary);
             padding: 6px 14px;
@@ -354,46 +421,82 @@
             transition: all 0.15s;
         }
 
-        /* Блокировки кнопок */
-        .upgrade-btn.locked {
-            background: rgba(255,255,255,0.02) !important;
-            border-color: rgba(255,255,255,0.05) !important;
-            color: #555577 !important;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
+            .upgrade-btn.locked {
+                background: rgba(255,255,255,0.01) !important;
+                border-color: rgba(255,255,255,0.03) !important;
+                color: #4e4e66 !important;
+                cursor: not-allowed;
+                pointer-events: none;
+            }
+
         .upgrade.locked-panel {
-            opacity: 0.6;
+            opacity: 0.55;
         }
 
-        /* ===== НАСТОЯЩИЙ ОНЛАЙН РЕЙТИНГ ===== */
+        /* ===== ОНЛАЙН РЕЙТИНГ ===== */
         .leaderboard-list {
             display: flex;
             flex-direction: column;
             gap: 6px;
             margin-top: 4px;
         }
+
         .leader-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 10px 14px;
             border-radius: 12px;
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.04);
+            background: rgba(255,255,255,0.015);
+            border: 1px solid rgba(255,255,255,0.03);
             font-size: 13px;
         }
-        
-        .leader-row.place-1 { border-color: #fbbf24; background: rgba(251, 191, 36, 0.06); box-shadow: 0 0 10px rgba(251, 191, 36, 0.15); font-weight: 700; }
-        .leader-row.place-2 { border-color: #94a3b8; background: rgba(148, 163, 184, 0.06); box-shadow: 0 0 10px rgba(148, 163, 184, 0.1); }
-        .leader-row.place-3 { border-color: #b45309; background: rgba(180, 83, 9, 0.06); box-shadow: 0 0 10px rgba(180, 83, 9, 0.1); }
-        .leader-row.current-user { background: rgba(0, 240, 255, 0.08) !important; border-color: var(--primary) !important; }
-        
-        .leader-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
-        .leader-rank { font-weight: 800; min-width: 20px; color: #8888bb; flex-shrink: 0; }
-        .leader-name { color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        
-        /* Кружочек уровня престижа */
+
+            .leader-row.place-1 {
+                border-color: #fcd34d;
+                background: rgba(252, 211, 77, 0.04);
+                box-shadow: 0 0 10px rgba(252, 211, 77, 0.08);
+                font-weight: 700;
+            }
+
+            .leader-row.place-2 {
+                border-color: #94a3b8;
+                background: rgba(148, 163, 184, 0.04);
+                box-shadow: 0 0 10px rgba(148, 163, 184, 0.05);
+            }
+
+            .leader-row.place-3 {
+                border-color: #b45309;
+                background: rgba(180, 83, 9, 0.04);
+                box-shadow: 0 0 10px rgba(180, 83, 9, 0.05);
+            }
+
+            .leader-row.current-user {
+                background: rgba(56, 189, 248, 0.05) !important;
+                border-color: var(--primary) !important;
+            }
+
+        .leader-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+        }
+
+        .leader-rank {
+            font-weight: 800;
+            min-width: 20px;
+            color: #8888bb;
+            flex-shrink: 0;
+        }
+
+        .leader-name {
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
         .leader-prestige-badge {
             display: inline-flex;
             align-items: center;
@@ -408,14 +511,14 @@
 
         /* ===== ЭВОЛЮЦИЯ ===== */
         .evolution-card {
-            background: linear-gradient(135deg, rgba(255,255,255,0.01), rgba(255,255,255,0.04));
+            background: linear-gradient(135deg, rgba(255,255,255,0.01), rgba(255,255,255,0.03));
             border: 1px solid var(--primary);
             border-radius: 16px;
             padding: 14px;
             text-align: center;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 12px;
             transition: border-color 0.5s;
         }
 
@@ -431,12 +534,30 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.4);
             transition: transform 0.1s;
         }
-        .prestige-btn:active { transform: scale(0.97); }
-        .prestige-btn.disabled {
-            background: #222235;
-            color: #555;
-            box-shadow: none;
-            pointer-events: none;
+
+            .prestige-btn:active {
+                transform: scale(0.97);
+            }
+
+            .prestige-btn.disabled {
+                background: #161626;
+                color: #4e4e66;
+                box-shadow: none;
+                pointer-events: none;
+            }
+
+        /* Анимация пульсации для стрелки переноса */
+        @keyframes pulse-arrow {
+            0% {
+                transform: scale(1);
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: scale(1.15);
+                opacity: 1;
+                filter: drop-shadow(0 0 8px var(--primary));
+            }
         }
 
         /* ===== ДОСТИЖЕНИЯ ===== */
@@ -444,37 +565,54 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.015);
+            border: 1px solid rgba(255,255,255,0.04);
             padding: 10px 12px;
             border-radius: 12px;
         }
-        .achieve-item.unlocked {
-            border-color: rgba(16, 185, 129, 0.4);
-            background: rgba(16, 185, 129, 0.04);
-        }
+
+            .achieve-item.unlocked {
+                border-color: rgba(52, 211, 153, 0.25);
+                background: rgba(52, 211, 153, 0.03);
+            }
+
         .achieve-icon {
             font-size: 24px;
             filter: grayscale(1);
             transition: filter 0.3s;
         }
+
         .achieve-item.unlocked .achieve-icon {
             filter: grayscale(0);
         }
+
         .achieve-info {
             display: flex;
             flex-direction: column;
             gap: 2px;
+            text-align: left;
         }
+
         .achieve-title {
             font-weight: 700;
             font-size: 13px;
         }
 
-        /* ===== НАСТРОЙКИ С КНОПКОЙ ОК ===== */
+        .achieve-desc {
+            font-size: 11px;
+            color: #a2a2c2;
+        }
+
+        .achieve-reward {
+            font-size: 10px;
+            color: #34d399;
+            font-weight: 600;
+        }
+
+        /* ===== НАСТРОЙКИ ===== */
         .input-box {
-            background: rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(0,0,0,0.25);
+            border: 1px solid rgba(255,255,255,0.08);
             border-radius: 10px;
             padding: 8px 12px;
             color: #fff;
@@ -484,17 +622,21 @@
             margin-top: 4px;
             transition: border-color 0.3s;
         }
-        .input-box:focus { border-color: var(--primary); }
+
+            .input-box:focus {
+                border-color: var(--primary);
+            }
 
         .settings-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 10px 4px;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
+            border-bottom: 1px solid rgba(255,255,255,0.03);
         }
+
         .stats-box {
-            background: rgba(0,0,0,0.2);
+            background: rgba(0,0,0,0.15);
             border-radius: 12px;
             padding: 12px;
             font-size: 12px;
@@ -503,46 +645,57 @@
             gap: 6px;
             margin-top: 8px;
         }
+
         .stats-line {
             display: flex;
             justify-content: space-between;
             color: #aaaacf;
         }
-        .stats-line span:last-child {
-            color: var(--primary);
-            font-weight: 600;
-        }
+
+            .stats-line span:last-child {
+                color: var(--primary);
+                font-weight: 600;
+            }
 
         .toggle {
             width: 40px;
             height: 22px;
-            background: #2a2a4a;
+            background: #16162b;
             border-radius: 30px;
             position: relative;
             cursor: pointer;
             transition: background 0.2s;
         }
-        .toggle.on { background: var(--primary); }
-        .toggle::after {
-            content: '';
-            position: absolute;
-            top: 2px; left: 2px;
-            width: 18px; height: 18px;
-            background: white;
-            border-radius: 50%;
-            transition: transform 0.2s;
-        }
-        .toggle.on::after { transform: translateX(18px); }
 
-        /* ===== ТАБ-БАР (ПЛАВАЮЩИЙ ПРЕМИУМ-ДОК) ===== */
+            .toggle.on {
+                background: var(--primary);
+            }
+
+            .toggle::after {
+                content: '';
+                position: absolute;
+                top: 2px;
+                left: 2px;
+                width: 18px;
+                height: 18px;
+                background: white;
+                border-radius: 50%;
+                transition: transform 0.2s;
+            }
+
+            .toggle.on::after {
+                transform: translateX(18px);
+            }
+
+        /* ===== ТАБ-БАР ===== */
         .tabs {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             padding: 8px 6px;
             border-radius: 16px;
             margin-top: auto;
@@ -565,40 +718,52 @@
             background: none;
         }
 
-        .tab.active {
-            background: rgba(255, 255, 255, 0.05);
-            transform: translateY(-2px);
-            filter: drop-shadow(0 0 8px var(--primary));
-        }
+            .tab.active {
+                background: rgba(255, 255, 255, 0.04);
+                transform: translateY(-2px);
+                filter: drop-shadow(0 0 8px var(--primary));
+            }
 
-        /* Глитч-сфера */
         .cyber-glitch {
             position: absolute;
             width: 45px;
             height: 45px;
-            background: radial-gradient(circle, #ff007f 20%, #00f0ff 100%);
+            background: radial-gradient(circle, #f472b6 20%, #38bdf8 100%);
             border-radius: 50%;
-            box-shadow: 0 0 25px #ff007f, 0 0 10px #00f0ff;
+            box-shadow: 0 0 20px rgba(244, 114, 182, 0.5), 0 0 10px rgba(56, 189, 248, 0.5);
             cursor: pointer;
             z-index: 1000;
             animation: glitch-bounce 1s infinite alternate, glitch-spin 4s linear infinite;
         }
 
         @keyframes glitch-bounce {
-            0% { transform: translateY(0) scale(1); }
-            100% { transform: translateY(-10px) scale(0.95); }
-        }
-        @keyframes glitch-spin {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(360deg); }
+            0% {
+                transform: translateY(0) scale(1);
+            }
+
+            100% {
+                transform: translateY(-10px) scale(0.95);
+            }
         }
 
-        /* ===== КИНЕМАТОГРАФИЧНОЕ ОКНО ПРЕСТИЖЕЙ ===== */
+        @keyframes glitch-spin {
+            0% {
+                filter: hue-rotate(0deg);
+            }
+
+            100% {
+                filter: hue-rotate(360deg);
+            }
+        }
+
+        /* ===== ОКНО ПРЕСТИЖЕЙ ===== */
         #prestigeOverlay {
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(4, 4, 12, 0.96);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 18, 0.96);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             z-index: 2000;
@@ -631,13 +796,18 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             color: #fff;
-            text-shadow: 0 0 20px var(--primary);
+            text-shadow: 0 0 15px var(--primary);
             animation: text-pulse-glitch 2s infinite alternate;
         }
 
         @keyframes text-pulse-glitch {
-            0% { text-shadow: 0 0 15px var(--primary); }
-            100% { text-shadow: 0 0 30px var(--accent), 0 0 10px #fff; }
+            0% {
+                text-shadow: 0 0 12px var(--primary);
+            }
+
+            100% {
+                text-shadow: 0 0 22px var(--accent), 0 0 8px #fff;
+            }
         }
 
         .init-btn {
@@ -651,44 +821,61 @@
             letter-spacing: 1px;
             text-transform: uppercase;
             cursor: pointer;
-            box-shadow: 0 0 30px var(--btn-glow);
+            box-shadow: 0 0 25px var(--btn-glow);
             transition: transform 0.1s;
         }
-        .init-btn:active { transform: scale(0.96); }
 
-        /* Вспышка экрана */
+            .init-btn:active {
+                transform: scale(0.96);
+            }
+
         #flashBang {
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: #fff;
             z-index: 3000;
             opacity: 0;
             pointer-events: none;
         }
-        #flashBang.active {
-            animation: short-flash 0.6s ease-out forwards;
-        }
+
+            #flashBang.active {
+                animation: short-flash 0.6s ease-out forwards;
+            }
+
         @keyframes short-flash {
-            0% { opacity: 1; }
-            100% { opacity: 0; }
+            0% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
         }
 
-        /* Вылетающий текст */
         .float-text {
             position: fixed;
             font-weight: 900;
             font-size: 24px;
             color: var(--primary);
-            text-shadow: 0 0 15px var(--btn-glow);
+            text-shadow: 0 0 12px var(--btn-glow);
             pointer-events: none;
             animation: floatUp 0.7s ease-out forwards;
             z-index: 999;
         }
 
         @keyframes floatUp {
-            0% { opacity: 1; transform: translateY(0) scale(1); }
-            100% { opacity: 0; transform: translateY(-100px) scale(1.3); }
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-10px) scale(1.3);
+            }
         }
 
         @media (max-width: 440px) {
@@ -699,11 +886,13 @@
                 padding: 12px 12px 16px;
                 margin: 0;
             }
+
             #clickButton {
                 width: 135px;
                 height: 135px;
                 font-size: 18px;
             }
+
             .tabs {
                 margin-bottom: 0px;
                 padding: 6px 4px;
@@ -715,33 +904,45 @@
 
     <div id="flashBang"></div>
 
-    <!-- ТРИУМФ ОВЕРЛЕЙ -->
+    <!-- Кастомное модальное окно подтверждения (вместо проблемного браузерного confirm) -->
+    <div id="confirmOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 10, 18, 0.96); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); z-index: 2500; display: none; justify-content: center; align-items: center; padding: 24px;">
+        <div class="celebration-modal" style="max-width: 340px; width: 100%; text-align: center; display: flex; flex-direction: column; gap: 16px; transform: scale(1); opacity: 1;">
+            <div style="font-size: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; color: #fb7185; text-shadow: 0 0 12px rgba(251, 113, 133, 0.35);">Квантовый Сброс</div>
+            <p style="font-size: 13px; color: #a1a1c2; line-height: 1.5;" id="confirmModalText">
+                Вы уверены? Это обнулит текущий баланс и заводы, но выдаст Нейрочипы.
+            </p>
+            <div style="display: flex; gap: 10px; margin-top: 8px;">
+                <button id="confirmYesBtn" style="flex: 1; padding: 12px; border-radius: 12px; border: none; background: linear-gradient(135deg, #34d399, #0f766e); color: white; font-weight: 800; font-size: 13px; cursor: pointer;">ДА</button>
+                <button id="confirmNoBtn" style="flex: 1; padding: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.03); color: #a1a1c2; font-weight: 700; font-size: 13px; cursor: pointer;">ОТМЕНА</button>
+            </div>
+        </div>
+    </div>
+
     <div id="prestigeOverlay">
         <div class="celebration-modal">
             <div class="evo-title-glitch">Синхронизация Успешна!</div>
             <div style="font-size: 50px; filter:drop-shadow(0 0 20px var(--primary));">🔮</div>
             <div style="font-size: 14px; color:#aaaacf; line-height: 1.5;">
                 Ваша старая цифровая оболочка распалась.<br>Сознание успешно перенесено в:
-                <div id="modalNewEraName" style="color: #fff; font-weight: 800; font-size: 16px; margin-top: 6px; text-transform: uppercase; color: var(--primary);">ЭРА 1</div>
+                <div id="modalNewEraName" style="font-weight: 800; font-size: 16px; margin-top: 6px; text-transform: uppercase; color: var(--primary);">ЭРА 1</div>
             </div>
-            
-            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 12px; border-radius: 14px; display: flex; flex-direction: column; gap: 6px; text-align: left; font-size: 13px;">
+
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); padding: 12px; border-radius: 14px; display: flex; flex-direction: column; gap: 6px; text-align: left; font-size: 13px;">
                 <div style="display:flex; justify-content:space-between;">
                     <span style="color:#8888bb;">Синтезировано чипов:</span>
-                    <span style="color:#10b981; font-weight:700;" id="modalChipsGained">+0 🧬</span>
+                    <span style="color:#34d399; font-weight:700;" id="modalChipsGained">+0 🧬</span>
                 </div>
                 <div style="display:flex; justify-content:space-between;">
-                    <span style="color:#8888bb;">Глобальный мультипликатор:</span>
+                    <span style="color: var(--primary);">Глобальный мультипликатор:</span>
                     <span style="color:var(--primary); font-weight:700;" id="modalNewBonus">+0%</span>
                 </div>
             </div>
-            <p style="font-size: 11px; color:#666688;">Энергия ядра восстановлена. Пропускная способность увеличена.</p>
+            <p style="font-size: 11px; color:#5c5c7a;">Энергия ядра восстановлена. Пропускная способность увеличена.</p>
             <button class="init-btn" id="closeCelebrationBtn">Инициализировать форму</button>
         </div>
     </div>
 
     <div id="app" class="p-level-0">
-        <!-- ШАПКА -->
         <header>
             <div class="stat">
                 <span class="stat-label">💎 Кристаллы</span>
@@ -761,7 +962,6 @@
             </div>
         </header>
 
-        <!-- КЛИК-ЗОНА -->
         <div class="click-area" id="clickArea">
             <button id="clickButton">
                 💥 КЛИК
@@ -774,14 +974,12 @@
             <button id="skillBtn">🔥 ПЕРЕГРУЗКА ЯДРА</button>
         </div>
 
-        <!-- СКРОЛЛИРУЕМЫЙ СРЕДНИЙ БЛОК -->
         <div class="panels-container">
-            
-            <!-- ПАНЕЛЬ 1: ПРОКАЧКА КЛИКА (РАСШИРЕННАЯ) -->
+
             <div class="panel active" id="panel-upgrades">
                 <div class="upgrade" id="upgrade-click">
                     <div class="upgrade-info">
-                        <span class="upgrade-name">🔧 Сила Мысли</span>
+                        <span class="upgrade-name">🔧 Сила Мысли <small id="clickLvl" style="color: #fcd34d; margin-left: 6px;">(0/100)</small></span>
                         <span class="upgrade-desc">+1 кристалл за клик</span>
                     </div>
                     <div class="upgrade-action">
@@ -789,10 +987,10 @@
                         <button class="upgrade-btn" id="buyClick">Купить</button>
                     </div>
                 </div>
-                
+
                 <div class="upgrade" id="upgrade-sync">
                     <div class="upgrade-info">
-                        <span class="upgrade-name">⚙️ Тактовый Синхронизатор</span>
+                        <span class="upgrade-name">⚙️ Тактовый Синхронизатор <small id="syncLvl" style="color: #fcd34d; margin-left: 6px;">(0/25)</small></span>
                         <span class="upgrade-desc">Клик забирает <b>+5% от текущего пассива</b></span>
                     </div>
                     <div class="upgrade-action">
@@ -803,7 +1001,7 @@
 
                 <div class="upgrade" id="upgrade-crit">
                     <div class="upgrade-info">
-                        <span class="upgrade-name">🌀 Квантовый Крит</span>
+                        <span class="upgrade-name">🌀 Квантовый Крит <small id="critLvl" style="color: #fcd34d; margin-left: 6px;">(0/10)</small></span>
                         <span class="upgrade-desc">+5% шанс нанести крит силой <b>x5 / x10</b></span>
                     </div>
                     <div class="upgrade-action">
@@ -812,10 +1010,9 @@
                     </div>
                 </div>
 
-                <!-- НОВОЕ: Эффективность клика (Снижение энергопотребления) -->
                 <div class="upgrade" id="upgrade-efficiency">
                     <div class="upgrade-info">
-                        <span class="upgrade-name">🛡️ Импульсный Оптимизатор</span>
+                        <span class="upgrade-name">🛡️ Импульсный Оптимизатор <small id="efficiencyLvl" style="color: #fcd34d; margin-left: 6px;">(0/10)</small></span>
                         <span class="upgrade-desc">+5% шанс кликнуть <b>без затрат энергии</b></span>
                     </div>
                     <div class="upgrade-action">
@@ -824,10 +1021,9 @@
                     </div>
                 </div>
 
-                <!-- НОВОЕ: Апгрейд супер-навыка перегрузки -->
                 <div class="upgrade" id="upgrade-overdrive">
                     <div class="upgrade-info">
-                        <span class="upgrade-name">🔋 Хроно-Инжектор</span>
+                        <span class="upgrade-name">🔋 Хроно-Инжектор <small id="overdriveLvl" style="color: #fcd34d; margin-left: 6px;">(0/10)</small></span>
                         <span class="upgrade-desc">Длительность навыка <b>+1с</b>, откат <b>-2.5с</b></span>
                     </div>
                     <div class="upgrade-action">
@@ -838,7 +1034,7 @@
 
                 <div class="upgrade" id="upgrade-energy">
                     <div class="upgrade-info">
-                        <span class="upgrade-name">⚡ Энерго-конденсатор</span>
+                        <span class="upgrade-name">⚡ Энерго-конденсатор <small id="energyLvl" style="color: #fcd34d; margin-left: 6px;">(0/50)</small></span>
                         <span class="upgrade-desc">+10 макс. энергии</span>
                     </div>
                     <div class="upgrade-action">
@@ -848,7 +1044,7 @@
                 </div>
                 <div class="upgrade" id="upgrade-regen">
                     <div class="upgrade-info">
-                        <span class="upgrade-name">♻️ Квантовый генератор</span>
+                        <span class="upgrade-name">♻️ Квантовый генератор <small id="regenLvl" style="color: #fcd34d; margin-left: 6px;">(0/30)</small></span>
                         <span class="upgrade-desc">+0.5 энергии/сек</span>
                     </div>
                     <div class="upgrade-action">
@@ -858,11 +1054,10 @@
                 </div>
             </div>
 
-            <!-- ПАНЕЛЬ 2: ГЕНЕРАТОРЫ И ГЛОБАЛЬНЫЕ МНОЖИТЕЛИ -->
             <div class="panel" id="panel-passive">
                 <div class="upgrade" id="upgrade-auto1">
                     <div class="upgrade-info">
-                        <span class="upgrade-name">🤖 Дроид-сборщик</span>
+                        <span class="upgrade-name">🤖 Дроид-сборщик <small id="auto1Lvl" style="color: #fcd34d; margin-left: 6px;">(0/100)</small></span>
                         <span class="upgrade-desc">+1 💎/сек в фоновом режиме</span>
                     </div>
                     <div class="upgrade-action">
@@ -872,7 +1067,7 @@
                 </div>
                 <div class="upgrade" id="upgrade-auto2">
                     <div class="upgrade-info">
-                        <span class="upgrade-name">🧠 Иск. Интеллект</span>
+                        <span class="upgrade-name">🧠 Иск. Интеллект <small id="auto2Lvl" style="color: #fcd34d; margin-left: 6px;">(0/100)</small></span>
                         <span class="upgrade-desc">+5 💎/сек с помощью алгоритмов</span>
                     </div>
                     <div class="upgrade-action">
@@ -882,7 +1077,7 @@
                 </div>
                 <div class="upgrade" id="upgrade-auto3">
                     <div class="upgrade-info">
-                        <span class="upgrade-name">🚀 Сингулярный реактор</span>
+                        <span class="upgrade-name">🚀 Сингулярный реактор <small id="auto3Lvl" style="color: #fcd34d; margin-left: 6px;">(0/50)</small></span>
                         <span class="upgrade-desc">+25 💎/сек из искривления времени</span>
                     </div>
                     <div class="upgrade-action">
@@ -891,10 +1086,9 @@
                     </div>
                 </div>
 
-                <!-- НОВОЕ: Высокоуровневая пассивная постройка №4 -->
                 <div class="upgrade" id="upgrade-auto4">
                     <div class="upgrade-info">
-                        <span class="upgrade-name">🌌 Синтезатор Тёмной Материи</span>
+                        <span class="upgrade-name">🌌 Синтезатор Тёмной Материи <small id="auto4Lvl" style="color: #fcd34d; margin-left: 6px;">(0/25)</small></span>
                         <span class="upgrade-desc">Стабильный прилив энергии: <b>+150 💎/сек</b></span>
                     </div>
                     <div class="upgrade-action">
@@ -903,10 +1097,9 @@
                     </div>
                 </div>
 
-                <!-- НОВОЕ: Финальная постройка №5 -->
                 <div class="upgrade" id="upgrade-auto5">
                     <div class="upgrade-info">
-                        <span class="upgrade-name">🪐 Хроно-Стазисное Поле</span>
+                        <span class="upgrade-name">🪐 Хроно-Стазисное Поле <small id="auto5Lvl" style="color: #fcd34d; margin-left: 6px;">(0/10)</small></span>
                         <span class="upgrade-desc">Ультимативная генерация: <b>+1,000 💎/сек</b></span>
                     </div>
                     <div class="upgrade-action">
@@ -915,10 +1108,9 @@
                     </div>
                 </div>
 
-                <!-- НОВОЕ: Глобальный множитель фабрик -->
                 <div class="upgrade" id="upgrade-factory">
                     <div class="upgrade-info">
-                        <span class="upgrade-name">📡 Потоковый Квантователь</span>
+                        <span class="upgrade-name">📡 Потоковый Квантователь <small id="factoryLvl" style="color: #fcd34d; margin-left: 6px;">(0/20)</small></span>
                         <span class="upgrade-desc">Увеличивает общую эффективность заводов на <b>+10%</b></span>
                     </div>
                     <div class="upgrade-action">
@@ -927,10 +1119,9 @@
                     </div>
                 </div>
 
-                <!-- НОВОЕ: Апгрейд рандомных глитч-сфер -->
                 <div class="upgrade" id="upgrade-glitch">
                     <div class="upgrade-info">
-                        <span class="upgrade-name">👾 Глитч-Модем</span>
+                        <span class="upgrade-name">👾 Глитч-Модем <small id="glitchLvl" style="color: #fcd34d; margin-left: 6px;">(0/15)</small></span>
                         <span class="upgrade-desc">Сферы сбоя появляются чаще, награда <b>+20%</b></span>
                     </div>
                     <div class="upgrade-action">
@@ -944,7 +1135,6 @@
                 </div>
             </div>
 
-            <!-- ПАНЕЛЬ 3: НАСТОЯЩИЙ ОНЛАЙН ТОП -->
             <div class="panel" id="panel-leaderboard">
                 <div style="font-size: 13px; font-weight:700; color:var(--primary); text-transform:uppercase; margin-bottom: 4px; text-align:center;">👑 Глобальная Сеть Сингулярности</div>
                 <p style="font-size:10px; color:#8888bb; text-align:center; margin-bottom: 8px;">Ранжирование по общему количеству собранных кристаллов</p>
@@ -953,105 +1143,112 @@
                 </div>
             </div>
 
-            <!-- ПАНЕЛЬ 4: ЭВОЛЮЦИЯ -->
+            <!-- НОВАЯ ИНТУИТИВНО ПОНЯТНАЯ ВКЛАДКА ЭВОЛЮЦИИ -->
             <div class="panel" id="panel-evolution">
                 <div class="evolution-card">
-                    <h3 style="font-size: 15px; color:var(--primary); transition: color 0.5s;">🔮 Квантовый Переход</h3>
-                    <p style="font-size: 11px; color: #aaaacf; margin-bottom: 2px;">
-                        Перенесите своё цифровое сознание в новую кибер-форму. Вы выйдете на новый уровень симуляции!
+                    <h3 style="font-size: 16px; color:var(--primary); text-transform:uppercase; letter-spacing:1px; margin-bottom: 2px;">🔮 Квантовый Переход</h3>
+                    <p style="font-size: 11px; color: #aaaacf; line-height: 1.4;">
+                        Перенесите ядро вашего сознания в следующую технологическую эру, значительно увеличив пропускную способность.
                     </p>
 
-                    <div style="text-align: left; background: rgba(0, 240, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); padding: 8px 10px; border-radius: 12px; font-size: 11px; display: flex; flex-direction: column; gap: 4px; line-height: 1.35;">
-                        <span style="color: var(--primary); font-weight: 700; display: block;">🧬 Логика синтеза чипов:</span>
-                        Чипы генерируются на основе <b>ВСЕХ</b> заработанных кристаллов за историю аккаунта.
-                        <div style="margin: 2px 0; border-left: 2px solid var(--accent); padding-left: 6px; color: #aaaacf;">
-                            Добыто за всё время: <span id="evoTotalEarnedHistory" style="color:#fbbf24; font-weight:700">0</span> 💎
+                    <!-- Шаг 1: Прогресс накопления -->
+                    <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 14px; padding: 12px; text-align: left;">
+                        <div style="display:flex; justify-content:space-between; font-size:11px; color:#8888bb; margin-bottom: 6px;">
+                            <span>Стабильность матрицы:</span>
+                            <span id="evoProgressLabel" style="font-weight:700; color:var(--primary);">0%</span>
                         </div>
-                        Математическая формула квантования:<br>
-                        <span style="font-family: monospace; color:#00f0ff; background: rgba(0,0,0,0.3); padding: 2px 4px; border-radius: 4px; align-self: flex-start; margin-top: 2px;">Кол-во = 3 * √ (Всего_Добыто / 2,000)</span>
-                    </div>
-
-                    <div style="display: flex; gap: 6px; text-align: left; font-size: 10px; margin-top: 2px;">
-                        <div style="flex: 1; background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.2); padding: 6px; border-radius: 10px;">
-                            <b style="color: #f87171; display: block; margin-bottom: 2px;">🔴 Сбросится:</b>
-                            • Кристаллы (баланс)<br>• Сила клика<br>• Все заводы пассива
+                        <div style="height: 6px; background: rgba(0,0,0,0.4); border-radius:3px; overflow:hidden;">
+                            <div id="evoProgressBar" style="height: 100%; width:0%; background: linear-gradient(90deg, var(--accent), var(--primary)); border-radius:3px; transition: width 0.3s ease;"></div>
                         </div>
-                        <div style="flex: 1; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); padding: 6px; border-radius: 10px;">
-                            <b style="color: #34d399; display: block; margin-bottom: 2px;">🟢 Сохранится:</b>
-                            • Все Нейрочипы<br>• Открытые ачивки<br>• Статистика логов
+                        <div style="display:flex; justify-content:space-between; font-size: 10px; color:#666688; margin-top: 6px;">
+                            <span id="evoCurrentScore">0 💎</span>
+                            <span id="evoRequiredScore">Требуется: 25,000 💎</span>
                         </div>
                     </div>
 
-                    <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 8px; margin: 2px 0;">
-                        <div style="display:flex; justify-content:space-around; align-items:center;">
-                            <div>
-                                <div style="font-size:9px; color:#8888bb;">Нейрочипы у вас</div>
-                                <div style="font-size:16px; font-weight:800; color:var(--primary);" id="currentChips">0</div>
-                            </div>
-                            <div style="font-size:14px; color:var(--accent);">➔</div>
-                            <div>
-                                <div style="font-size:9px; color:#8888bb;">Будет начислено</div>
-                                <div style="font-size:16px; font-weight:800; color:#10b981;" id="pendingChips">0</div>
-                            </div>
+                    <!-- Шаг 2: Схема перехода сознания -->
+                    <div style="display:flex; justify-content:space-around; align-items:center; background: rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.03); border-radius: 16px; padding: 12px; margin: 2px 0;">
+                        <div style="text-align:center;">
+                            <span style="font-size:9px; color:#8888bb; display:block; margin-bottom: 4px;">Текущая Фаза</span>
+                            <span id="evoCurrentEraBadge" class="p-badge-0" style="padding: 4px 10px; border-radius: 20px; font-weight:800; font-size:11px;">ERA 0</span>
+                        </div>
+                        <div style="font-size:20px; color: var(--primary); animation: pulse-arrow 1.5s infinite alternate;">➔</div>
+                        <div style="text-align:center;">
+                            <span style="font-size:9px; color:#8888bb; display:block; margin-bottom: 4px;">Новая Оболочка</span>
+                            <span id="evoNextEraBadge" class="p-badge-1" style="padding: 4px 10px; border-radius: 20px; font-weight:800; font-size:11px;">ERA 1</span>
                         </div>
                     </div>
 
-                    <div style="text-align: left; background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255,255,255,0.05); padding: 8px 10px; border-radius: 12px; font-size: 11px; display:flex; flex-direction:column; gap:2px;">
-                        <div>⚡ <b>Текущий глобальный буст:</b> <span id="evoCurrentBonus" style="color:var(--primary); font-weight:700">+0%</span> к добыче.</div>
-                        <div>🔮 <b>После эволюции буст станет:</b> <span id="evoNextBonus" style="color:#10b981; font-weight:700">+0%</span>.</div>
-                        <div style="color: #8888bb; font-size: 9px; margin-top: 2px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 2px;" id="nextEraTooltip">
-                            Следующая эра: Эра 1
+                    <!-- Шаг 3: Прогнозирование чипов и буста -->
+                    <div style="background: rgba(255,255,255,0.015); border: 1px solid rgba(255,255,255,0.04); border-radius: 14px; padding: 12px; text-align: left; display:flex; flex-direction:column; gap:6px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-size:11px; color:#aaaacf;">Синтезируемые Нейрочипы:</span>
+                            <span id="pendingChipsLabel" style="font-size:15px; font-weight:900; color:#34d399; text-shadow:0 0 10px rgba(52,211,153,0.3);">+0 🧬</span>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-size:11px; color:#aaaacf;">Текущий буст:</span>
+                            <span id="evoCurrentBonus" style="font-size:11px; font-weight:700; color:var(--primary);">+0%</span>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-size:11px; color:#aaaacf;">Буст после перехода:</span>
+                            <span id="evoNextBonus" style="font-size:11px; font-weight:700; color:#34d399;">+0%</span>
+                        </div>
+                        <div id="nextEraTooltip" style="font-size: 9px; color: #8888bb; border-top: 1px solid rgba(255,255,255,0.04); padding-top: 6px; margin-top: 4px; text-transform: uppercase; text-align:center;">
+                            Перенос в Эра 1: Кремниевый Сетевик
                         </div>
                     </div>
 
-                    <button class="prestige-btn disabled" id="prestigeBtn">ЭВОЛЮЦИОНИРОВАТЬ (Нужно 5k 💎)</button>
+                    <!-- Шаг 4: Разъяснение правил сброса/сохранения -->
+                    <div style="display: flex; gap: 8px; text-align: left; font-size: 10px; margin-top: 2px;">
+                        <div style="flex: 1; background: rgba(251, 113, 133, 0.04); border: 1px solid rgba(251, 113, 133, 0.12); padding: 8px; border-radius: 12px; display:flex; flex-direction:column; gap:2px;">
+                            <b style="color: #fb7185; font-size:11px;">⚠️ Аннулируется:</b>
+                            <span style="color:#aaaacf; line-height: 1.3;">Текущий баланс 💎, уровни улучшателей и заводы пассива.</span>
+                        </div>
+                        <div style="flex: 1; background: rgba(52, 211, 153, 0.04); border: 1px solid rgba(52, 211, 153, 0.12); padding: 8px; border-radius: 12px; display:flex; flex-direction:column; gap:2px;">
+                            <b style="color: #34d399; font-size:11px;">🟢 Сохраняется:</b>
+                            <span style="color:#aaaacf; line-height: 1.3;">Все Нейрочипы, достижения, рекорды и настройки логов.</span>
+                        </div>
+                    </div>
+
+                    <div style="display:none;">
+                        <span id="currentChips">0</span>
+                        <span id="pendingChips">0</span>
+                        <span id="evoTotalEarnedHistory">0</span>
+                    </div>
+
+                    <button class="prestige-btn disabled" id="prestigeBtn">Инициировать переход ядра</button>
                 </div>
             </div>
 
-            <!-- ПАНЕЛЬ 5: ДОСТИЖЕНИЯ -->
             <div class="panel" id="panel-achievements">
-                <div class="achieve-item" id="ach-1">
-                    <div class="achieve-icon">⌨️</div>
-                    <div class="achieve-info">
-                        <span class="achieve-title">Юный Взломщик</span>
-                        <span class="achieve-desc">Сделать 100 кликов по ядру</span>
-                        <span class="achieve-reward">Бонус: +10% к силе клика навсегда</span>
-                    </div>
-                </div>
-                <div class="achieve-item" id="ach-2">
-                    <div class="achieve-icon">💎</div>
-                    <div class="achieve-info">
-                        <span class="achieve-title">Кристальный Магнат</span>
-                        <span class="achieve-desc">Собрать 25,000 кристаллов за всё время</span>
-                        <span class="achieve-reward">Бонус: +15% к пассивному доходу</span>
-                    </div>
-                </div>
-                <div class="achieve-item" id="ach-3">
-                    <div class="achieve-icon">⚡</div>
-                    <div class="achieve-info">
-                        <span class="achieve-title">Вечный Двигатель</span>
-                        <span class="achieve-desc">Прокачать лимит энергии до 150</span>
-                        <span class="achieve-reward">Бонус: +1 энергия/сек регенерации</span>
-                    </div>
-                </div>
-                <div class="achieve-item" id="ach-4">
-                    <div class="achieve-icon">🧬</div>
-                    <div class="achieve-info">
-                        <span class="achieve-title">Цифровой Бог</span>
-                        <span class="achieve-desc">Произвести хотя бы 1 Эволюцию</span>
-                        <span class="achieve-reward">Бонус: +20% к эффективности Нейрочипов</span>
-                    </div>
-                </div>
+                <div class="achieve-item" id="ach-1"><div class="achieve-icon">⌨️</div><div class="achieve-info"><span class="achieve-title">Юный Взломщик</span><span class="achieve-desc">Сделать 100 кликов по ядру</span><span class="achieve-reward">Бонус: +10% к силе клика</span></div></div>
+                <div class="achieve-item" id="ach-2"><div class="achieve-icon">💎</div><div class="achieve-info"><span class="achieve-title">Кристальный Магнат</span><span class="achieve-desc">Собрать 25,000 кристаллов</span><span class="achieve-reward">Бонус: +15% к пассивному доходу</span></div></div>
+                <div class="achieve-item" id="ach-3"><div class="achieve-icon">⚡</div><div class="achieve-info"><span class="achieve-title">Вечный Двигатель</span><span class="achieve-desc">Прокачать лимит энергии до 150</span><span class="achieve-reward">Бонус: +1 энергия/сек регенерации</span></div></div>
+                <div class="achieve-item" id="ach-4"><div class="achieve-icon">🧬</div><div class="achieve-info"><span class="achieve-title">Цифровой Бог</span><span class="achieve-desc">Произвести хотя бы 1 Эволюцию</span><span class="achieve-reward">Бонус: +20% к эффективности чипов</span></div></div>
+
+                <div class="achieve-item" id="ach-m-click"><div class="achieve-icon">👑</div><div class="achieve-info"><span class="achieve-title">Архитектор Познания</span><span class="achieve-desc">Прокачать Силу Мысли до 100 уровня</span><span class="achieve-reward">Бонус: +5% глобальной силы клика</span></div></div>
+                <div class="achieve-item" id="ach-m-sync"><div class="achieve-icon">⏳</div><div class="achieve-info"><span class="achieve-title">Повелитель Хроноса</span><span class="achieve-desc">Тактовый Синхронизатор достиг 25 уровня</span><span class="achieve-reward">Бонус: +5% к эффективности синхронизации</span></div></div>
+                <div class="achieve-item" id="ach-m-crit"><div class="achieve-icon">💥</div><div class="achieve-info"><span class="achieve-title">Сингулярный Разрыв</span><span class="achieve-desc">Квантовый Крит достиг 10 уровня</span><span class="achieve-reward">Бонус: +10% к крит. множителю</span></div></div>
+                <div class="achieve-item" id="ach-m-efficiency"><div class="achieve-icon">🛡️</div><div class="achieve-info"><span class="achieve-title">Призрачный Импульс</span><span class="achieve-desc">Импульсный Оптимизатор достиг 10 уровня</span><span class="achieve-reward">Бонус: +5% к шансу бесплатного клика</span></div></div>
+                <div class="achieve-item" id="ach-m-overdrive"><div class="achieve-icon">🧬</div><div class="achieve-info"><span class="achieve-title">Вне Хронологии</span><span class="achieve-desc">Хроно-Инжектор достиг 10 уровня</span><span class="achieve-reward">Бонус: -2с к базовой перезарядке навыка</span></div></div>
+                <div class="achieve-item" id="ach-m-energy"><div class="achieve-icon">🔋</div><div class="achieve-info"><span class="achieve-title">Термоядерная Матрица</span><span class="achieve-desc">Энерго-конденсатор достиг 50 уровня</span><span class="achieve-reward">Бонус: +50 к максимальному лимиту энергии</span></div></div>
+                <div class="achieve-item" id="ach-m-regen"><div class="achieve-icon">♻️</div><div class="achieve-info"><span class="achieve-title">Вечный Исток</span><span class="achieve-desc">Квантовый генератор достиг 30 уровня</span><span class="achieve-reward">Бонус: +2 энергии/сек пассивного регена</span></div></div>
+                <div class="achieve-item" id="ach-m-auto1"><div class="achieve-icon">🤖</div><div class="achieve-info"><span class="achieve-title">Железный Рой Дроидов</span><span class="achieve-desc">Дроид-сборщик достиг 100 уровня</span><span class="achieve-reward">Бонус: +20% эффективности всех дроидов</span></div></div>
+                <div class="achieve-item" id="ach-m-auto2"><div class="achieve-icon">🧠</div><div class="achieve-info"><span class="achieve-title">Технологический Бог</span><span class="achieve-desc">Искусственный Интеллект достиг 100 уровня</span><span class="achieve-reward">Бонус: +20% эффективности вычислений ИИ</span></div></div>
+                <div class="achieve-item" id="ach-m-auto3"><div class="achieve-icon">🚀</div><div class="achieve-info"><span class="achieve-title">Горизонт Событий</span><span class="achieve-desc">Сингулярный реактор достиг 50 уровня</span><span class="achieve-reward">Бонус: +20% эффективности реакторов</span></div></div>
+                <div class="achieve-item" id="ach-m-auto4"><div class="achieve-icon">🌌</div><div class="achieve-info"><span class="achieve-title">Тёмный Архитектор</span><span class="achieve-desc">Синтезатор Тёмной Материи достиг 25 уровня</span><span class="achieve-reward">Бонус: +25% добычи материи</span></div></div>
+                <div class="achieve-item" id="ach-m-auto5"><div class="achieve-icon">🪐</div><div class="achieve-info"><span class="achieve-title">Повелитель Реальности</span><span class="achieve-desc">Хроно-Стазисное Поле достигло 10 уровня</span><span class="achieve-reward">Бонус: +30% пассивной эффективности поля</span></div></div>
+                <div class="achieve-item" id="ach-m-factory"><div class="achieve-icon">📡</div><div class="achieve-info"><span class="achieve-title">Квантовый Владыка</span><span class="achieve-desc">Потоковый Квантователь достиг 20 уровня</span><span class="achieve-reward">Бонус: +15% к мощи квантования заводов</span></div></div>
+                <div class="achieve-item" id="ach-m-glitch"><div class="achieve-icon">👾</div><div class="achieve-info"><span class="achieve-title">Архивариус Сбоев</span><span class="achieve-desc">Глитч-Модем достиг 15 уровня</span><span class="achieve-reward">Бонус: +50% награды со сфер взлома</span></div></div>
             </div>
 
-            <!-- ПАНЕЛЬ 6: НАСТРОЙКИ -->
             <div class="panel" id="panel-settings">
-                <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); border-radius:14px; padding:12px; display:flex; flex-direction:column; gap:4px;">
+                <div style="background:rgba(255,255,255,0.015); border:1px solid rgba(255,255,255,0.04); border-radius:14px; padding:12px; display:flex; flex-direction:column; gap:4px;">
                     <span style="font-size:12px; font-weight:700; color:var(--primary); text-transform:uppercase;">🏷️ Идентификатор Сети</span>
                     <div style="font-size:11px; color:#8888bb;">Ваш персональный системный адрес: <b id="displayUserId" style="color:#fff;">user-00000</b></div>
                     <div style="display:flex; gap:6px; margin-top:4px;">
                         <input type="text" id="usernameInput" class="input-box" maxlength="14" placeholder="Изменить имя..." style="margin-top:0; flex:1;">
-                        <button id="saveUsernameBtn" style="background:rgba(255,255,255,0.02); border:1px solid var(--primary); color:var(--primary); padding:0 16px; border-radius:10px; font-size:12px; font-weight:700; cursor:pointer;">ОК</button>
+                        <button id="saveUsernameBtn" style="background:rgba(255,255,255,0.015); border:1px solid var(--primary); color:var(--primary); padding:0 16px; border-radius:10px; font-size:12px; font-weight:700; cursor:pointer;">ОК</button>
                     </div>
                 </div>
 
@@ -1070,14 +1267,13 @@
                     <div class="stats-line"><span>Собрано за всё время:</span> <span id="statTotalEarned">0</span></div>
                     <div class="stats-line"><span>Пройдено Эволюций:</span> <span id="statEvos">0</span></div>
                 </div>
-                <div style="margin-top:12px; font-size:11px; color:#444477; text-align:center;" id="versionFooter">
-                    Кибер-Эволюция v3.0 • Облачная Сингулярность
+                <div style="margin-top:12px; font-size:11px; color:#40405c; text-align:center;" id="versionFooter">
+                    Кибер-Эволюция v3.2 • Стабильная Сингулярность
                 </div>
             </div>
 
         </div>
 
-        <!-- ПОСТОЯННОЕ МЕНЮ СНИЗУ -->
         <div class="tabs">
             <button class="tab active" data-tab="upgrades" title="Клик">🖱️</button>
             <button class="tab" data-tab="passive" title="Генераторы">🏭</button>
@@ -1089,616 +1285,945 @@
     </div>
 
     <script>
-    // ============================================================
-    //  ДИНАМИЧЕСКИЙ ЖИВОЙ РЕНДЕР ИГРЫ И ОБЛАКА v3.0
-    // ============================================================
-    const CURRENT_VERSION = "3.0";
+        // Защита ведущей точкой с запятой
+        ; (function () {
+            const CURRENT_VERSION = "3.2";
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyAbh1fvh_dCYgyl6MzgfcAevEeklMF_dAs",
-        authDomain: "game-clicker-c0612.firebaseapp.com",
-        databaseURL: "https://game-clicker-c0612-default-rtdb.europe-west1.firebasedatabase.app",
-        projectId: "game-clicker-c0612",
-        storageBucket: "game-clicker-c0612.firebasestorage.app",
-        messagingSenderId: "250793504991",
-        appId: "1:250793504991:web:59244a3394eacbb904f96a",
-        measurementId: "G-NLCCGML1SL"
-    };
+            window.onerror = function (message, source, lineno, colno, error) {
+                console.error("🚨 Сбой ядра JS:", message, "строка:", lineno, error);
+                if (typeof showFloatingNotification === 'function') {
+                    showFloatingNotification(`🚨 Ошибка: ${message.split(':')[1] || message} (Стр: ${lineno})`);
+                }
+                return false;
+            };
 
-    const $ = id => document.getElementById(id);
+            // Базовая конфигурация пользователя
+            let firebaseConfig = {
+                apiKey: "AIzaSyAbh1fvh_dCYgyl6MzgfcAevEeklMF_dAs",
+                authDomain: "game-clicker-c0612.firebaseapp.com",
+                databaseURL: "https://game-clicker-c0612-default-rtdb.europe-west1.firebasedatabase.app",
+                projectId: "game-clicker-c0612",
+                storageBucket: "game-clicker-c0612.firebasestorage.app",
+                messagingSenderId: "250793504991",
+                appId: "1:250793504991:web:59244a3394eacbb904f96a",
+                measurementId: "G-NLCCGML1SL"
+            };
 
-    let db = null;
-    try {
-        if (typeof firebase !== 'undefined') {
-            firebase.initializeApp(firebaseConfig);
-            db = firebase.firestore();
-            console.log("☁️ Облачная подсистема Firebase успешно запущена.");
-        }
-    } catch (e) {
-        console.warn("⚠️ Firestore оффлайн.", e);
-    }
-
-    const ERAS = [
-        { name: "Эпоха 0: Аналоговая Система" },
-        { name: "Эпоха 1: Кремниевый Сетевик" },
-        { name: "Эпоха 2: Нейросеть Сознания" },
-        { name: "Эпоха 3: Фотоника" },
-        { name: "Эпоха 4: Квантовый Разум" },
-        { name: "Эпоха 5: Абсолют" }
-    ];
-
-    const DEFAULT_STATE = {
-        userId: "", 
-        username: "",
-        score: 0,
-        totalScoreEarned: 0,
-        clicksCount: 0,
-        energy: 100,
-        maxEnergy: 100,
-        energyRegen: 0.5,
-        clickPower: 1,
-        clickCost: 10,
-        
-        // Лейт-гейм прокачки клика и ядра
-        syncLevel: 0,
-        syncCost: 500,
-        critLevel: 0,
-        critCost: 1000,
-        efficiencyLevel: 0,
-        efficiencyCost: 300,
-        overdriveLevel: 0,
-        overdriveCost: 800,
-
-        energyCost: 20,
-        regenCost: 30,
-        auto1: 0, auto2: 0, auto3: 0, auto4: 0, auto5: 0,
-        auto1Cost: 50, auto2Cost: 250, auto3Cost: 1200, auto4Cost: 5000, auto5Cost: 25000,
-        factoryLevel: 0, factoryCost: 1500,
-        glitchLevel: 0, glitchCost: 400,
-        
-        passiveTotal: 0,
-        prestigeCount: 0,
-        nanochips: 0,
-        skillCooldown: 0,
-        skillDuration: 0,
-        sound: true,
-        animations: true,
-        achievements: []
-    };
-
-    let state = JSON.parse(JSON.stringify(DEFAULT_STATE));
-
-    async function checkPWAUpdates() {
-        if (!navigator.onLine) return;
-        try {
-            const rawUrl = window.location.href.split('?')[0];
-            const nocacheUrl = `${rawUrl}?cb_detect=${Date.now()}`;
-            const response = await fetch(nocacheUrl, { cache: 'no-store' });
-            if (!response.ok) return;
-            const text = await response.text();
-            const versionMatch = text.match(/const\s+CURRENT_VERSION\s*=\s*["']([^"']+)["']/);
-            if (versionMatch && versionMatch[1] && versionMatch[1] !== CURRENT_VERSION) {
-                showFloatingNotification("🔄 Установка обновления...");
-                setTimeout(() => window.location.replace(`${rawUrl}?forced_update=${Date.now()}`), 1200);
+            // Проверка окружения для автоматической интеграции Firebase
+            if (typeof __firebase_config !== 'undefined' && __firebase_config) {
+                try {
+                    firebaseConfig = JSON.parse(__firebase_config);
+                } catch (e) { }
             }
-        } catch(e) {}
-    }
 
-    async function initNetworkProfile() {
-        if (!db) {
-            if (!state.userId) {
-                state.userId = "offline-user";
-                state.username = "Автономный Сборщик";
-                save();
-            }
-            if ($('displayUserId')) $('displayUserId').textContent = state.userId;
-            if ($('usernameInput')) $('usernameInput').value = state.username;
-            return;
-        }
+            const appId = typeof __app_id !== 'undefined' ? __app_id : 'game-clicker-c0612';
+            const isEnvFirebase = (typeof __firebase_config !== 'undefined' && __firebase_config);
 
-        if (!state.userId) {
+            const _cyber$ = id => document.getElementById(id);
+
+            let db = null;
+            let firebaseUser = null;
+
             try {
-                const counterRef = db.collection('metadata').doc('counters');
-                await db.runTransaction(async (transaction) => {
-                    const counterDoc = await transaction.get(counterRef);
-                    let newCount = 1;
-                    if (counterDoc.exists) {
-                        newCount = (counterDoc.data().count || 0) + 1;
+                if (typeof firebase !== 'undefined') {
+                    firebase.initializeApp(firebaseConfig);
+                    db = firebase.firestore();
+                    console.log("☁️ Облачная подсистема Firebase успешно запущена.");
+                }
+            } catch (e) {
+                console.warn("⚠️ Firestore оффлайн.", e);
+            }
+
+            // Определение коллекции в зависимости от песочницы/окружения (RULE 1)
+            function getUserCollection() {
+                if (isEnvFirebase && db) {
+                    return db.collection('artifacts').doc(appId).collection('public').doc('data').collection('users');
+                } else if (db) {
+                    return db.collection('users');
+                }
+                return null;
+            }
+
+            // Выполнение авторизации перед любым сетевым запросом (RULE 3)
+            async function initFirebaseAuth() {
+                if (!firebase || typeof firebase.auth === 'undefined') return null;
+                const auth = firebase.auth();
+                try {
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                        const userCredential = await auth.signInWithCustomToken(__initial_auth_token);
+                        firebaseUser = userCredential.user;
+                    } else {
+                        const userCredential = await auth.signInAnonymously();
+                        firebaseUser = userCredential.user;
                     }
-                    transaction.set(counterRef, { count: newCount }, { merge: true });
-                    const paddedNumber = String(newCount).padStart(5, '0');
-                    state.userId = `user-${paddedNumber}`;
-                    state.username = state.userId;
-                    
-                    transaction.set(db.collection('users').doc(state.userId), {
+                } catch (e) {
+                    console.warn("🔐 Ошибка аутентификации Firebase. Оффлайн-режим.", e);
+                }
+                return firebaseUser;
+            }
+
+            const ERAS = [
+                { name: "Эпоха 0: Аналоговая Система" },
+                { name: "Эпоха 1: Кремниевый Сетевик" },
+                { name: "Эпоха 2: Нейросеть Сознания" },
+                { name: "Эпоха 3: Фотоника" },
+                { name: "Эпоха 4: Квантовый Разум" },
+                { name: "Эпоха 5: Абсолют" }
+            ];
+
+            const UPGRADE_CONFIGS = {
+                click: { max: 100, key: 'clickLevel' },
+                sync: { max: 25, key: 'syncLevel' },
+                crit: { max: 10, key: 'critLevel' },
+                efficiency: { max: 10, key: 'efficiencyLevel' },
+                overdrive: { max: 10, key: 'overdriveLevel' },
+                energy: { max: 50, key: 'energyLevel' },
+                regen: { max: 30, key: 'regenLevel' },
+                auto1: { max: 100, key: 'auto1' },
+                auto2: { max: 100, key: 'auto2' },
+                auto3: { max: 50, key: 'auto3' },
+                auto4: { max: 25, key: 'auto4' },
+                auto5: { max: 10, key: 'auto5' },
+                factory: { max: 20, key: 'factoryLevel' },
+                glitch: { max: 15, key: 'glitchLevel' }
+            };
+
+            // Функция расчета стоимости для перехода на каждый новый престиж (сильно прогрессивные ценники)
+            function getPrestigeCost(prestigeLevel) {
+                const costs = [
+                    25000,         // Эра 0 ➔ Эра 1: 25,000 (увеличено с 5,000)
+                    500000,        // Эра 1 ➔ Эра 2: 500,000
+                    15000000,      // Эра 2 ➔ Эра 3: 15,000,000 (15 млн)
+                    500000000,     // Эра 3 ➔ Эра 4: 500,000,000 (500 млн)
+                    25000000000,   // Эра 4 ➔ Эра 5: 25,000,000,000 (25 млрд)
+                    1000000000000  // Эра 5+ : 1 триллион
+                ];
+                if (prestigeLevel < costs.length) {
+                    return costs[prestigeLevel];
+                }
+                return costs[costs.length - 1] * Math.pow(10, prestigeLevel - (costs.length - 1));
+            }
+
+            // Исправленные дефолтные переменные (Добавлены syncCost, critCost, efficiencyCost, overdriveCost)
+            const DEFAULT_STATE = {
+                userId: "",
+                username: "",
+                score: 0,
+                totalScoreEarned: 0,
+                clicksCount: 0,
+                energy: 100,
+                maxEnergy: 100,
+                energyRegen: 0.5,
+                clickPower: 1,
+                clickCost: 10,
+                clickLevel: 0,
+                syncLevel: 0,
+                critLevel: 0,
+                efficiencyLevel: 0,
+                overdriveLevel: 0,
+                energyLevel: 0,
+                regenLevel: 0,
+                energyCost: 20,
+                regenCost: 30,
+                auto1: 0, auto2: 0, auto3: 0, auto4: 0, auto5: 0,
+                auto1Cost: 50, auto2Cost: 250, auto3Cost: 1200, auto4Cost: 5000, auto5Cost: 25000,
+                factoryLevel: 0, factoryCost: 1500,
+                glitchLevel: 0, glitchCost: 400,
+                passiveTotal: 0,
+                prestigeCount: 0,
+                nanochips: 0,
+                skillCooldown: 0,
+                skillDuration: 0,
+                sound: true,
+                animations: true,
+                achievements: [],
+                // Исправленные поля
+                syncCost: 500,
+                critCost: 1000,
+                efficiencyCost: 300,
+                overdriveCost: 800
+            };
+
+            let state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+            let activeGlitch = null;
+
+            async function checkPWAUpdates() {
+                if (!navigator.onLine) return;
+                try {
+                    const rawUrl = window.location.href.split('?')[0];
+                    const nocacheUrl = `${rawUrl}?cb_detect=${Date.now()}`;
+                    const response = await fetch(nocacheUrl, { cache: 'no-store' });
+                    if (!response.ok) return;
+                    const text = await response.text();
+                    const versionMatch = text.match(/const\s+CURRENT_VERSION\s*=\s*["']([^"']+)["']/);
+                    if (versionMatch && versionMatch[1] && versionMatch[1] !== CURRENT_VERSION) {
+                        showFloatingNotification("🔄 Установка обновления...");
+                        setTimeout(() => window.location.replace(`${rawUrl}?forced_update=${Date.now()}`), 1200);
+                    }
+                } catch (e) { }
+            }
+
+            async function initNetworkProfile() {
+                if (!db) {
+                    if (!state.userId) {
+                        state.userId = "offline-user";
+                        state.username = "Автономный Сборщик";
+                        save();
+                    }
+                    if (_cyber$('displayUserId')) _cyber$('displayUserId').textContent = state.userId;
+                    if (_cyber$('usernameInput')) _cyber$('usernameInput').value = state.username;
+                    return;
+                }
+
+                // Авторизация
+                await initFirebaseAuth();
+
+                const col = getUserCollection();
+
+                if (!state.userId) {
+                    try {
+                        const counterRef = isEnvFirebase
+                            ? db.collection('artifacts').doc(appId).collection('public').doc('data').collection('metadata').doc('counters')
+                            : db.collection('metadata').doc('counters');
+
+                        await db.runTransaction(async (transaction) => {
+                            const counterDoc = await transaction.get(counterRef);
+                            let newCount = 1;
+                            if (counterDoc.exists) {
+                                newCount = (counterDoc.data().count || 0) + 1;
+                            }
+                            transaction.set(counterRef, { count: newCount }, { merge: true });
+                            const paddedNumber = String(newCount).padStart(5, '0');
+                            state.userId = `user-${paddedNumber}`;
+                            state.username = state.userId;
+
+                            transaction.set(col.doc(state.userId), {
+                                id: state.userId,
+                                username: state.username,
+                                score: 0,
+                                prestige: 0
+                            });
+                        });
+                        save();
+                    } catch (e) {
+                        console.error("Ошибка транзакции ID, переход в локальный режим", e);
+                        state.userId = "user-" + Math.floor(10000 + Math.random() * 90000);
+                        state.username = state.userId;
+                        save();
+                    }
+                }
+                if (_cyber$('displayUserId')) _cyber$('displayUserId').textContent = state.userId;
+                if (_cyber$('usernameInput')) _cyber$('usernameInput').value = state.username;
+                syncWithDatabase();
+            }
+
+            async function syncWithDatabase() {
+                const col = getUserCollection();
+                if (!db || !col || !state.userId || state.userId === "offline-user" || !navigator.onLine) return;
+                try {
+                    await col.doc(state.userId).set({
                         id: state.userId,
                         username: state.username,
-                        score: 0,
-                        prestige: 0
+                        score: Math.floor(state.totalScoreEarned),
+                        prestige: state.prestigeCount || 0
+                    }, { merge: true });
+                } catch (e) { }
+            }
+
+            async function fetchLeaderboard() {
+                const container = _cyber$('leaderboardContainer');
+                if (!container) return;
+                const col = getUserCollection();
+                if (!db || !col || !navigator.onLine) {
+                    container.innerHTML = `<div style="text-align:center;color:#8888bb;padding:20px;font-size:11px;">Работает автономно. Подключите сеть для синхронизации.</div>`;
+                    return;
+                }
+                try {
+                    let usersList = [];
+
+                    if (isEnvFirebase) {
+                        // Для песочниц - выкачиваем и сортируем в памяти (RULE 2)
+                        const querySnapshot = await col.get();
+                        querySnapshot.forEach(doc => {
+                            const data = doc.data();
+                            usersList.push({ id: doc.id, ...data });
+                        });
+                        usersList.sort((a, b) => (b.score || 0) - (a.score || 0));
+                        usersList = usersList.slice(0, 50);
+                    } else {
+                        // Сортировка с сервера с fallback в память при отсутствии индекса
+                        try {
+                            const snapshot = await col.orderBy('score', 'desc').limit(50).get();
+                            snapshot.forEach((doc) => {
+                                usersList.push({ id: doc.id, ...doc.data() });
+                            });
+                        } catch (err) {
+                            const querySnapshot = await col.get();
+                            querySnapshot.forEach(doc => {
+                                usersList.push({ id: doc.id, ...doc.data() });
+                            });
+                            usersList.sort((a, b) => (b.score || 0) - (a.score || 0));
+                            usersList = usersList.slice(0, 50);
+                        }
+                    }
+
+                    container.innerHTML = "";
+                    let rank = 1;
+                    usersList.forEach((player) => {
+                        const playerId = player.id;
+                        const playerUsername = player.username || playerId;
+                        const playerPrestige = player.prestige || 0;
+
+                        let placeClass = "";
+                        let medal = "";
+                        if (rank === 1) { placeClass = "place-1"; medal = "🥇 "; }
+                        else if (rank === 2) { placeClass = "place-2"; medal = "🥈 "; }
+                        else if (rank === 3) { placeClass = "place-3"; medal = "🥉 "; }
+                        if (playerId === state.userId) placeClass += " current-user";
+
+                        const badgeClass = `p-badge-${Math.min(playerPrestige, 5)}`;
+
+                        const row = document.createElement('div');
+                        row.className = `leader-row ${placeClass}`;
+                        row.innerHTML = `
+                                <div class="leader-left">
+                                    <span class="leader-rank">${medal || rank}</span>
+                                    <span class="leader-prestige-badge ${badgeClass}">${playerPrestige}</span>
+                                    <span class="leader-name">${playerUsername} ${playerId === state.userId ? '(Вы)' : ''}</span>
+                                </div>
+                                <span class="leader-score">${Math.floor(player.score || 0).toLocaleString()} 💎</span>
+                            `;
+                        container.appendChild(row);
+                        rank++;
                     });
+                } catch (e) {
+                    console.error("Ошибка сети при загрузке рейтинга:", e);
+                    container.innerHTML = `<div style="text-align:center;color:#f87171;padding:20px;font-size:11px;">Не удалось загрузить таблицу лидеров.</div>`;
+                }
+            }
+
+            // Функция глубокой валидации загруженного стейта против NaN, undefined и null (Полная защита от сбоев)
+            function validateAndFixState() {
+                for (let key in DEFAULT_STATE) {
+                    if (state[key] === undefined || state[key] === null) {
+                        state[key] = DEFAULT_STATE[key];
+                    }
+                    if (typeof DEFAULT_STATE[key] === 'number') {
+                        state[key] = Number(state[key]);
+                        if (isNaN(state[key])) {
+                            state[key] = DEFAULT_STATE[key];
+                        }
+                    }
+                    if (typeof DEFAULT_STATE[key] === 'boolean') {
+                        state[key] = Boolean(state[key]);
+                    }
+                    if (Array.isArray(DEFAULT_STATE[key]) && !Array.isArray(state[key])) {
+                        state[key] = [];
+                    }
+                }
+
+                // Целевая страховка для показателей перегрузки ядра
+                if (isNaN(state.skillCooldown) || state.skillCooldown < 0) {
+                    state.skillCooldown = 0;
+                }
+                if (isNaN(state.skillDuration) || state.skillDuration < 0) {
+                    state.skillDuration = 0;
+                }
+                if (isNaN(state.overdriveLevel) || state.overdriveLevel < 0) {
+                    state.overdriveLevel = 0;
+                }
+            }
+
+            function sanitizeState(loaded) {
+                const base = JSON.parse(JSON.stringify(DEFAULT_STATE));
+                if (!loaded || typeof loaded !== 'object') return base;
+                const sanitized = {};
+                for (let key in base) {
+                    if (loaded.hasOwnProperty(key) && loaded[key] !== undefined && loaded[key] !== null) {
+                        if (Array.isArray(base[key])) {
+                            sanitized[key] = Array.isArray(loaded[key]) ? loaded[key] : [];
+                        } else if (typeof base[key] === 'number') {
+                            sanitized[key] = isNaN(Number(loaded[key])) ? base[key] : Number(loaded[key]);
+                        } else if (typeof base[key] === 'boolean') {
+                            sanitized[key] = Boolean(loaded[key]);
+                        } else {
+                            sanitized[key] = loaded[key];
+                        }
+                    } else {
+                        sanitized[key] = base[key];
+                    }
+                }
+                return sanitized;
+            }
+
+            function save() { try { localStorage.setItem('cyberClicker_v2_net', JSON.stringify(state)); } catch (e) { } }
+            function load() {
+                try {
+                    const raw = localStorage.getItem('cyberClicker_v2_net');
+                    if (raw) state = sanitizeState(JSON.parse(raw));
+                } catch (e) { }
+
+                // Запуск принудительного исправления NaN и отсутствующих переменных
+                validateAndFixState();
+
+                if (state.clickPower > 1 && state.clickLevel === 0) state.clickLevel = state.clickPower - 1;
+                if (state.maxEnergy > 100 && state.energyLevel === 0) state.energyLevel = Math.round((state.maxEnergy - 100) / 10);
+                if (state.energyRegen > 0.5 && state.regenLevel === 0) state.regenLevel = Math.round((state.energyRegen - 0.5) / 0.5);
+
+                recalcPassive();
+            }
+
+            // Начисление чипов зависит от стоимости текущего перехода, гарантируя постепенную выгоду
+            function getPendingChips() {
+                const targetCost = getPrestigeCost(state.prestigeCount);
+                if (!state.totalScoreEarned || state.totalScoreEarned < targetCost) return 0;
+                // Масштабируем чипы от исторической добычи
+                return Math.max(0, Math.floor(Math.sqrt(state.totalScoreEarned / 2000) * 3) - (state.nanochips || 0));
+            }
+
+            function getMultiplier() {
+                const hasAch4 = state.achievements && state.achievements.includes('ach-4');
+                return 1 + ((state.nanochips || 0) * (hasAch4 ? 0.024 : 0.02));
+            }
+
+            function getActualClickPower() {
+                let basePower = 1 + (state.clickLevel || 0);
+                let syncBonusFactor = 0.05;
+                if (state.achievements && state.achievements.includes('ach-m-sync')) syncBonusFactor += 0.05;
+
+                let passiveSynergy = Math.floor(getActualPassive() * syncBonusFactor * (state.syncLevel || 0));
+                let totalBase = basePower + passiveSynergy;
+
+                let clickMultiplier = 1;
+                if (state.achievements && state.achievements.includes('ach-1')) clickMultiplier += 0.10;
+                if (state.achievements && state.achievements.includes('ach-m-click')) clickMultiplier += 0.05;
+
+                const duration = isNaN(state.skillDuration) ? 0 : state.skillDuration;
+                return Math.floor(totalBase * clickMultiplier * getMultiplier() * (duration > 0 ? 3 : 1));
+            }
+
+            function getActualPassive() {
+                let a1Bonus = (state.achievements && state.achievements.includes('ach-m-auto1')) ? 1.2 : 1;
+                let a2Bonus = (state.achievements && state.achievements.includes('ach-m-auto2')) ? 1.2 : 1;
+                let a3Bonus = (state.achievements && state.achievements.includes('ach-m-auto3')) ? 1.2 : 1;
+                let a4Bonus = (state.achievements && state.achievements.includes('ach-m-auto4')) ? 1.25 : 1;
+                let a5Bonus = (state.achievements && state.achievements.includes('ach-m-auto5')) ? 1.3 : 1;
+
+                let rawBase = ((state.auto1 * 1 * a1Bonus) +
+                    (state.auto2 * 5 * a2Bonus) +
+                    (state.auto3 * 25 * a3Bonus) +
+                    (state.auto4 * 150 * a4Bonus) +
+                    (state.auto5 * 1000 * a5Bonus));
+
+                let factoryStep = 0.1;
+                if (state.achievements && state.achievements.includes('ach-m-factory')) factoryStep += 0.05;
+                let factoryMultiplier = 1 + (state.factoryLevel * factoryStep);
+
+                const hasAch2 = state.achievements && state.achievements.includes('ach-2');
+                return Math.floor(rawBase * factoryMultiplier * (hasAch2 ? 1.15 : 1) * getMultiplier());
+            }
+
+            function getActualMemoryRegen() {
+                let r = 0.5 + (state.regenLevel * 0.5);
+                if (state.achievements && state.achievements.includes('ach-m-regen')) r += 2.0;
+                if (state.achievements && state.achievements.includes('ach-3')) r += 1.0;
+                return r;
+            }
+
+            function recalcPassive() {
+                state.passiveTotal = getActualPassive();
+                if (_cyber$('totalPassiveDisplay')) _cyber$('totalPassiveDisplay').textContent = state.passiveTotal.toLocaleString();
+                if (_cyber$('passiveDisplay')) _cyber$('passiveDisplay').textContent = state.passiveTotal.toLocaleString();
+            }
+
+            function updateSkillUI() {
+                const clickBtn = _cyber$('clickButton');
+                const skillBtn = _cyber$('skillBtn');
+                if (!clickBtn || !skillBtn) return;
+
+                const duration = isNaN(state.skillDuration) ? 0 : state.skillDuration;
+                const cooldown = isNaN(state.skillCooldown) ? 0 : state.skillCooldown;
+
+                if (duration > 0) {
+                    clickBtn.classList.add('overdrive-active');
+                    skillBtn.classList.add('cooldown');
+                    skillBtn.textContent = `ПЕРЕГРУЗКА АКТИВНА (${duration}с)`;
+                } else if (cooldown > 0) {
+                    clickBtn.classList.remove('overdrive-active');
+                    skillBtn.classList.add('cooldown');
+                    skillBtn.textContent = `ПЕРЕЗАРЯДКА (${cooldown}с)`;
+                } else {
+                    clickBtn.classList.remove('overdrive-active');
+                    skillBtn.classList.remove('cooldown');
+                    skillBtn.textContent = `🔥 ПЕРЕГРУЗКА ЯДРА`;
+                }
+            }
+
+            function updateUpgradeRow(id, currentLevel, maxLevel, cost) {
+                const block = _cyber$(`upgrade-${id}`);
+                const btn = _cyber$(`buy${id.charAt(0).toUpperCase() + id.slice(1)}`);
+                const priceDisp = _cyber$(`${id}PriceDisplay`);
+                const lvlDisp = _cyber$(`${id}Lvl`);
+
+                if (lvlDisp) lvlDisp.textContent = `(${currentLevel}/${maxLevel})`;
+
+                if (currentLevel >= maxLevel) {
+                    if (block) {
+                        block.classList.add('maxed-gold');
+                        block.classList.remove('locked-panel');
+                    }
+                    if (btn) {
+                        btn.textContent = 'ФУЛЛ';
+                        btn.className = 'upgrade-btn locked';
+                    }
+                    if (priceDisp) priceDisp.textContent = 'МАКСИМУМ';
+                } else {
+                    if (block) block.classList.remove('maxed-gold');
+                    if (btn) btn.textContent = 'Купить';
+                    // Предотвращение падения, если cost не определен
+                    const formattedCost = (cost !== undefined && cost !== null) ? cost.toLocaleString() : '0';
+                    if (priceDisp) priceDisp.textContent = `${formattedCost} 💎`;
+
+                    if (state.score < cost) {
+                        if (btn) { btn.className = 'upgrade-btn locked'; }
+                        if (block) block.classList.add('locked-panel');
+                    } else {
+                        if (btn) { btn.className = 'upgrade-btn'; }
+                        if (block) block.classList.remove('locked-panel');
+                    }
+                }
+            }
+
+            function updateUI() {
+                let extraMaxEnergy = (state.achievements && state.achievements.includes('ach-m-energy')) ? 50 : 0;
+                state.maxEnergy = 100 + (state.energyLevel * 10) + extraMaxEnergy;
+
+                if (_cyber$('scoreDisplay')) _cyber$('scoreDisplay').textContent = Math.floor(state.score).toLocaleString();
+                if (_cyber$('energyDisplay')) _cyber$('energyDisplay').textContent = Math.floor(state.energy);
+                if (_cyber$('energyFill')) _cyber$('energyFill').style.width = Math.max(0, Math.min(100, (state.energy / state.maxEnergy) * 100)) + '%';
+                if (_cyber$('clickPowerLabel')) _cyber$('clickPowerLabel').textContent = `+${getActualClickPower()} ⚡`;
+
+                for (let key in UPGRADE_CONFIGS) {
+                    const conf = UPGRADE_CONFIGS[key];
+                    const currentLevel = state[conf.key];
+                    let cost = 0;
+                    if (key === 'click') cost = state.clickCost;
+                    else if (key === 'sync') cost = state.syncCost;
+                    else if (key === 'crit') cost = state.critCost;
+                    else if (key === 'efficiency') cost = state.efficiencyCost;
+                    else if (key === 'overdrive') cost = state.overdriveCost;
+                    else if (key === 'energy') cost = state.energyCost;
+                    else if (key === 'regen') cost = state.regenCost;
+                    else if (key === 'auto1') cost = state.auto1Cost;
+                    else if (key === 'auto2') cost = state.auto2Cost;
+                    else if (key === 'auto3') cost = state.auto3Cost;
+                    else if (key === 'auto4') cost = state.auto4Cost;
+                    else if (key === 'auto5') cost = state.auto5Cost;
+                    else if (key === 'factory') cost = state.factoryCost;
+                    else if (key === 'glitch') cost = state.glitchCost;
+
+                    updateUpgradeRow(key, currentLevel, conf.max, cost);
+                }
+
+                const appContainer = _cyber$('app');
+                const prestigeLevel = state.prestigeCount || 0;
+                const levelClass = Math.min(prestigeLevel, 5);
+                if (appContainer) {
+                    for (let i = 0; i <= 5; i++) appContainer.classList.remove('p-level-' + i);
+                    appContainer.classList.add('p-level-' + levelClass);
+                }
+
+                if (_cyber$('eraTitle')) _cyber$('eraTitle').textContent = `ЭРА ${prestigeLevel}: ${(ERAS[levelClass] || ERAS[5]).name.split(': ')[1]}`;
+                if (_cyber$('chipsHeaderDisplay')) _cyber$('chipsHeaderDisplay').textContent = `${(state.nanochips || 0).toLocaleString()} (Lvl ${prestigeLevel})`;
+
+                // ДИНАМИЧЕСКИЙ РАСЧЕТ ПРОГРЕССА ДЛЯ ВКЛАДКИ ЭВОЛЮЦИИ ПО НОВОЙ СТОИМОСТИ
+                const pending = getPendingChips();
+                const targetCost = getPrestigeCost(prestigeLevel);
+                const progressPercent = Math.min(100, Math.floor((state.score / targetCost) * 100));
+
+                if (_cyber$('evoProgressLabel')) _cyber$('evoProgressLabel').textContent = `${progressPercent}%`;
+                if (_cyber$('evoProgressBar')) _cyber$('evoProgressBar').style.width = `${progressPercent}%`;
+                if (_cyber$('evoCurrentScore')) _cyber$('evoCurrentScore').textContent = `${Math.floor(state.score).toLocaleString()} 💎`;
+                if (_cyber$('evoRequiredScore')) _cyber$('evoRequiredScore').textContent = `Требуется: ${targetCost.toLocaleString()} 💎`;
+
+                // Бейджи фаз эволюции
+                const curBadge = _cyber$('evoCurrentEraBadge');
+                if (curBadge) {
+                    curBadge.textContent = `ERA ${prestigeLevel}`;
+                    curBadge.className = `p-badge-${levelClass}`;
+                }
+
+                const nextLevelClass = Math.min(prestigeLevel + 1, 5);
+                const nextBadge = _cyber$('evoNextEraBadge');
+                if (nextBadge) {
+                    nextBadge.textContent = `ERA ${prestigeLevel + 1}`;
+                    nextBadge.className = `p-badge-${nextLevelClass}`;
+                }
+
+                const nextEra = ERAS[nextLevelClass] || ERAS[5];
+                if (_cyber$('nextEraTooltip')) _cyber$('nextEraTooltip').textContent = `Перенос в Эра ${prestigeLevel + 1}: ${nextEra.name.split(': ')[1]}`;
+                if (_cyber$('pendingChipsLabel')) _cyber$('pendingChipsLabel').textContent = `+${pending.toLocaleString()} 🧬`;
+
+                if (_cyber$('evoCurrentBonus')) _cyber$('evoCurrentBonus').textContent = `+${Math.round((getMultiplier() - 1) * 100)}%`;
+
+                const hasAch4 = state.achievements && state.achievements.includes('ach-4');
+                const nextMult = (1 + ((state.nanochips + pending) * (hasAch4 ? 0.024 : 0.02))) - 1;
+                if (_cyber$('evoNextBonus')) _cyber$('evoNextBonus').textContent = `+${Math.round(nextMult * 100)}%`;
+
+                const prestigeBtn = _cyber$('prestigeBtn');
+                if (prestigeBtn) {
+                    if (state.score >= targetCost && pending > 0) {
+                        prestigeBtn.classList.remove('disabled');
+                        prestigeBtn.textContent = `СИНХРОНИЗИРОВАТЬ ЯДРО (+${pending})`;
+                    } else {
+                        prestigeBtn.classList.add('disabled');
+                        prestigeBtn.textContent = state.score < targetCost ? `Мало Кристаллов (нужно ${targetCost.toLocaleString()} 💎)` : "Мало чипов / Кап";
+                    }
+                }
+
+                if (_cyber$('statClicks')) _cyber$('statClicks').textContent = state.clicksCount.toLocaleString();
+                if (_cyber$('statTotalEarned')) _cyber$('statTotalEarned').textContent = Math.floor(state.totalScoreEarned).toLocaleString();
+                if (_cyber$('statEvos')) _cyber$('statEvos').textContent = state.prestigeCount;
+
+                const soundToggle = _cyber$('soundToggle');
+                const animToggle = _cyber$('animToggle');
+                if (soundToggle) { if (state.sound) soundToggle.classList.add('on'); else soundToggle.classList.remove('on'); }
+                if (animToggle) { if (state.animations) animToggle.classList.add('on'); else animToggle.classList.remove('on'); }
+
+                updateSkillUI();
+                checkAchievements();
+                recalcPassive();
+            }
+
+            function checkAchievements() {
+                const checkAndUnlock = (id, condition) => {
+                    const hasAch = state.achievements && state.achievements.includes(id);
+                    if (condition && !hasAch) {
+                        state.achievements.push(id);
+                        const card = _cyber$(id); if (card) card.classList.add('unlocked');
+                        showFloatingNotification("🏆 Ачивка открыта!"); save();
+                    } else if (hasAch) {
+                        const card = _cyber$(id); if (card) card.classList.add('unlocked');
+                    }
+                };
+                checkAndUnlock('ach-1', state.clicksCount >= 100);
+                checkAndUnlock('ach-2', state.totalScoreEarned >= 25000);
+                checkAndUnlock('ach-3', state.maxEnergy >= 150);
+                checkAndUnlock('ach-4', state.prestigeCount >= 1);
+
+                checkAndUnlock('ach-m-click', state.clickLevel >= UPGRADE_CONFIGS.click.max);
+                checkAndUnlock('ach-m-sync', state.syncLevel >= UPGRADE_CONFIGS.sync.max);
+                checkAndUnlock('ach-m-crit', state.critLevel >= UPGRADE_CONFIGS.crit.max);
+                checkAndUnlock('ach-m-efficiency', state.efficiencyLevel >= UPGRADE_CONFIGS.efficiency.max);
+                checkAndUnlock('ach-m-overdrive', state.overdriveLevel >= UPGRADE_CONFIGS.overdrive.max);
+                checkAndUnlock('ach-m-energy', state.energyLevel >= UPGRADE_CONFIGS.energy.max);
+                checkAndUnlock('ach-m-regen', state.regenLevel >= UPGRADE_CONFIGS.regen.max);
+                checkAndUnlock('ach-m-auto1', state.auto1 >= UPGRADE_CONFIGS.auto1.max);
+                checkAndUnlock('ach-m-auto2', state.auto2 >= UPGRADE_CONFIGS.auto2.max);
+                checkAndUnlock('ach-m-auto3', state.auto3 >= UPGRADE_CONFIGS.auto3.max);
+                checkAndUnlock('ach-m-auto4', state.auto4 >= UPGRADE_CONFIGS.auto4.max);
+                checkAndUnlock('ach-m-auto5', state.auto5 >= UPGRADE_CONFIGS.auto5.max);
+                checkAndUnlock('ach-m-factory', state.factoryLevel >= UPGRADE_CONFIGS.factory.max);
+                checkAndUnlock('ach-m-glitch', state.glitchLevel >= UPGRADE_CONFIGS.glitch.max);
+            }
+
+            function showFloatingNotification(text) {
+                const notif = document.createElement('div');
+                notif.style.cssText = `position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--accent), var(--primary)); color: white; padding: 8px 16px; border-radius: 20px; font-size: 11px; font-weight: 700; box-shadow: 0 4px 15px rgba(0,0,0,0.4); z-index: 1001; pointer-events: none; opacity: 0; transition: opacity 0.3s;`;
+                notif.textContent = text; document.body.appendChild(notif);
+                setTimeout(() => notif.style.opacity = '1', 50);
+                setTimeout(() => { notif.style.opacity = '0'; setTimeout(() => notif.remove(), 300); }, 1800);
+            }
+
+            function handleClick() {
+                const ovr = (isNaN(state.skillDuration) ? 0 : state.skillDuration) > 0;
+                const clickBtn = _cyber$('clickButton');
+                if (!clickBtn) return;
+
+                if (!ovr && state.energy < 1) {
+                    clickBtn.style.boxShadow = '0 0 30px rgba(255,50,50,0.5)';
+                    setTimeout(() => clickBtn.style.boxShadow = '', 150);
+                    return;
+                }
+
+                if (!ovr) {
+                    let freeClickChance = Math.min(0.50, state.efficiencyLevel * 0.05);
+                    if (state.achievements && state.achievements.includes('ach-m-efficiency')) freeClickChance += 0.05;
+                    if (Math.random() >= freeClickChance) {
+                        state.energy = Math.max(0, state.energy - 1);
+                    }
+                }
+
+                let gain = getActualClickPower();
+                let isCrit = false;
+                let MathCritMult = 1;
+
+                if (state.critLevel > 0) {
+                    let MathCritChance = state.critLevel * 0.05;
+                    if (Math.random() < MathCritChance) {
+                        isCrit = true;
+                        let extraCrit = (state.achievements && state.achievements.includes('ach-m-crit')) ? 2 : 0;
+                        MathCritMult = Math.random() < 0.2 ? (10 + extraCrit) : (5 + extraCrit);
+                        gain = gain * MathCritMult;
+                    }
+                }
+
+                state.score += gain; state.totalScoreEarned += gain; state.clicksCount++;
+                updateUI();
+
+                if (state.animations) {
+                    const el = document.createElement('div'); el.className = 'float-text';
+                    el.textContent = isCrit ? `💥 КРИТ x${MathCritMult}! +${gain}` : `+${gain}`;
+                    if (isCrit) {
+                        el.style.color = '#fcd34d'; el.style.textShadow = '0 0 15px rgba(252, 211, 77, 0.6), 0 0 5px #fff'; el.style.fontSize = '26px';
+                    } else if (ovr) {
+                        el.style.color = '#f472b6'; el.style.textShadow = '0 0 15px rgba(244, 114, 182, 0.6)';
+                    }
+                    const rect = clickBtn.getBoundingClientRect();
+                    el.style.left = (rect.left + rect.width / 2 - 40 + (Math.random() - 0.5) * 30) + 'px'; el.style.top = rect.top + 'px';
+                    document.body.appendChild(el); setTimeout(() => el.remove(), 650);
+                }
+            }
+
+            function buyUpgrade(type) {
+                const conf = UPGRADE_CONFIGS[type];
+                if (conf && state[conf.key] >= conf.max) {
+                    showFloatingNotification("🔒 Достигнут лимит! Требуется Эволюция.");
+                    return;
+                }
+
+                if (type === 'click' && state.score >= state.clickCost) { state.score -= state.clickCost; state.clickLevel++; state.clickCost = Math.floor(state.clickCost * 1.5) + 2; }
+                if (type === 'sync' && state.score >= state.syncCost) { state.score -= state.syncCost; state.syncLevel++; state.syncCost = Math.floor(state.syncCost * 2.2) + 50; }
+                if (type === 'crit' && state.score >= state.critCost) { state.score -= state.critCost; state.critLevel++; state.critCost = Math.floor(state.critCost * 2.5) + 100; }
+                if (type === 'efficiency' && state.score >= state.efficiencyCost) { state.score -= state.efficiencyCost; state.efficiencyLevel++; state.efficiencyCost = Math.floor(state.efficiencyCost * 2.0) + 150; }
+                if (type === 'overdrive' && state.score >= state.overdriveCost) { state.score -= state.overdriveCost; state.overdriveLevel++; state.overdriveCost = Math.floor(state.overdriveCost * 2.4) + 200; }
+
+                if (type === 'energy' && state.score >= state.energyCost) { state.score -= state.energyCost; state.energyLevel++; state.energyCost = Math.floor(state.energyCost * 1.6) + 5; }
+                if (type === 'regen' && state.score >= state.regenCost) { state.score -= state.regenCost; state.regenLevel++; state.regenCost = Math.floor(state.regenCost * 1.7) + 8; }
+                if (type === 'auto1' && state.score >= state.auto1Cost) { state.score -= state.auto1Cost; state.auto1++; state.auto1Cost = Math.floor(state.auto1Cost * 1.4) + 10; }
+                if (type === 'auto2' && state.score >= state.auto2Cost) { state.score -= state.auto2Cost; state.auto2++; state.auto2Cost = Math.floor(state.auto2Cost * 1.5) + 30; }
+                if (type === 'auto3' && state.score >= state.auto3Cost) { state.score -= state.auto3Cost; state.auto3++; state.auto3Cost = Math.floor(state.auto3Cost * 1.6) + 100; }
+                if (type === 'auto4' && state.score >= state.auto4Cost) { state.score -= state.auto4Cost; state.auto4++; state.auto4Cost = Math.floor(state.auto4Cost * 1.7) + 400; }
+                if (type === 'auto5' && state.score >= state.auto5Cost) { state.score -= state.auto5Cost; state.auto5++; state.auto5Cost = Math.floor(state.auto5Cost * 1.8) + 1500; }
+                if (type === 'factory' && state.score >= state.factoryCost) { state.score -= state.factoryCost; state.factoryLevel++; state.factoryCost = Math.floor(state.factoryCost * 3.0) + 500; }
+                if (type === 'glitch' && state.score >= state.glitchCost) { state.score -= state.glitchCost; state.glitchLevel++; state.glitchCost = Math.floor(state.glitchCost * 2.1) + 100; }
+
+                recalcPassive(); updateUI();
+            }
+
+            function spawnCyberGlitch() {
+                if (activeGlitch) return;
+                const clickArea = _cyber$('clickArea'); if (!clickArea) return;
+                const glitch = document.createElement('div'); glitch.className = 'cyber-glitch';
+                const widthLimit = Math.max(50, clickArea.clientWidth - 50); const heightLimit = Math.max(50, clickArea.clientHeight - 50);
+                glitch.style.left = Math.floor(Math.random() * widthLimit) + 'px'; glitch.style.top = Math.floor(Math.random() * heightLimit) + 'px';
+                clickArea.appendChild(glitch); activeGlitch = glitch;
+
+                glitch.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    let baseReward = Math.max(150, Math.floor(getActualPassive() * 25));
+                    let glitchBonusMultiplier = 1 + (state.glitchLevel * 0.2);
+                    if (state.achievements && state.achievements.includes('ach-m-glitch')) glitchBonusMultiplier += 0.50;
+
+                    const reward = Math.floor(baseReward * glitchBonusMultiplier);
+
+                    state.score += reward; state.totalScoreEarned += reward;
+                    if (state.animations) {
+                        const el = document.createElement('div'); el.className = 'float-text'; el.textContent = `⚡ Взлом: +${reward} 💎`;
+                        el.style.color = '#e879f9'; el.style.left = e.clientX + 'px'; el.style.top = e.clientY + 'px';
+                        document.body.appendChild(el); setTimeout(() => el.remove(), 1000);
+                    }
+                    glitch.remove(); activeGlitch = null;
                 });
-                save();
-            } catch(e) {
-                console.error("Ошибка транзакции ID, переход в локальный режим", e);
-                state.userId = "user-" + Math.floor(10000 + Math.random() * 90000);
-                state.username = state.userId;
-                save();
+                setTimeout(() => { if (glitch.parentNode) { glitch.remove(); activeGlitch = null; } }, 7000);
             }
-        }
-        if ($('displayUserId')) $('displayUserId').textContent = state.userId;
-        if ($('usernameInput')) $('usernameInput').value = state.username;
-        syncWithDatabase();
-    }
 
-    async function syncWithDatabase() {
-        if (!db || !state.userId || state.userId === "offline-user" || !navigator.onLine) return;
-        try {
-            await db.collection('users').doc(state.userId).set({
-                id: state.userId,
-                username: state.username,
-                score: Math.floor(state.totalScoreEarned),
-                prestige: state.prestigeCount || 0
-            }, { merge: true });
-        } catch(e) {}
-    }
-
-    async function fetchLeaderboard() {
-        const container = $('leaderboardContainer');
-        if (!container) return;
-        if (!db || !navigator.onLine) {
-            container.innerHTML = `<div style="text-align:center;color:#8888bb;padding:20px;font-size:11px;">Работает автономно. Подключите сеть для синхронизации.</div>`;
-            return;
-        }
-        try {
-            const snapshot = await db.collection('users').orderBy('score', 'desc').limit(50).get();
-            container.innerHTML = "";
-            let rank = 1;
-            snapshot.forEach((doc) => {
-                const player = doc.data();
-                const playerId = doc.id; 
-                const playerUsername = player.username || playerId;
-                const playerPrestige = player.prestige || 0;
-                
-                let placeClass = "";
-                let medal = "";
-                if (rank === 1) { placeClass = "place-1"; medal = "🥇 "; }
-                else if (rank === 2) { placeClass = "place-2"; medal = "🥈 "; }
-                else if (rank === 3) { placeClass = "place-3"; medal = "🥉 "; }
-                if (playerId === state.userId) placeClass += " current-user";
-
-                const badgeClass = `p-badge-${Math.min(playerPrestige, 5)}`;
-
-                const row = document.createElement('div');
-                row.className = `leader-row ${placeClass}`;
-                row.innerHTML = `
-                    <div class="leader-left">
-                        <span class="leader-rank">${medal || rank}</span>
-                        <span class="leader-prestige-badge ${badgeClass}">${playerPrestige}</span>
-                        <span class="leader-name">${playerUsername} ${playerId === state.userId ? '(Вы)' : ''}</span>
-                    </div>
-                    <span class="leader-score">${Math.floor(player.score || 0).toLocaleString()} 💎</span>
-                `;
-                container.appendChild(row);
-                rank++;
-            });
-        } catch(e) {
-            container.innerHTML = `<div style="text-align:center;color:#f87171;padding:20px;font-size:11px;">Не удалось загрузить таблицу лидеров.</div>`;
-        }
-    }
-
-    function sanitizeState(loaded) {
-        const base = JSON.parse(JSON.stringify(DEFAULT_STATE));
-        if (!loaded || typeof loaded !== 'object') return base;
-        const sanitized = {};
-        for (let key in base) {
-            if (loaded.hasOwnProperty(key) && loaded[key] !== undefined && loaded[key] !== null) {
-                if (Array.isArray(base[key])) {
-                    sanitized[key] = Array.isArray(loaded[key]) ? loaded[key] : [];
-                } else if (typeof base[key] === 'number') {
-                    sanitized[key] = isNaN(Number(loaded[key])) ? base[key] : Number(loaded[key]);
-                } else if (typeof base[key] === 'boolean') {
-                    sanitized[key] = Boolean(loaded[key]);
-                } else {
-                    sanitized[key] = loaded[key];
+            // Кастомный диалог подтверждения
+            let onConfirmCallback = null;
+            function showCustomConfirm(text, callback) {
+                const overlay = _cyber$('confirmOverlay');
+                const textEl = _cyber$('confirmModalText');
+                if (!overlay || !textEl) {
+                    // Safe auto-approve fallback inside offline sandbox environments
+                    console.log("Safe auto-confirm fallback approved: ", text);
+                    callback();
+                    return;
                 }
+                textEl.textContent = text;
+                onConfirmCallback = callback;
+                overlay.style.display = 'flex';
+            }
+
+            function doPrestige() {
+                const pending = getPendingChips();
+                const cost = getPrestigeCost(state.prestigeCount);
+                if (state.score < cost || pending < 1) return;
+
+                showCustomConfirm(`Вы уверены? Это обнулит текущий баланс и заводы, но выдаст +${pending} Нейрочипов.`, () => {
+                    const nanos = state.nanochips + pending; const evos = state.prestigeCount + 1;
+                    const historyScore = state.totalScoreEarned; const clicks = state.clicksCount;
+                    const uid = state.userId; const uname = state.username; const achs = [...(state.achievements || [])];
+
+                    state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+                    state.userId = uid; state.username = uname; state.nanochips = nanos; state.prestigeCount = evos;
+                    state.totalScoreEarned = historyScore; state.clicksCount = clicks; state.achievements = achs;
+
+                    save(); recalcPassive(); updateUI(); syncWithDatabase();
+                    triggerPrestigeCelebration(pending, evos);
+                });
+            }
+
+            // НАДЕЖНОЕ ДЕЛЕГИРОВАНИЕ КЛИКОВ (ЗАЩИТА ВНУТРИ КОДА)
+            function initEventDelegation() {
+                const app = _cyber$('app');
+                if (!app) return;
+
+                app.addEventListener('click', function (e) {
+                    const target = e.target;
+
+                    // Клик по главному ядру (с поддержкой внутренних дочерних элементов)
+                    if (target.id === 'clickButton' || target.closest('#clickButton')) {
+                        handleClick();
+                        return;
+                    }
+
+                    // Клик по супер-навыку
+                    if (target.id === 'skillBtn' || target.closest('#skillBtn')) {
+                        const cooldown = isNaN(state.skillCooldown) ? 0 : state.skillCooldown;
+                        if (cooldown <= 0) {
+                            state.skillDuration = 10 + (state.overdriveLevel || 0);
+                            let reduction = (state.achievements && state.achievements.includes('ach-m-overdrive')) ? 2.0 : 0;
+                            state.skillCooldown = Math.max(25, 60 - ((state.overdriveLevel || 0) * 2.5) - reduction);
+                            updateUI();
+                        }
+                        return;
+                    }
+
+                    // Клик по кнопке Эволюции
+                    if (target.id === 'prestigeBtn' || target.closest('#prestigeBtn')) {
+                        doPrestige();
+                        return;
+                    }
+
+                    // Покупка улучшений по их ID (безопасное делегирование с closest)
+                    const buyBtn = target.closest('button[id^="buy"]');
+                    if (buyBtn) {
+                        const type = buyBtn.id.replace('buy', '').toLowerCase();
+                        buyUpgrade(type);
+                        return;
+                    }
+
+                    // Кнопка сохранения имени
+                    const saveNameBtn = target.closest('#saveUsernameBtn');
+                    if (saveNameBtn) {
+                        const usernameInput = _cyber$('usernameInput');
+                        if (!usernameInput) return;
+                        let cleanName = usernameInput.value.trim().substring(0, 14);
+                        if (cleanName) {
+                            state.username = cleanName;
+                            save();
+                            showFloatingNotification("🔄 Синхронизация имени...");
+                            syncWithDatabase().then(() => {
+                                showFloatingNotification("✅ Имя успешно изменено в сети!");
+                            });
+                        } else {
+                            showFloatingNotification("❌ Имя не может быть пустым");
+                        }
+                        return;
+                    }
+
+                    // Переключатели звуков и эффектов
+                    const sToggle = target.closest('#soundToggle');
+                    if (sToggle) { state.sound = !state.sound; sToggle.classList.toggle('on'); return; }
+
+                    const aToggle = target.closest('#animToggle');
+                    if (aToggle) { state.animations = !state.animations; aToggle.classList.toggle('on'); return; }
+
+                    // Закрытие модального окна престижа
+                    const closeCelBtn = target.closest('#closeCelebrationBtn');
+                    if (closeCelBtn) {
+                        if (_cyber$('prestigeOverlay')) _cyber$('prestigeOverlay').classList.remove('triggered');
+                        setTimeout(() => { if (_cyber$('prestigeOverlay')) _cyber$('prestigeOverlay').style.display = 'none'; }, 500);
+                        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+                        const upgradesTab = document.querySelector('[data-tab="upgrades"]');
+                        if (upgradesTab) upgradesTab.classList.add('active');
+                        if (_cyber$('panel-upgrades')) _cyber$('panel-upgrades').classList.add('active');
+                        return;
+                    }
+
+                    // Подтверждение или отмена в кастомном модальном окне
+                    if (target.id === 'confirmYesBtn') {
+                        if (onConfirmCallback) onConfirmCallback();
+                        const overlay = _cyber$('confirmOverlay');
+                        if (overlay) overlay.style.display = 'none';
+                        onConfirmCallback = null;
+                        return;
+                    }
+
+                    if (target.id === 'confirmNoBtn') {
+                        const overlay = _cyber$('confirmOverlay');
+                        if (overlay) overlay.style.display = 'none';
+                        onConfirmCallback = null;
+                        return;
+                    }
+
+                    // Переключение Табов меню
+                    const tabBtn = target.closest('.tab');
+                    if (tabBtn && tabBtn.dataset.tab) {
+                        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+                        tabBtn.classList.add('active');
+                        const panel = _cyber$('panel-' + tabBtn.dataset.tab);
+                        if (panel) panel.classList.add('active');
+                        if (tabBtn.dataset.tab === 'leaderboard') fetchLeaderboard();
+                        return;
+                    }
+                });
+            }
+
+            const initGame = () => {
+                load();
+                initNetworkProfile();
+                checkPWAUpdates();
+                updateUI();
+                initEventDelegation();
+
+                setInterval(() => {
+                    state.energy = Math.min(state.maxEnergy, state.energy + getActualMemoryRegen());
+                    state.score += getActualPassive();
+                    state.totalScoreEarned += getActualPassive();
+
+                    let duration = isNaN(state.skillDuration) ? 0 : state.skillDuration;
+                    let cooldown = isNaN(state.skillCooldown) ? 0 : state.skillCooldown;
+
+                    if (duration > 0) {
+                        duration--;
+                        state.skillDuration = duration;
+                    } else if (cooldown > 0) {
+                        cooldown--;
+                        state.skillCooldown = cooldown;
+                    }
+
+                    updateUI();
+                }, 1000);
+
+                setInterval(syncWithDatabase, 15000);
+                setInterval(() => {
+                    let spawnChance = 0.15 + (state.glitchLevel * 0.03);
+                    if (Math.random() < spawnChance) spawnCyberGlitch();
+                }, 15000);
+                setInterval(save, 3000);
+            };
+
+            if (document.readyState === 'complete' || document.readyState === 'interactive') {
+                initGame();
             } else {
-                sanitized[key] = base[key];
+                window.addEventListener('load', initGame);
             }
-        }
-        return sanitized;
-    }
 
-    function save() { try { localStorage.setItem('cyberClicker_v2_net', JSON.stringify(state)); } catch(e) {} }
-    function load() {
-        try {
-            const raw = localStorage.getItem('cyberClicker_v2_net');
-            if (raw) state = sanitizeState(JSON.parse(raw));
-        } catch(e) {}
-        recalcPassive();
-    }
-
-    function getPendingChips() {
-        if (!state.totalScoreEarned || state.totalScoreEarned < 5000) return 0;
-        return Math.max(0, Math.floor(Math.sqrt(state.totalScoreEarned / 2000) * 3) - (state.nanochips || 0));
-    }
-
-    function getMultiplier() { return 1 + ((state.nanochips || 0) * (state.achievements.includes('ach-4') ? 0.024 : 0.02)); }
-    
-    function getActualClickPower() { 
-        let basePower = state.clickPower || 1;
-        let passiveSynergy = Math.floor(getActualPassive() * 0.05 * (state.syncLevel || 0));
-        let totalBase = basePower + passiveSynergy;
-        
-        return Math.floor(totalBase * (state.achievements.includes('ach-1') ? 1.1 : 1) * getMultiplier() * (state.skillDuration > 0 ? 3 : 1)); 
-    }
-
-    function getActualPassive() { 
-        let rawBase = ((state.auto1 * 1) + (state.auto2 * 5) + (state.auto3 * 25) + (state.auto4 * 150) + (state.auto5 * 1000));
-        let factoryMultiplier = 1 + (state.factoryLevel * 0.1); // +10% за уровень квантователя
-        let computed = Math.floor(rawBase * factoryMultiplier * (state.achievements.includes('ach-2') ? 1.15 : 1) * getMultiplier());
-        return computed;
-    }
-    
-    function getActualMemoryRegen() { return (state.energyRegen || 0.5) + (state.achievements.includes('ach-3') ? 1.0 : 0); }
-
-    function recalcPassive() {
-        state.passiveTotal = getActualPassive();
-        if ($('totalPassiveDisplay')) $('totalPassiveDisplay').textContent = state.passiveTotal.toLocaleString();
-        if ($('passiveDisplay')) $('passiveDisplay').textContent = state.passiveTotal.toLocaleString();
-    }
-
-    function updateSkillUI() {
-        const clickBtn = $('clickButton');
-        const skillBtn = $('skillBtn');
-        if (!clickBtn || !skillBtn) return;
-        
-        // Считаем динамический откат перегрузки на основе уровня Хроно-Инжектора
-        let baseCooldown = Math.max(35, 60 - (state.overdriveLevel * 2.5));
-
-        if (state.skillDuration > 0) {
-            clickBtn.classList.add('overdrive-active');
-            skillBtn.classList.add('cooldown');
-            skillBtn.textContent = `ПЕРЕГРУЗКА АКТИВНА (${state.skillDuration}с)`;
-        } else if (state.skillCooldown > 0) {
-            clickBtn.classList.remove('overdrive-active');
-            skillBtn.classList.add('cooldown');
-            skillBtn.textContent = `ПЕРЕЗАРЯДКА (${state.skillCooldown}с)`;
-        } else {
-            clickBtn.classList.remove('overdrive-active');
-            skillBtn.classList.remove('cooldown');
-            skillBtn.textContent = `🔥 ПЕРЕГРУЗКА ЯДРА`;
-        }
-    }
-
-    function updateUI() {
-        if ($('scoreDisplay')) $('scoreDisplay').textContent = Math.floor(state.score).toLocaleString();
-        if ($('energyDisplay')) $('energyDisplay').textContent = Math.floor(state.energy);
-        if ($('energyFill')) $('energyFill').style.width = Math.max(0, Math.min(100, (state.energy / state.maxEnergy) * 100)) + '%';
-        if ($('clickPowerLabel')) $('clickPowerLabel').textContent = `+${getActualClickPower()} ⚡`;
-
-        if ($('clickPriceDisplay')) $('clickPriceDisplay').textContent = `${state.clickCost.toLocaleString()} 💎`;
-        if ($('syncPriceDisplay')) $('syncPriceDisplay').textContent = `${state.syncCost.toLocaleString()} 💎`;
-        if ($('critPriceDisplay')) $('critPriceDisplay').textContent = `${state.critCost.toLocaleString()} 💎`;
-        if ($('efficiencyPriceDisplay')) $('efficiencyPriceDisplay').textContent = `${state.efficiencyCost.toLocaleString()} 💎`;
-        if ($('overdrivePriceDisplay')) $('overdrivePriceDisplay').textContent = `${state.overdriveCost.toLocaleString()} 💎`;
-        
-        if ($('energyPriceDisplay')) $('energyPriceDisplay').textContent = `${state.energyCost.toLocaleString()} 💎`;
-        if ($('regenPriceDisplay')) $('regenPriceDisplay').textContent = `${state.regenCost.toLocaleString()} 💎`;
-        if ($('auto1PriceDisplay')) $('auto1PriceDisplay').textContent = `${state.auto1Cost.toLocaleString()} 💎`;
-        if ($('auto2PriceDisplay')) $('auto2PriceDisplay').textContent = `${state.auto2Cost.toLocaleString()} 💎`;
-        if ($('auto3PriceDisplay')) $('auto3PriceDisplay').textContent = `${state.auto3Cost.toLocaleString()} 💎`;
-        if ($('auto4PriceDisplay')) $('auto4PriceDisplay').textContent = `${state.auto4Cost.toLocaleString()} 💎`;
-        if ($('auto5PriceDisplay')) $('auto5PriceDisplay').textContent = `${state.auto5Cost.toLocaleString()} 💎`;
-        if ($('factoryPriceDisplay')) $('factoryPriceDisplay').textContent = `${state.factoryCost.toLocaleString()} 💎`;
-        if ($('glitchPriceDisplay')) $('glitchPriceDisplay').textContent = `${state.glitchCost.toLocaleString()} 💎`;
-
-        checkUpgradeAvailability('click', state.clickCost);
-        checkUpgradeAvailability('sync', state.syncCost);
-        checkUpgradeAvailability('crit', state.critCost);
-        checkUpgradeAvailability('efficiency', state.efficiencyCost);
-        checkUpgradeAvailability('overdrive', state.overdriveCost);
-        
-        checkUpgradeAvailability('energy', state.energyCost);
-        checkUpgradeAvailability('regen', state.regenCost);
-        checkUpgradeAvailability('auto1', state.auto1Cost);
-        checkUpgradeAvailability('auto2', state.auto2Cost);
-        checkUpgradeAvailability('auto3', state.auto3Cost);
-        checkUpgradeAvailability('auto4', state.auto4Cost);
-        checkUpgradeAvailability('auto5', state.auto5Cost);
-        checkUpgradeAvailability('factory', state.factoryCost);
-        checkUpgradeAvailability('glitch', state.glitchCost);
-
-        const appContainer = $('app');
-        const prestigeLevel = state.prestigeCount || 0;
-        const levelClass = Math.min(prestigeLevel, 5);
-        if (appContainer) {
-            for (let i = 0; i <= 5; i++) appContainer.classList.remove('p-level-' + i);
-            appContainer.classList.add('p-level-' + levelClass);
-        }
-
-        if ($('eraTitle')) $('eraTitle').textContent = `ЭРА ${prestigeLevel}: ${(ERAS[levelClass] || ERAS[5]).name.split(': ')[1]}`;
-        if ($('chipsHeaderDisplay')) $('chipsHeaderDisplay').textContent = `${(state.nanochips || 0).toLocaleString()} (Lvl ${prestigeLevel})`;
-
-        const pending = getPendingChips();
-        if ($('currentChips')) $('currentChips').textContent = (state.nanochips || 0).toLocaleString();
-        if ($('pendingChips')) $('pendingChips').textContent = pending.toLocaleString();
-        if ($('evoTotalEarnedHistory')) $('evoTotalEarnedHistory').textContent = Math.floor(state.totalScoreEarned || 0).toLocaleString();
-
-        const nextLevelClass = Math.min(prestigeLevel + 1, 5);
-        const nextEra = ERAS[nextLevelClass] || ERAS[5];
-        if ($('nextEraTooltip')) $('nextEraTooltip').textContent = `Следующая эра: Lvl ${prestigeLevel + 1} (${nextEra.name})`;
-
-        if ($('evoCurrentBonus')) $('evoCurrentBonus').textContent = `+${Math.round((getMultiplier() - 1) * 100)}%`;
-        if ($('evoNextBonus')) $('evoNextBonus').textContent = `+${Math.round(((1 + ((state.nanochips + pending) * (state.achievements.includes('ach-4') ? 0.024 : 0.02))) - 1) * 100)}%`;
-        
-        const prestigeBtn = $('prestigeBtn');
-        if (prestigeBtn) {
-            if (state.score >= 5000 && pending > 0) {
-                prestigeBtn.classList.remove('disabled');
-                prestigeBtn.textContent = `ЭВОЛЮЦИОНИРОВАТЬ (+${pending})`;
-            } else {
-                prestigeBtn.classList.add('disabled');
-                prestigeBtn.textContent = state.score < 5000 ? "Нужно 5k 💎" : "Мало чипов";
-            }
-        }
-
-        if ($('statClicks')) $('statClicks').textContent = state.clicksCount.toLocaleString();
-        if ($('statTotalEarned')) $('statTotalEarned').textContent = Math.floor(state.totalScoreEarned).toLocaleString();
-        if ($('statEvos')) $('statEvos').textContent = state.prestigeCount;
-
-        const soundToggle = $('soundToggle');
-        const animToggle = $('animToggle');
-        if (soundToggle) { if (state.sound) soundToggle.classList.add('on'); else soundToggle.classList.remove('on'); }
-        if (animToggle) { if (state.animations) animToggle.classList.add('on'); else animToggle.classList.remove('on'); }
-
-        updateSkillUI();
-        checkAchievements();
-        recalcPassive();
-    }
-
-    function checkUpgradeAvailability(id, cost) {
-        const btn = $(`buy${id.charAt(0).toUpperCase() + id.slice(1)}`);
-        const block = $(`upgrade-${id}`);
-        if (!btn) return;
-        if (state.score < cost) { btn.classList.add('locked'); if (block) block.classList.add('locked-panel'); }
-        else { btn.classList.remove('locked'); if (block) block.classList.remove('locked-panel'); }
-    }
-
-    function checkAchievements() {
-        const checkAndUnlock = (id, condition) => {
-            if (condition && !state.achievements.includes(id)) {
-                state.achievements.push(id);
-                const card = $(id); if (card) card.classList.add('unlocked');
-                showFloatingNotification(`🏆 Ачивка открыта!`); save();
-            } else if (state.achievements.includes(id)) {
-                const card = $(id); if (card) card.classList.add('unlocked');
-            }
-        };
-        checkAndUnlock('ach-1', state.clicksCount >= 100);
-        checkAndUnlock('ach-2', state.totalScoreEarned >= 25000);
-        checkAndUnlock('ach-3', state.maxEnergy >= 150);
-        checkAndUnlock('ach-4', state.prestigeCount >= 1);
-    }
-
-    function showFloatingNotification(text) {
-        const notif = document.createElement('div');
-        notif.style.cssText = `position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--accent), var(--primary)); color: white; padding: 8px 16px; border-radius: 20px; font-size: 11px; font-weight: 700; box-shadow: 0 4px 15px rgba(0,0,0,0.4); z-index: 1001; pointer-events: none; opacity: 0; transition: opacity 0.3s;`;
-        notif.textContent = text; document.body.appendChild(notif);
-        setTimeout(() => notif.style.opacity = '1', 50);
-        setTimeout(() => { notif.style.opacity = '0'; setTimeout(() => notif.remove(), 300); }, 1800);
-    }
-
-    function handleClick() {
-        const ovr = state.skillDuration > 0;
-        const clickBtn = $('clickButton');
-        if (!clickBtn) return;
-        
-        if (!ovr && state.energy < 1) {
-            clickBtn.style.boxShadow = '0 0 30px rgba(255,50,50,0.8)';
-            setTimeout(() => clickBtn.style.boxShadow = '', 150);
-            return;
-        }
-        
-        if (!ovr) {
-            // Шанс бесплатного клика благодаря Импульсному Оптимизатору (5% за уровень, макс 50%)
-            let freeClickChance = Math.min(0.50, state.efficiencyLevel * 0.05);
-            if (Math.random() >= freeClickChance) {
-                state.energy = Math.max(0, state.energy - 1);
-            }
-        }
-        
-        let gain = getActualClickPower();
-        let isCrit = false;
-        let critMultiplier = 1;
-        
-        if (state.critLevel > 0) {
-            let critChance = state.critLevel * 0.05; 
-            if (Math.random() < critChance) {
-                isCrit = true;
-                critMultiplier = Math.random() < 0.2 ? 10 : 5; 
-                gain = gain * critMultiplier;
-            }
-        }
-
-        state.score += gain; state.totalScoreEarned += gain; state.clicksCount++;
-        updateUI();
-
-        if (state.animations) {
-            const el = document.createElement('div'); el.className = 'float-text'; 
-            el.textContent = isCrit ? `💥 КРИТ x${critMultiplier}! +${gain}` : `+${gain}`;
-            if (isCrit) {
-                el.style.color = '#fbbf24';
-                el.style.textShadow = '0 0 20px #fbbf24, 0 0 10px #fff';
-                el.style.fontSize = '26px';
-            } else if (ovr) {
-                el.style.color = '#ff007f'; el.style.textShadow = '0 0 15px #ff007f';
-            }
-            const rect = clickBtn.getBoundingClientRect();
-            el.style.left = (rect.left + rect.width/2 - 40 + (Math.random()-0.5)*30) + 'px'; el.style.top = rect.top + 'px';
-            document.body.appendChild(el); setTimeout(() => el.remove(), 650);
-        }
-    }
-
-    function buyUpgrade(type) {
-        if (type === 'click' && state.score >= state.clickCost) { state.score -= state.clickCost; state.clickPower++; state.clickCost = Math.floor(state.clickCost * 1.5) + 2; }
-        if (type === 'sync' && state.score >= state.syncCost) { state.score -= state.syncCost; state.syncLevel++; state.syncCost = Math.floor(state.syncCost * 2.2) + 50; }
-        if (type === 'crit' && state.score >= state.critCost) { state.score -= state.critCost; state.critLevel++; state.critCost = Math.floor(state.critCost * 2.5) + 100; }
-        if (type === 'efficiency' && state.score >= state.efficiencyCost) { state.score -= state.efficiencyCost; state.efficiencyLevel++; state.efficiencyCost = Math.floor(state.efficiencyCost * 2.0) + 150; }
-        if (type === 'overdrive' && state.score >= state.overdriveCost) { state.score -= state.overdriveCost; state.overdriveLevel++; state.overdriveCost = Math.floor(state.overdriveCost * 2.4) + 200; }
-        
-        if (type === 'energy' && state.score >= state.energyCost) { state.score -= state.energyCost; state.maxEnergy += 10; state.energy += 10; state.energyCost = Math.floor(state.energyCost * 1.6) + 5; }
-        if (type === 'regen' && state.score >= state.regenCost) { state.score -= state.regenCost; state.energyRegen += 0.5; state.regenCost = Math.floor(state.regenCost * 1.7) + 8; }
-        if (type === 'auto1' && state.score >= state.auto1Cost) { state.score -= state.auto1Cost; state.auto1++; state.auto1Cost = Math.floor(state.auto1Cost * 1.4) + 10; }
-        if (type === 'auto2' && state.score >= state.auto2Cost) { state.score -= state.auto2Cost; state.auto2++; state.auto2Cost = Math.floor(state.auto2Cost * 1.5) + 30; }
-        if (type === 'auto3' && state.score >= state.auto3Cost) { state.score -= state.auto3Cost; state.auto3++; state.auto3Cost = Math.floor(state.auto3Cost * 1.6) + 100; }
-        if (type === 'auto4' && state.score >= state.auto4Cost) { state.score -= state.auto4Cost; state.auto4++; state.auto4Cost = Math.floor(state.auto4Cost * 1.7) + 400; }
-        if (type === 'auto5' && state.score >= state.auto5Cost) { state.score -= state.auto5Cost; state.auto5++; state.auto5Cost = Math.floor(state.auto5Cost * 1.8) + 1500; }
-        if (type === 'factory' && state.score >= state.factoryCost) { state.score -= state.factoryCost; state.factoryLevel++; state.factoryCost = Math.floor(state.factoryCost * 3.0) + 500; }
-        if (type === 'glitch' && state.score >= state.glitchCost) { state.score -= state.glitchCost; state.glitchLevel++; state.glitchCost = Math.floor(state.glitchCost * 2.1) + 100; }
-        
-        recalcPassive(); updateUI();
-    }
-
-    function spawnCyberGlitch() {
-        if (activeGlitch) return;
-        const clickArea = $('clickArea'); if (!clickArea) return;
-        const glitch = document.createElement('div'); glitch.className = 'cyber-glitch';
-        const widthLimit = Math.max(50, clickArea.clientWidth - 50); const heightLimit = Math.max(50, clickArea.clientHeight - 50);
-        glitch.style.left = Math.floor(Math.random() * widthLimit) + 'px'; glitch.style.top = Math.floor(Math.random() * heightLimit) + 'px';
-        clickArea.appendChild(glitch); activeGlitch = glitch;
-
-        glitch.addEventListener('click', (e) => {
-            e.stopPropagation(); 
-            // Множитель базовой пассивной награды от Глитч-Модема (+20% за лвл)
-            let baseReward = Math.max(150, Math.floor(getActualPassive() * 25));
-            let glitchBonusMultiplier = 1 + (state.glitchLevel * 0.2);
-            const reward = Math.floor(baseReward * glitchBonusMultiplier);
-
-            state.score += reward; state.totalScoreEarned += reward;
-            if (state.animations) {
-                const el = document.createElement('div'); el.className = 'float-text'; el.textContent = `⚡ Взлом: +${reward} 💎`;
-                el.style.color = '#ff00ff'; el.style.left = e.clientX + 'px'; el.style.top = e.clientY + 'px';
-                document.body.appendChild(el); setTimeout(() => el.remove(), 1000);
-            }
-            glitch.remove(); activeGlitch = null;
-        });
-        setTimeout(() => { if (glitch.parentNode) { glitch.remove(); activeGlitch = null; } }, 7000);
-    }
-
-    function doPrestige() {
-        const pending = getPendingChips();
-        if (state.score < 5000 || pending < 1) return;
-        if (confirm(`Вы уверены? Это обнулит текущий баланс и заводы, но выдаст +${pending} Нейрочипов.`)) {
-            const nanos = state.nanochips + pending; const evos = state.prestigeCount + 1;
-            const historyScore = state.totalScoreEarned; const clicks = state.clicksCount;
-            const uid = state.userId; const uname = state.username; const achs = [...state.achievements];
-
-            state = JSON.parse(JSON.stringify(DEFAULT_STATE));
-            state.userId = uid; state.username = uname; state.nanochips = nanos; state.prestigeCount = evos;
-            state.totalScoreEarned = historyScore; state.clicksCount = clicks; state.achievements = achs;
-
-            save(); recalcPassive(); updateUI(); syncWithDatabase();
-            triggerPrestigeCelebration(pending, evos);
-        }
-    }
-
-    // ===== НАДЕЖНЫЙ ОБРАБОТЧИК ЗАПУСКА СИСТЕМЫ И ПРИВЯЗКИ КНОПОК =====
-    window.addEventListener('load', () => {
-        load();
-        updateUI();
-        initNetworkProfile();
-        checkPWAUpdates();
-
-        if ($('clickButton')) $('clickButton').addEventListener('click', handleClick);
-        if ($('skillBtn')) $('skillBtn').addEventListener('click', () => { 
-            if (state.skillCooldown === 0) { 
-                // Длительность перегрузки растет благодаря Хроно-Инжектору (+1с за лвл)
-                state.skillDuration = 10 + state.overdriveLevel; 
-                state.skillCooldown = Math.max(35, 60 - (state.overdriveLevel * 2.5)); 
-                updateUI(); 
-            } 
-        });
-        if ($('prestigeBtn')) $('prestigeBtn').addEventListener('click', doPrestige);
-
-        $('buyClick').addEventListener('click', () => buyUpgrade('click'));
-        $('buySync').addEventListener('click', () => buyUpgrade('sync'));
-        $('buyCrit').addEventListener('click', () => buyUpgrade('crit'));
-        $('buyEfficiency').addEventListener('click', () => buyUpgrade('efficiency'));
-        $('buyOverdrive').addEventListener('click', () => buyUpgrade('overdrive'));
-        
-        $('buyEnergy').addEventListener('click', () => buyUpgrade('energy'));
-        $('buyRegen').addEventListener('click', () => buyUpgrade('regen'));
-        $('buyAuto1').addEventListener('click', () => buyUpgrade('auto1'));
-        $('buyAuto2').addEventListener('click', () => buyUpgrade('auto2'));
-        $('buyAuto3').addEventListener('click', () => buyUpgrade('auto3'));
-        $('buyAuto4').addEventListener('click', () => buyUpgrade('auto4'));
-        $('buyAuto5').addEventListener('click', () => buyUpgrade('auto5'));
-        $('buyFactory').addEventListener('click', () => buyUpgrade('factory'));
-        $('buyGlitch').addEventListener('click', () => buyUpgrade('glitch'));
-
-        if ($('saveUsernameBtn')) {
-            $('saveUsernameBtn').addEventListener('click', async function() {
-                const usernameInput = $('usernameInput');
-                if (!usernameInput) return;
-                let cleanName = usernameInput.value.trim().substring(0, 14);
-                if (cleanName) {
-                    state.username = cleanName;
-                    save();
-                    showFloatingNotification("🔄 Синхронизация имени...");
-                    await syncWithDatabase();
-                    showFloatingNotification("✅ Имя успешно изменено в сети!");
-                } else {
-                    showFloatingNotification("❌ Имя не может быть пустым");
-                }
-            });
-        }
-
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-                tab.classList.add('active');
-                const panel = $('panel-' + tab.dataset.tab);
-                if (panel) panel.classList.add('active');
-                if (tab.dataset.tab === 'leaderboard') fetchLeaderboard();
-            });
-        });
-
-        if ($('soundToggle')) $('soundToggle').addEventListener('click', function() { state.sound = !state.sound; this.classList.toggle('on'); });
-        if ($('animToggle')) $('animToggle').addEventListener('click', function() { state.animations = !state.animations; this.classList.toggle('on'); });
-        
-        if ($('closeCelebrationBtn')) {
-            $('closeCelebrationBtn').addEventListener('click', () => {
-                if ($('prestigeOverlay')) $('prestigeOverlay').classList.remove('triggered');
-                setTimeout(() => { if ($('prestigeOverlay')) $('prestigeOverlay').style.display = 'none'; }, 500);
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-                const upgradesTab = document.querySelector('[data-tab="upgrades"]');
-                if (upgradesTab) upgradesTab.classList.add('active');
-                if ($('panel-upgrades')) $('panel-upgrades').classList.add('active');
-            });
-        }
-
-        // Фоновые интервалы процессов ядра
-        setInterval(() => {
-            state.energy = Math.min(state.maxEnergy, state.energy + getActualMemoryRegen());
-            state.score += (getActualPassive() / 1); state.totalScoreEarned += (getActualPassive() / 1);
-            if (state.skillDuration > 0) state.skillDuration--; else if (state.skillCooldown > 0) state.skillCooldown--;
-            updateUI();
-        }, 1000);
-
-        setInterval(syncWithDatabase, 15000);
-        
-        // Интервал появления глитч-сфер, ускоряемый Глитч-Модемом
-        setInterval(() => {
-            let spawnChance = 0.15 + (state.glitchLevel * 0.03); // +3% шанс появления каждые 15с
-            if (Math.random() < spawnChance) spawnCyberGlitch();
-        }, 15000);
-        
-        setInterval(save, 3000);
-    });
-
-    document.addEventListener('visibilitychange', () => { if (document.hidden) { save(); syncWithDatabase(); } });
+            document.addEventListener('visibilitychange', () => { if (document.hidden) { save(); syncWithDatabase(); } });
+        })();
     </script>
 </body>
 </html>
