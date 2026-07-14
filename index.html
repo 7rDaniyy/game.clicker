@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Кибер-Эволюция: Сингулярность</title>
     <link rel="manifest" href='data:application/json,{"name":"Кибер-Эволюция","short_name":"Кибер","display":"standalone","orientation":"portrait","icons":[{"src":"data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22100%22 fill=%22%230a0a1a%22 /%3E%3Ccircle cx=%22256%22 cy=%22256%22 r=%22180%22 fill=%22none%22 stroke=%22%2300f0ff%22 stroke-width=%2220%22 /%3E%3Cpath d=%22M256 76 L256 436 M76 256 L436 256%22 stroke=%22%2300f0ff%22 stroke-width=%2220%22 /%3E%3Ccircle cx=%22256%22 cy=%22256%22 r=%2240%22 fill=%22%2300f0ff%22 /%3E%3C/svg%3E","sizes":"512x512","type":"image/svg+xml"}]}'>
+    
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
     <style>
         /* Глобальный сброс стилей */
         * {
@@ -29,7 +33,7 @@
         }
 
         /* ===== ТЕМЫ ПРЕСТИЖЕЙ С ГЛУБОКИМИ ГРАДИЕНТАМИ ДЛЯ АНИМАЦИИ ===== */
-
+        
         /* Уровень 0: Аналоговая Система (Тухло и тускло) */
         #app.p-level-0 {
             --primary: #8a7a6e;
@@ -39,7 +43,7 @@
             --btn-grad: radial-gradient(circle at 30% 30%, #5a524b, #2b2622);
             --btn-glow: rgba(138, 122, 110, 0.1);
         }
-
+        
         /* Уровень 1: Неоновый Взрыв */
         #app.p-level-1 {
             --primary: #00f0ff;
@@ -92,17 +96,9 @@
 
         /* АНИМАЦИЯ МЯГКОГО ЖИВОГО ФОНА */
         @keyframes soft-bg-glow {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         /* Основной контейнер */
@@ -158,7 +154,7 @@
         }
 
         .stat-value {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
             background: linear-gradient(135deg, var(--primary), var(--accent));
             -webkit-background-clip: text;
@@ -173,17 +169,17 @@
             transition: color 0.5s;
         }
 
-            .stat-value.energy {
-                font-size: 13px;
-                -webkit-text-fill-color: #fbbf24;
-                background: none;
-            }
+        .stat-value.energy {
+            font-size: 12px;
+            -webkit-text-fill-color: #fbbf24;
+            background: none;
+        }
 
-            .stat-value.chips {
-                font-size: 13px;
-                -webkit-text-fill-color: var(--primary);
-                background: none;
-            }
+        .stat-value.chips {
+            font-size: 12px;
+            -webkit-text-fill-color: var(--primary);
+            background: none;
+        }
 
         /* ===== КЛИК-ЗОНА ===== */
         .click-area {
@@ -219,33 +215,28 @@
             position: relative;
         }
 
-            #clickButton:active {
-                transform: scale(0.92);
-                box-shadow: 0 0 60px var(--btn-glow), inset 0 -4px 0 rgba(0,0,0,0.3);
-            }
+        #clickButton:active {
+            transform: scale(0.92);
+            box-shadow: 0 0 60px var(--btn-glow), inset 0 -4px 0 rgba(0,0,0,0.3);
+        }
 
-            #clickButton .sub {
-                font-size: 12px;
-                font-weight: 400;
-                opacity: 0.85;
-                margin-top: 4px;
-            }
+        #clickButton .sub {
+            font-size: 12px;
+            font-weight: 400;
+            opacity: 0.85;
+            margin-top: 4px;
+        }
 
-            /* Перегрузка ядра (Overdrive) */
-            #clickButton.overdrive-active {
-                background: radial-gradient(circle at 30% 30%, #ff007f, #990033) !important;
-                box-shadow: 0 0 60px rgba(255, 0, 127, 0.8), inset 0 -6px 0 rgba(0,0,0,0.4) !important;
-                animation: pulse-red 0.5s infinite alternate;
-            }
+        /* Перегрузка ядра (Overdrive) */
+        #clickButton.overdrive-active {
+            background: radial-gradient(circle at 30% 30%, #ff007f, #990033) !important;
+            box-shadow: 0 0 60px rgba(255, 0, 127, 0.8), inset 0 -6px 0 rgba(0,0,0,0.4) !important;
+            animation: pulse-red 0.5s infinite alternate;
+        }
 
         @keyframes pulse-red {
-            0% {
-                transform: scale(1);
-            }
-
-            100% {
-                transform: scale(1.04);
-            }
+            0% { transform: scale(1); }
+            100% { transform: scale(1.04); }
         }
 
         .energy-bar {
@@ -282,13 +273,12 @@
             transition: all 0.5s ease;
             text-transform: uppercase;
         }
-
-            #skillBtn.cooldown {
-                background: #222230 !important;
-                color: #555 !important;
-                box-shadow: none !important;
-                pointer-events: none;
-            }
+        #skillBtn.cooldown {
+            background: #222230 !important;
+            color: #555 !important;
+            box-shadow: none !important;
+            pointer-events: none;
+        }
 
         /* ===== СКРОЛЛИРУЕМЫЙ КОНТЕНТНЫЙ БЛОК (ПАНЕЛИ) ===== */
         .panels-container {
@@ -297,10 +287,7 @@
             margin: 10px 0;
             scrollbar-width: none;
         }
-
-            .panels-container::-webkit-scrollbar {
-                display: none;
-            }
+        .panels-container::-webkit-scrollbar { display: none; }
 
         .panel {
             display: none;
@@ -308,9 +295,9 @@
             gap: 8px;
         }
 
-            .panel.active {
-                display: flex;
-            }
+        .panel.active {
+            display: flex;
+        }
 
         /* Карточка улучшения */
         .upgrade {
@@ -368,18 +355,47 @@
             transition: all 0.15s;
         }
 
-            /* Блокировки кнопок */
-            .upgrade-btn.locked {
-                background: rgba(255,255,255,0.02) !important;
-                border-color: rgba(255,255,255,0.05) !important;
-                color: #555577 !important;
-                cursor: not-allowed;
-                pointer-events: none;
-            }
-
+        /* Блокировки кнопок */
+        .upgrade-btn.locked {
+            background: rgba(255,255,255,0.02) !important;
+            border-color: rgba(255,255,255,0.05) !important;
+            color: #555577 !important;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
         .upgrade.locked-panel {
             opacity: 0.6;
         }
+
+        /* ===== НАСТРОЯЩИЙ ОНЛАЙН РЕЙТИНГ (БЕЗ БОТОВ) ===== */
+        .leaderboard-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: 4px;
+        }
+        .leader-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 14px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.04);
+            font-size: 13px;
+        }
+        
+        /* Стилизация топ призовых мест */
+        .leader-row.place-1 { border-color: #fbbf24; background: rgba(251, 191, 36, 0.06); box-shadow: 0 0 10px rgba(251, 191, 36, 0.15); font-weight: 700; }
+        .leader-row.place-2 { border-color: #94a3b8; background: rgba(148, 163, 184, 0.06); box-shadow: 0 0 10px rgba(148, 163, 184, 0.1); }
+        .leader-row.place-3 { border-color: #b45309; background: rgba(180, 83, 9, 0.06); box-shadow: 0 0 10px rgba(180, 83, 9, 0.1); }
+        .leader-row.current-user { background: rgba(0, 240, 255, 0.08) !important; border-color: var(--primary) !important; }
+        
+        .leader-left { display: flex; align-items: center; gap: 10px; }
+        .leader-rank { font-weight: 800; min-width: 20px; color: #8888bb; }
+        .leader-row.place-1 .leader-rank { color: #fbbf24; }
+        .leader-name { color: #fff; }
+        .leader-score { color: #00f0ff; font-weight: 700; font-family: monospace; }
 
         /* ===== ЭВОЛЮЦИЯ ===== */
         .evolution-card {
@@ -406,17 +422,13 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.4);
             transition: transform 0.1s;
         }
-
-            .prestige-btn:active {
-                transform: scale(0.97);
-            }
-
-            .prestige-btn.disabled {
-                background: #222235;
-                color: #555;
-                box-shadow: none;
-                pointer-events: none;
-            }
+        .prestige-btn:active { transform: scale(0.97); }
+        .prestige-btn.disabled {
+            background: #222235;
+            color: #555;
+            box-shadow: none;
+            pointer-events: none;
+        }
 
         /* ===== ДОСТИЖЕНИЯ ===== */
         .achieve-item {
@@ -428,40 +440,48 @@
             padding: 10px 12px;
             border-radius: 12px;
         }
-
-            .achieve-item.unlocked {
-                border-color: rgba(16, 185, 129, 0.4);
-                background: rgba(16, 185, 129, 0.04);
-            }
-
+        .achieve-item.unlocked {
+            border-color: rgba(16, 185, 129, 0.4);
+            background: rgba(16, 185, 129, 0.04);
+        }
         .achieve-icon {
             font-size: 24px;
             filter: grayscale(1);
             transition: filter 0.3s;
         }
-
         .achieve-item.unlocked .achieve-icon {
             filter: grayscale(0);
         }
-
         .achieve-info {
             display: flex;
             flex-direction: column;
             gap: 2px;
         }
-
         .achieve-title {
             font-weight: 700;
             font-size: 13px;
         }
-
         .achieve-reward {
             font-size: 10px;
             color: #10b981;
             font-weight: 600;
         }
 
-        /* ===== СТАТИСТИКА И НАСТРОЙКИ ===== */
+        /* ===== НАСТРОЙКИ ===== */
+        .input-box {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 8px 12px;
+            color: #fff;
+            font-size: 14px;
+            width: 100%;
+            outline: none;
+            margin-top: 4px;
+            transition: border-color 0.3s;
+        }
+        .input-box:focus { border-color: var(--primary); }
+
         .settings-item {
             display: flex;
             justify-content: space-between;
@@ -469,7 +489,6 @@
             padding: 10px 4px;
             border-bottom: 1px solid rgba(255,255,255,0.04);
         }
-
         .stats-box {
             background: rgba(0,0,0,0.2);
             border-radius: 12px;
@@ -480,17 +499,15 @@
             gap: 6px;
             margin-top: 8px;
         }
-
         .stats-line {
             display: flex;
             justify-content: space-between;
             color: #aaaacf;
         }
-
-            .stats-line span:last-child {
-                color: var(--primary);
-                font-weight: 600;
-            }
+        .stats-line span:last-child {
+            color: var(--primary);
+            font-weight: 600;
+        }
 
         .toggle {
             width: 40px;
@@ -501,39 +518,17 @@
             cursor: pointer;
             transition: background 0.2s;
         }
-
-            .toggle.on {
-                background: var(--primary);
-            }
-
-            .toggle::after {
-                content: '';
-                position: absolute;
-                top: 2px;
-                left: 2px;
-                width: 18px;
-                height: 18px;
-                background: white;
-                border-radius: 50%;
-                transition: transform 0.2s;
-            }
-
-            .toggle.on::after {
-                transform: translateX(18px);
-            }
-
-        .reset-btn {
-            background: rgba(255, 50, 50, 0.1);
-            border: 1px solid rgba(255, 50, 50, 0.2);
-            color: #ff6b6b;
-            padding: 10px;
-            border-radius: 12px;
-            text-align: center;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 8px;
-            font-size: 12px;
+        .toggle.on { background: var(--primary); }
+        .toggle::after {
+            content: '';
+            position: absolute;
+            top: 2px; left: 2px;
+            width: 18px; height: 18px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.2s;
         }
+        .toggle.on::after { transform: translateX(18px); }
 
         /* ===== ПОСТОЯННОЕ МЕНЮ СНИЗУ (TABS BAR) ===== */
         .tabs {
@@ -556,7 +551,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 20px; /* Крупные иконки-эмодзи */
+            font-size: 20px;
             padding: 6px 0;
             border-radius: 12px;
             cursor: pointer;
@@ -565,11 +560,11 @@
             background: none;
         }
 
-            .tab.active {
-                background: rgba(255, 255, 255, 0.04);
-                transform: translateY(-2px);
-                filter: drop-shadow(0 0 8px var(--primary));
-            }
+        .tab.active {
+            background: rgba(255, 255, 255, 0.04);
+            transform: translateY(-2px);
+            filter: drop-shadow(0 0 8px var(--primary));
+        }
 
         /* Глитч-сфера */
         .cyber-glitch {
@@ -585,23 +580,106 @@
         }
 
         @keyframes glitch-bounce {
-            0% {
-                transform: translateY(0) scale(1);
-            }
-
-            100% {
-                transform: translateY(-10px) scale(0.95);
-            }
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-10px) scale(0.95); }
+        }
+        @keyframes glitch-spin {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
         }
 
-        @keyframes glitch-spin {
-            0% {
-                filter: hue-rotate(0deg);
-            }
+        /* ===== КИНЕМАТОГРАФИЧНОЕ ОКНО ПРЕСТИЖА (ТРИУМФ) ===== */
+         King-престиж оверлей */
+        #prestigeOverlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(4, 4, 12, 0.96);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+        }
 
-            100% {
-                filter: hue-rotate(360deg);
-            }
+        .celebration-modal {
+            max-width: 360px;
+            width: 100%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            transform: scale(0.8);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        #prestigeOverlay.triggered .celebration-modal {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .evo-title-glitch {
+            font-size: 24px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #fff;
+            text-shadow: 0 0 20px var(--primary);
+            animation: text-pulse-glitch 2s infinite alternate;
+        }
+
+        @keyframes text-pulse-glitch {
+            0% { text-shadow: 0 0 15px var(--primary); }
+            100% { text-shadow: 0 0 30px var(--accent), 0 0 10px #fff; }
+        }
+
+        .evo-badge {
+            font-size: 50px;
+            margin: 10px 0;
+            animation: badge-rotate 10s linear infinite;
+            filter: drop-shadow(0 0 20px var(--primary));
+        }
+
+        @keyframes badge-rotate {
+            0% { transform: rotate(0deg) scale(1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        .init-btn {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #fff;
+            border: none;
+            padding: 14px;
+            border-radius: 14px;
+            font-weight: 800;
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 0 30px var(--btn-glow);
+            transition: transform 0.1s;
+        }
+        .init-btn:active { transform: scale(0.96); }
+
+        /* Вспышка экрана */
+        #flashBang {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #fff;
+            z-index: 3000;
+            opacity: 0;
+            pointer-events: none;
+        }
+        #flashBang.active {
+            animation: short-flash 0.6s ease-out forwards;
+        }
+        @keyframes short-flash {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
         }
 
         /* Вылетающий текст */
@@ -617,15 +695,8 @@
         }
 
         @keyframes floatUp {
-            0% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-
-            100% {
-                opacity: 0;
-                transform: translateY(-100px) scale(1.3);
-            }
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-100px) scale(1.3); }
         }
 
         @media (max-width: 440px) {
@@ -635,13 +706,11 @@
                 max-height: 100dvh;
                 padding: 12px 12px 16px;
             }
-
             #clickButton {
                 width: 135px;
                 height: 135px;
                 font-size: 18px;
             }
-
             .tabs {
                 margin-bottom: -16px;
                 padding: 8px 4px;
@@ -650,6 +719,33 @@
     </style>
 </head>
 <body>
+
+    <div id="flashBang"></div>
+
+    <div id="prestigeOverlay">
+        <div class="celebration-modal">
+            <div class="evo-title-glitch">Синхронизация Успешна!</div>
+            <div class="evo-badge">🔮</div>
+            <div style="font-size: 14px; color:#aaaacf; line-height: 1.5;">
+                Ваша старая цифровая оболочка распалась.<br>Сознание успешно перенесено в:
+                <div id="modalNewEraName" style="color: #fff; font-weight: 800; font-size: 16px; margin-top: 6px; text-transform: uppercase; color: var(--primary);">ЭРА 1</div>
+            </div>
+            
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 12px; border-radius: 14px; display: flex; flex-direction: column; gap: 6px; text-align: left; font-size: 13px;">
+                <div style="display:flex; justify-content:space-between;">
+                    <span style="color:#8888bb;">Синтезировано чипов:</span>
+                    <span style="color:#10b981; font-weight:700;" id="modalChipsGained">+0 🧬</span>
+                </div>
+                <div style="display:flex; justify-content:space-between;">
+                    <span style="color:#8888bb;">Глобальный мультипликатор:</span>
+                    <span style="color:var(--primary); font-weight:700;" id="modalNewBonus">+0%</span>
+                </div>
+            </div>
+            
+            <p style="font-size: 11px; color:#666688;">Энергия ядра восстановлена. Пропускная способность увеличена.</p>
+            <button class="init-btn" id="closeCelebrationBtn">Инициализировать форму</button>
+        </div>
+    </div>
 
     <div id="app" class="p-level-0">
         <header>
@@ -684,7 +780,7 @@
         </div>
 
         <div class="panels-container">
-
+            
             <div class="panel active" id="panel-upgrades">
                 <div class="upgrade" id="upgrade-click">
                     <div class="upgrade-info">
@@ -754,6 +850,14 @@
                 </div>
             </div>
 
+            <div class="panel" id="panel-leaderboard">
+                <div style="font-size: 13px; font-weight:700; color:var(--primary); text-transform:uppercase; margin-bottom: 4px; text-align:center;">👑 Глобальная Сеть Сингулярности</div>
+                <p style="font-size:10px; color:#8888bb; text-align:center; margin-bottom: 8px;">Ранжирование по общему количеству собранных кристаллов</p>
+                <div class="leaderboard-list" id="leaderboardContainer">
+                    <div style="text-align:center; font-size:12px; color:#8888bb; padding:20px;">Подключение к матрице данных...</div>
+                </div>
+            </div>
+
             <div class="panel" id="panel-evolution">
                 <div class="evolution-card">
                     <h3 style="font-size: 15px; color:var(--primary); transition: color 0.5s;">🔮 Квантовый Переход</h3>
@@ -763,13 +867,12 @@
 
                     <div style="text-align: left; background: rgba(0, 240, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); padding: 8px 10px; border-radius: 12px; font-size: 11px; display: flex; flex-direction: column; gap: 4px; line-height: 1.35;">
                         <span style="color: var(--primary); font-weight: 700; display: block;">🧬 Логика синтеза чипов:</span>
-                        Чипы генерируются на основе <b>ВСЕХ</b> заработанных кристаллов за историю аккаунта (включая уже потраченные).
+                        Чипы генерируются на основе <b>ВСЕХ</b> заработанных кристаллов за историю аккаунта.
                         <div style="margin: 2px 0; border-left: 2px solid var(--accent); padding-left: 6px; color: #aaaacf;">
                             Добыто за всё время: <span id="evoTotalEarnedHistory" style="color:#fbbf24; font-weight:700">0</span> 💎
                         </div>
-                        Математическая формула кванкования:<br>
+                        Математическая формула квантования:<br>
                         <span style="font-family: monospace; color:#00f0ff; background: rgba(0,0,0,0.3); padding: 2px 4px; border-radius: 4px; align-self: flex-start; margin-top: 2px;">Кол-во = 3 * √ (Всего_Добыто / 2,000)</span>
-                        <span style="font-size: 10px; color:#8888bb; margin-top: 2px;">Чем больше чипов вы имеете, тем больше общей добычи требуется для следующего квантового скачка.</span>
                     </div>
 
                     <div style="display: flex; gap: 6px; text-align: left; font-size: 10px; margin-top: 2px;">
@@ -845,7 +948,13 @@
             </div>
 
             <div class="panel" id="panel-settings">
-                <div class="settings-item">
+                <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); border-radius:14px; padding:12px; display:flex; flex-direction:column; gap:4px;">
+                    <span style="font-size:12px; font-weight:700; color:var(--primary); text-transform:uppercase;">🏷️ Идентификатор Сети</span>
+                    <div style="font-size:11px; color:#8888bb;">Ваш персональный системный адрес: <b id="displayUserId" style="color:#fff;">user-00000</b></div>
+                    <input type="text" id="usernameInput" class="input-box" maxlength="14" placeholder="Изменить имя...">
+                </div>
+
+                <div class="settings-item" style="margin-top:8px;">
                     <span>🔊 Звук</span>
                     <div class="toggle on" id="soundToggle"></div>
                 </div>
@@ -859,12 +968,9 @@
                     <div class="stats-line"><span>Всего кликов:</span> <span id="statClicks">0</span></div>
                     <div class="stats-line"><span>Собрано за всё время:</span> <span id="statTotalEarned">0</span></div>
                     <div class="stats-line"><span>Пройдено Эволюций:</span> <span id="statEvos">0</span></div>
-                    <div class="stats-line"><span>Бонус Нейрочипов:</span> <span id="statChipsBonus">+0%</span></div>
                 </div>
-
-                <div class="reset-btn" id="resetBtn">🗑️ Очистить память (Сброс)</div>
                 <div style="margin-top:12px; font-size:11px; color:#444477; text-align:center;" id="versionFooter">
-                    Кибер-Эволюция v2.5 • Сингулярность<br>Локальное хранилище синхронизировано.
+                    Кибер-Эволюция v2.7 • Облачная Сингулярность
                 </div>
             </div>
 
@@ -873,6 +979,7 @@
         <div class="tabs">
             <button class="tab active" data-tab="upgrades" title="Клик">🖱️</button>
             <button class="tab" data-tab="passive" title="Генераторы">🏭</button>
+            <button class="tab" data-tab="leaderboard" title="Рейтинг">👑</button>
             <button class="tab" data-tab="evolution" title="Эволюция">🧬</button>
             <button class="tab" data-tab="achievements" title="Достижения">🏆</button>
             <button class="tab" data-tab="settings" title="Настройки">⚙️</button>
@@ -880,631 +987,761 @@
     </div>
 
     <script>
-        // ============================================================
-        //  БД ПРЕСТИЖЕЙ (ЭПОХИ И ТЕМЫ) И СИСТЕМА ФОРСИРОВАННЫХ ОБНОВЛЕНИЙ
-        // ============================================================
-        const CURRENT_VERSION = "2.5"; // ВАЖНО: При обновлении кода на сервере меняйте эту строку!
+    // ============================================================
+    //  КОНФИГУРАЦИЯ И СИНХРОНИЗАЦИЯ FIREBASE CLOUD FIRESTORE
+    // ============================================================
+    const CURRENT_VERSION = "2.7";
 
-        const ERAS = [
-            { name: "Эпоха 0: Аналоговая Система", desc: "Дряхлая медь, серый шум и тусклые янтарные диоды." },
-            { name: "Эпоха 1: Кремниевый Сетевик", desc: "Вспышки неона, хромированная сталь и яркие цифровые контуры." },
-            { name: "Эпоха 2: Нейросеть Сознания", desc: "Биолюминесцентные изумрудные импульсы и живая органика." },
-            { name: "Эпоха 3: Фотоника", desc: "Сверхбыстрые лазеры, глубокий ультрафиолет и неоновая роза." },
-            { name: "Эпоха 4: Квантовый Разум", desc: "Искривления пространства, обсидиановые ядра и золотое сияние." },
-            { name: "Эпоха 5: Абсолют", desc: "Вы за пределами кода. Бесконечный радужный спектр сознания." }
-        ];
+    // Вставь сюда данные своего проекта из панели Firebase:
+    const firebaseConfig = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_AUTH_DOMAIN",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_STORAGE_BUCKET",
+        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+        appId: "YOUR_APP_ID"
+    };
 
-        const DEFAULT_STATE = {
-            score: 0,
-            totalScoreEarned: 0,
-            clicksCount: 0,
-            energy: 100,
-            maxEnergy: 100,
-            energyRegen: 0.5,
-            clickPower: 1,
-            clickCost: 10,
-            energyCost: 20,
-            regenCost: 30,
-            auto1: 0,
-            auto2: 0,
-            auto3: 0,
-            auto1Cost: 50,
-            auto2Cost: 250,
-            auto3Cost: 1200,
-            passiveTotal: 0,
-            prestigeCount: 0,
-            nanochips: 0,
-            skillCooldown: 0,
-            skillDuration: 0,
-            sound: true,
-            animations: true,
-            achievements: []
-        };
+    // Инициализация Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
 
-        let state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+    const ERAS = [
+        { name: "Эпоха 0: Аналоговая Система" },
+        { name: "Эпоха 1: Кремниевый Сетевик" },
+        { name: "Эпоха 2: Нейросеть Сознания" },
+        { name: "Эпоха 3: Фотоника" },
+        { name: "Эпоха 4: Квантовый Разум" },
+        { name: "Эпоха 5: Абсолют" }
+    ];
 
-        const $ = id => document.getElementById(id);
-        const scoreDisplay = $('scoreDisplay');
-        const energyDisplay = $('energyDisplay');
-        const energyFill = $('energyFill');
-        const passiveDisplay = $('passiveDisplay');
-        const totalPassiveDisplay = $('totalPassiveDisplay');
-        const clickPowerLabel = $('clickPowerLabel');
+    const DEFAULT_STATE = {
+        userId: "", 
+        username: "",
+        score: 0,
+        totalScoreEarned: 0,
+        clicksCount: 0,
+        energy: 100,
+        maxEnergy: 100,
+        energyRegen: 0.5,
+        clickPower: 1,
+        clickCost: 10,
+        energyCost: 20,
+        regenCost: 30,
+        auto1: 0,
+        auto2: 0,
+        auto3: 0,
+        auto1Cost: 50,
+        auto2Cost: 250,
+        auto3Cost: 1200,
+        passiveTotal: 0,
+        prestigeCount: 0,
+        nanochips: 0,
+        skillCooldown: 0,
+        skillDuration: 0,
+        sound: true,
+        animations: true,
+        achievements: []
+    };
 
-        const clickPriceDisplay = $('clickPriceDisplay');
-        const energyPriceDisplay = $('energyPriceDisplay');
-        const regenPriceDisplay = $('regenPriceDisplay');
-        const auto1PriceDisplay = $('auto1PriceDisplay');
-        const auto2PriceDisplay = $('auto2PriceDisplay');
-        const auto3PriceDisplay = $('auto3PriceDisplay');
-        const skillBtn = $('skillBtn');
+    let state = JSON.parse(JSON.stringify(DEFAULT_STATE));
 
-        // --- ПРИНУДИТЕЛЬНЫЙ ОБХОД КЭША SAFARI PWA ---
-        async function checkPWAUpdates() {
-            if (!navigator.onLine) return; // Проверка только при наличии сети
-            try {
-                const rawUrl = window.location.href.split('?')[0];
-                const nocacheUrl = `${rawUrl}?cb_detect=${Date.now()}`;
+    const $ = id => document.getElementById(id);
+    const scoreDisplay = $('scoreDisplay');
+    const energyDisplay = $('energyDisplay');
+    const energyFill = $('energyFill');
+    const passiveDisplay = $('passiveDisplay');
+    const totalPassiveDisplay = $('totalPassiveDisplay');
+    const clickPowerLabel = $('clickPowerLabel');
 
-                const response = await fetch(nocacheUrl, { cache: 'no-store' });
-                if (!response.ok) return;
-                const text = await response.text();
+    const clickPriceDisplay = $('clickPriceDisplay');
+    const energyPriceDisplay = $('energyPriceDisplay');
+    const regenPriceDisplay = $('regenPriceDisplay');
+    const auto1PriceDisplay = $('auto1PriceDisplay');
+    const auto2PriceDisplay = $('auto2PriceDisplay');
+    const auto3PriceDisplay = $('auto3PriceDisplay');
+    const skillBtn = $('skillBtn');
 
-                const versionMatch = text.match(/const\s+CURRENT_VERSION\s*=\s*["']([^"']+)["']/);
-                if (versionMatch && versionMatch[1]) {
-                    const serverVersion = versionMatch[1];
-                    if (serverVersion !== CURRENT_VERSION) {
-                        console.log(`[PWA Update] Найдена новая версия: ${serverVersion}. (Текущая: ${CURRENT_VERSION})`);
-                        showFloatingNotification("🔄 Установка обновления...");
-
-                        setTimeout(() => {
-                            window.location.replace(`${rawUrl}?forced_update=${Date.now()}`);
-                        }, 1200);
-                    }
-                }
-            } catch (e) {
-                console.warn("[PWA Update Check Failed]", e);
-            }
-        }
-
-        // Функция безопасности: защита от NaN и повреждений файлов сохранений
-        function sanitizeState(loaded) {
-            const base = JSON.parse(JSON.stringify(DEFAULT_STATE));
-            if (!loaded || typeof loaded !== 'object') return base;
-
-            const sanitized = {};
-            for (let key in base) {
-                if (loaded.hasOwnProperty(key) && loaded[key] !== undefined && loaded[key] !== null) {
-                    if (Array.isArray(base[key])) {
-                        sanitized[key] = Array.isArray(loaded[key]) ? loaded[key] : [];
-                    } else if (typeof base[key] === 'number') {
-                        sanitized[key] = isNaN(Number(loaded[key])) ? base[key] : Number(loaded[key]);
-                    } else if (typeof base[key] === 'boolean') {
-                        sanitized[key] = Boolean(loaded[key]);
-                    } else {
-                        sanitized[key] = loaded[key];
-                    }
-                } else {
-                    sanitized[key] = base[key];
+    // --- ПРИНУДИТЕЛЬНЫЙ ОБХОД КЭША SAFARI PWA ---
+    async function checkPWAUpdates() {
+        if (!navigator.onLine) return;
+        try {
+            const rawUrl = window.location.href.split('?')[0];
+            const nocacheUrl = `${rawUrl}?cb_detect=${Date.now()}`;
+            
+            const response = await fetch(nocacheUrl, { cache: 'no-store' });
+            if (!response.ok) return;
+            const text = await response.text();
+            
+            const versionMatch = text.match(/const\s+CURRENT_VERSION\s*=\s*["']([^"']+)["']/);
+            if (versionMatch && versionMatch[1]) {
+                const serverVersion = versionMatch[1];
+                if (serverVersion !== CURRENT_VERSION) {
+                    showFloatingNotification("🔄 Установка обновления...");
+                    setTimeout(() => {
+                        window.location.replace(`${rawUrl}?forced_update=${Date.now()}`);
+                    }, 1200);
                 }
             }
-            return sanitized;
-        }
+        } catch(e) {}
+    }
 
-        function save() {
+    // --- ИНИЦИАЛИЗАЦИЯ И СТРОГАЯ ТРАНЗАКЦИЯ ПОРЯДКОВЫХ ID ---
+    async function initNetworkProfile() {
+        if (!state.userId) {
             try {
-                localStorage.setItem('cyberClicker_v2', JSON.stringify(state));
-            } catch (e) { }
+                // Ссылка на единый счетчик пользователей в Firestore
+                const counterRef = db.collection('metadata').doc('counters');
+                
+                await db.runTransaction(async (transaction) => {
+                    const counterDoc = await transaction.get(counterRef);
+                    
+                    let newCount = 1;
+                    if (counterDoc.exists) {
+                        newCount = (counterDoc.data().count || 0) + 1;
+                    }
+                    
+                    // Обновляем глобальный счетчик в базе данных
+                    transaction.set(counterRef, { count: newCount }, { merge: true });
+                    
+                    // Форматируем ID по порядку: user-00001, user-00002...
+                    const paddedNumber = String(newCount).padStart(5, '0');
+                    state.userId = `user-${paddedNumber}`;
+                    state.username = state.userId;
+                    
+                    // Создаем карточку пользователя в базе данных
+                    const userRef = db.collection('users').doc(state.userId);
+                    transaction.set(userRef, {
+                        id: state.userId,
+                        username: state.username,
+                        score: 0
+                    });
+                });
+                
+                save();
+                console.log("Успешная облачная регистрация:", state.userId);
+            } catch(e) {
+                console.error("Критическая ошибка создания профиля в Firebase", e);
+            }
         }
+        
+        $('displayUserId').textContent = state.userId || "Автономный режим";
+        $('usernameInput').value = state.username || "";
+        syncWithDatabase();
+    }
 
-        function load() {
-            try {
-                const raw = localStorage.getItem('cyberClicker_v2');
-                if (raw) {
-                    const saved = JSON.parse(raw);
-                    state = sanitizeState(saved);
+    // Отправка рекорда в Firebase
+    async function syncWithDatabase() {
+        if (!state.userId || !navigator.onLine) return;
+        try {
+            await db.collection('users').doc(state.userId).set({
+                username: state.username,
+                score: Math.floor(state.totalScoreEarned)
+            }, { merge: true });
+        } catch(e) {
+            console.error("Ошибка облачной синхронизации очков", e);
+        }
+    }
+
+    // Загрузка реального ТОП лидеров из Firestore Cloud
+    async function fetchLeaderboard() {
+        const container = $('leaderboardContainer');
+        if (!navigator.onLine) {
+            container.innerHTML = `<div style="text-align:center;color:#f87171;padding:20px;font-size:12px;">Вы отключены от сети.</div>`;
+            return;
+        }
+        try {
+            const snapshot = await db.collection('users').orderBy('score', 'desc').limit(50).get();
+            container.innerHTML = "";
+            
+            let rank = 1;
+            snapshot.forEach((doc) => {
+                const player = doc.data();
+                let placeClass = "";
+                let medal = "";
+                
+                if (rank === 1) { placeClass = "place-1"; medal = "🥇 "; }
+                else if (rank === 2) { placeClass = "place-2"; medal = "🥈 "; }
+                else if (rank === 3) { placeClass = "place-3"; medal = "🥉 "; }
+                
+                if (player.id === state.userId) placeClass += " current-user";
+
+                const row = document.createElement('div');
+                row.className = `leader-row ${placeClass}`;
+                row.innerHTML = `
+                    <div class="leader-left">
+                        <span class="leader-rank">${medal || rank}</span>
+                        <span class="leader-name">${player.username || player.id} ${player.id === state.userId ? '(Вы)' : ''}</span>
+                    </div>
+                    <span class="leader-score">${Math.floor(player.score || 0).toLocaleString()} 💎</span>
+                `;
+                container.appendChild(row);
+                rank++;
+            });
+            
+            if (rank === 1) {
+                container.innerHTML = `<div style="text-align:center;color:#8888bb;padding:20px;font-size:12px;">База данных пуста. Станьте первым!</div>`;
+            }
+        } catch(e) {
+            console.error("Ошибка чтения топ листов", e);
+            container.innerHTML = `<div style="text-align:center;color:#f87171;padding:20px;font-size:12px;">Ошибка синхронизации рейтингов.</div>`;
+        }
+    }
+
+    function sanitizeState(loaded) {
+        const base = JSON.parse(JSON.stringify(DEFAULT_STATE));
+        if (!loaded || typeof loaded !== 'object') return base;
+        
+        const sanitized = {};
+        for (let key in base) {
+            if (loaded.hasOwnProperty(key) && loaded[key] !== undefined && loaded[key] !== null) {
+                if (Array.isArray(base[key])) {
+                    sanitized[key] = Array.isArray(loaded[key]) ? loaded[key] : [];
+                } else if (typeof base[key] === 'number') {
+                    sanitized[key] = isNaN(Number(loaded[key])) ? base[key] : Number(loaded[key]);
+                } else if (typeof base[key] === 'boolean') {
+                    sanitized[key] = Boolean(loaded[key]);
                 } else {
-                    state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+                    sanitized[key] = loaded[key];
                 }
-            } catch (e) {
+            } else {
+                sanitized[key] = base[key];
+            }
+        }
+        return sanitized;
+    }
+
+    function save() {
+        try {
+            localStorage.setItem('cyberClicker_v2_net', JSON.stringify(state));
+        } catch(e) {}
+    }
+
+    function load() {
+        try {
+            const raw = localStorage.getItem('cyberClicker_v2_net');
+            if (raw) {
+                const saved = JSON.parse(raw);
+                state = sanitizeState(saved);
+            } else {
                 state = JSON.parse(JSON.stringify(DEFAULT_STATE));
             }
+        } catch(e) {
+            state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+        }
+        recalcPassive();
+    }
+
+    function getPendingChips() {
+        if (!state.totalScoreEarned || state.totalScoreEarned < 5000) return 0;
+        let totalChips = Math.floor(Math.sqrt(state.totalScoreEarned / 2000) * 3);
+        return Math.max(0, totalChips - (state.nanochips || 0));
+    }
+
+    function getMultiplier() {
+        let chipBase = 0.02;
+        if ((state.achievements || []).includes('ach-4')) {
+            chipBase = 0.024;
+        }
+        return 1 + ((state.nanochips || 0) * chipBase);
+    }
+
+    function getActualClickPower() {
+        let base = state.clickPower || 1;
+        let mult = 1;
+        if ((state.achievements || []).includes('ach-1')) {
+            mult += 0.10;
+        }
+        mult *= getMultiplier();
+        if (state.skillDuration > 0) {
+            mult *= 3;
+        }
+        return Math.floor(base * mult);
+    }
+
+    function getActualPassive() {
+        let base = ((state.auto1 || 0) * 1) + ((state.auto2 || 0) * 5) + ((state.auto3 || 0) * 25);
+        let mult = 1;
+        if ((state.achievements || []).includes('ach-2')) {
+            mult += 0.15;
+        }
+        mult *= getMultiplier();
+        return Math.floor(base * mult);
+    }
+
+    function getActualEnergyRegen() {
+        let base = state.energyRegen || 0.5;
+        if ((state.achievements || []).includes('ach-3')) {
+            base += 1.0;
+        }
+        return base;
+    }
+
+    function recalcPassive() {
+        state.passiveTotal = getActualPassive();
+        if (totalPassiveDisplay) totalPassiveDisplay.textContent = state.passiveTotal.toLocaleString();
+        if (passiveDisplay) passiveDisplay.textContent = state.passiveTotal.toLocaleString();
+    }
+
+    function updateSkillUI() {
+        const clickBtn = $('clickButton');
+        if (state.skillDuration > 0) {
+            clickBtn.classList.add('overdrive-active');
+            skillBtn.classList.add('cooldown');
+            skillBtn.textContent = `ПЕРЕГРУЗКА АКТИВНА (${state.skillDuration}с)`;
+        } else if (state.skillCooldown > 0) {
+            clickBtn.classList.remove('overdrive-active');
+            skillBtn.classList.add('cooldown');
+            skillBtn.textContent = `ПЕРЕЗАРЯДКА (${state.skillCooldown}с)`;
+        } else {
+            clickBtn.classList.remove('overdrive-active');
+            skillBtn.classList.remove('cooldown');
+            skillBtn.textContent = `🔥 ПЕРЕГРУЗКА ЯДРА`;
+        }
+    }
+
+    function updateUI() {
+        scoreDisplay.textContent = Math.floor(state.score).toLocaleString();
+        energyDisplay.textContent = Math.floor(state.energy);
+        
+        const pct = Math.max(0, Math.min(100, (state.energy / state.maxEnergy) * 100));
+        energyFill.style.width = pct + '%';
+        
+        clickPowerLabel.textContent = `+${getActualClickPower()} ⚡`;
+
+        clickPriceDisplay.textContent = `${state.clickCost.toLocaleString()} 💎`;
+        energyPriceDisplay.textContent = `${state.energyCost.toLocaleString()} 💎`;
+        regenPriceDisplay.textContent = `${state.regenCost.toLocaleString()} 💎`;
+        auto1PriceDisplay.textContent = `${state.auto1Cost.toLocaleString()} 💎`;
+        auto2PriceDisplay.textContent = `${state.auto2Cost.toLocaleString()} 💎`;
+        auto3PriceDisplay.textContent = `${state.auto3Cost.toLocaleString()} 💎`;
+
+        checkUpgradeAvailability('click', state.clickCost);
+        checkUpgradeAvailability('energy', state.energyCost);
+        checkUpgradeAvailability('regen', state.regenCost);
+        checkUpgradeAvailability('auto1', state.auto1Cost);
+        checkUpgradeAvailability('auto2', state.auto2Cost);
+        checkUpgradeAvailability('auto3', state.auto3Cost);
+
+        const app = $('app');
+        const prestigeLevel = state.prestigeCount || 0;
+        const levelClass = Math.min(prestigeLevel, 5);
+        
+        for (let i = 0; i <= 5; i++) {
+            app.classList.remove('p-level-' + i);
+        }
+        app.classList.add('p-level-' + levelClass);
+
+        const currentEra = ERAS[levelClass] || ERAS[5];
+        $('eraTitle').textContent = `ЭРА ${prestigeLevel}: ${currentEra.name.split(': ')[1]}`;
+        $('chipsHeaderDisplay').textContent = `${(state.nanochips || 0).toLocaleString()} (Lvl ${prestigeLevel})`;
+
+        const pending = getPendingChips();
+        $('currentChips').textContent = (state.nanochips || 0).toLocaleString();
+        $('pendingChips').textContent = pending.toLocaleString();
+        $('evoTotalEarnedHistory').textContent = Math.floor(state.totalScoreEarned || 0).toLocaleString();
+
+        const nextLevelClass = Math.min(prestigeLevel + 1, 5);
+        const nextEra = ERAS[nextLevelClass] || ERAS[5];
+        $('nextEraTooltip').textContent = `Следующая эра: Lvl ${prestigeLevel + 1} (${nextEra.name.split(': ')[1]})`;
+
+        const currentBonusPct = Math.round((getMultiplier() - 1) * 100);
+        $('evoCurrentBonus').textContent = `+${currentBonusPct}%`;
+        
+        const nextChipsTotal = (state.nanochips || 0) + pending;
+        let chipBase = 0.02;
+        if ((state.achievements || []).includes('ach-4')) {
+            chipBase = 0.024;
+        }
+        const nextBonusPct = Math.round((nextChipsTotal * chipBase) * 100);
+        $('evoNextBonus').textContent = `+${nextBonusPct}%`;
+        
+        const prestBtn = $('prestigeBtn');
+        if (state.score >= 5000 && pending > 0) {
+            prestBtn.classList.remove('disabled');
+            prestBtn.textContent = `СОВЕРШИТЬ ЭВОЛЮЦИЮ (+${pending} чипов)`;
+        } else {
+            prestBtn.classList.add('disabled');
+            prestBtn.textContent = state.score < 5000 ? "ЭВОЛЮЦИОНИРОВАТЬ (Нужно 5k 💎)" : "Слишком мало новых чипов";
+        }
+
+        $('statClicks').textContent = (state.clicksCount || 0).toLocaleString();
+        $('statTotalEarned').textContent = Math.floor(state.totalScoreEarned || 0).toLocaleString();
+        $('statEvos').textContent = (state.prestigeCount || 0).toLocaleString();
+
+        if (state.sound) $('soundToggle').classList.add('on'); else $('soundToggle').classList.remove('on');
+        if (state.animations) $('animToggle').classList.add('on'); else $('animToggle').classList.remove('on');
+
+        $('versionFooter').innerHTML = `Кибер-Эволюция v${CURRENT_VERSION} • Облачная Сингулярность<br>Хранилище Firestore синхронизировано.`;
+
+        updateSkillUI();
+        checkAchievements();
+        recalcPassive();
+    }
+
+    function checkUpgradeAvailability(id, cost) {
+        const btn = $(`buy${id.charAt(0).toUpperCase() + id.slice(1)}`);
+        const block = $(`upgrade-${id}`);
+        if (!btn) return;
+        
+        if (state.score < cost) {
+            btn.classList.add('locked');
+            if (block) block.classList.add('locked-panel');
+        } else {
+            btn.classList.remove('locked');
+            if (block) block.classList.remove('locked-panel');
+        }
+    }
+
+    function checkAchievements() {
+        const checkAndUnlock = (id, condition) => {
+            if (condition && !(state.achievements || []).includes(id)) {
+                state.achievements.push(id);
+                const card = $(id);
+                if (card) card.classList.add('unlocked');
+                showFloatingNotification(`🏆 Ачивка открыта!`);
+                save();
+            } else if ((state.achievements || []).includes(id)) {
+                const card = $(id);
+                if (card) card.classList.add('unlocked');
+            }
+        };
+
+        checkAndUnlock('ach-1', state.clicksCount >= 100);
+        checkAndUnlock('ach-2', state.totalScoreEarned >= 25000);
+        checkAndUnlock('ach-3', state.maxEnergy >= 150);
+        checkAndUnlock('ach-4', state.prestigeCount >= 1);
+    }
+
+    function showFloatingNotification(text) {
+        const notif = document.createElement('div');
+        notif.style.cssText = `
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            z-index: 1001;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        `;
+        notif.textContent = text;
+        document.body.appendChild(notif);
+        setTimeout(() => notif.style.opacity = '1', 50);
+        setTimeout(() => {
+            notif.style.opacity = '0';
+            setTimeout(() => notif.remove(), 300);
+        }, 1800);
+    }
+
+    function handleClick() {
+        const inOverdrive = state.skillDuration > 0;
+        
+        if (!inOverdrive && state.energy < 1) {
+            const btn = $('clickButton');
+            btn.style.boxShadow = '0 0 30px rgba(255,50,50,0.8)';
+            setTimeout(() => btn.style.boxShadow = '', 150);
+            return;
+        }
+
+        if (!inOverdrive) {
+            state.energy = Math.max(0, state.energy - 1);
+        }
+
+        const gain = getActualClickPower();
+        state.score += gain;
+        state.totalScoreEarned += gain;
+        state.clicksCount += 1;
+        updateUI();
+
+        if (state.animations) {
+            const el = document.createElement('div');
+            el.className = 'float-text';
+            el.textContent = `+${gain}`;
+            if (inOverdrive) {
+                el.style.color = '#ff007f';
+                el.style.textShadow = '0 0 15px rgba(255, 0, 127, 0.8)';
+            }
+            const rect = $('clickButton').getBoundingClientRect();
+            el.style.left = (rect.left + rect.width/2 - 20 + (Math.random()-0.5)*30) + 'px';
+            el.style.top = (rect.top) + 'px';
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 650);
+        }
+    }
+
+    function buyUpgrade(type) {
+        switch(type) {
+            case 'click': {
+                if (state.score < state.clickCost) return;
+                state.score -= state.clickCost;
+                state.clickPower += 1;
+                state.clickCost = Math.floor(state.clickCost * 1.5) + 2;
+                break;
+            }
+            case 'energy': {
+                if (state.score < state.energyCost) return;
+                state.score -= state.energyCost;
+                state.maxEnergy += 10;
+                state.energy = Math.min(state.energy + 10, state.maxEnergy);
+                state.energyCost = Math.floor(state.energyCost * 1.6) + 5;
+                break;
+            }
+            case 'regen': {
+                if (state.score < state.regenCost) return;
+                state.score -= state.regenCost;
+                state.energyRegen += 0.5;
+                state.regenCost = Math.floor(state.regenCost * 1.7) + 8;
+                break;
+            }
+            case 'auto1': {
+                if (state.score < state.auto1Cost) return;
+                state.score -= state.auto1Cost;
+                state.auto1 += 1;
+                state.auto1Cost = Math.floor(state.auto1Cost * 1.4) + 10;
+                break;
+            }
+            case 'auto2': {
+                if (state.score < state.auto2Cost) return;
+                state.score -= state.auto2Cost;
+                state.auto2 += 1;
+                state.auto2Cost = Math.floor(state.auto2Cost * 1.5) + 30;
+                break;
+            }
+            case 'auto3': {
+                if (state.score < state.auto3Cost) return;
+                state.score -= state.auto3Cost;
+                state.auto3 += 1;
+                state.auto3Cost = Math.floor(state.auto3Cost * 1.6) + 100;
+                break;
+            }
+        }
+        recalcPassive();
+        updateUI();
+    }
+
+    function activateSkill() {
+        if (state.skillCooldown > 0) return;
+        state.skillDuration = 10;
+        state.skillCooldown = 60;
+        updateUI();
+    }
+
+    function triggerPrestigeCelebration(chipsGained, nextLvl) {
+        const flash = $('flashBang');
+        flash.classList.add('active');
+        setTimeout(() => flash.classList.remove('active'), 600);
+
+        const levelIndex = Math.min(nextLvl, 5);
+        const eraData = ERAS[levelIndex] || ERAS[5];
+        
+        $('modalNewEraName').textContent = `ЭРА ${nextLvl}: ${eraData.name}`;
+        $('modalChipsGained').textContent = `+${chipsGained.toLocaleString()} 🧬`;
+        
+        let chipBase = 0.02;
+        if ((state.achievements || []).includes('ach-4')) chipBase = 0.024;
+        const finalBonusPct = Math.round((state.nanochips * chipBase) * 100);
+        $('modalNewBonus').textContent = `+${finalBonusPct}%`;
+
+        const overlay = $('prestigeOverlay');
+        overlay.style.display = 'flex';
+        setTimeout(() => overlay.classList.add('triggered'), 50);
+    }
+
+    function doPrestige() {
+        const pending = getPendingChips();
+        if (state.score < 5000 || pending < 1) return;
+
+        if (confirm(`Вы уверены? Это сотрет ваши текущие кристаллы и улучшения, но взамен вы получите ${pending} Нейрочипов!`)) {
+            const currentNanos = (state.nanochips || 0) + pending;
+            const currentEvos = (state.prestigeCount || 0) + 1;
+            const totalEarnedHistory = state.totalScoreEarned;
+            const totalClicksHistory = state.clicksCount;
+            const achievementsSaved = [...(state.achievements || [])];
+
+            state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+            
+            state.userId = localStorage.getItem('cyberUserId_v2') || ""; 
+            state.username = localStorage.getItem('cyberUsername_v2') || "";
+            state.nanochips = currentNanos;
+            state.prestigeCount = currentEvos;
+            state.totalScoreEarned = totalEarnedHistory;
+            state.clicksCount = totalClicksHistory;
+            state.achievements = achievementsSaved;
+
+            save();
             recalcPassive();
-        }
-
-        // Расчет чипов за престиж
-        function getPendingChips() {
-            if (!state.totalScoreEarned || state.totalScoreEarned < 5000) return 0;
-            let totalChips = Math.floor(Math.sqrt(state.totalScoreEarned / 2000) * 3);
-            return Math.max(0, totalChips - (state.nanochips || 0));
-        }
-
-        function getMultiplier() {
-            let chipBase = 0.02;
-            if ((state.achievements || []).includes('ach-4')) {
-                chipBase = 0.024;
-            }
-            return 1 + ((state.nanochips || 0) * chipBase);
-        }
-
-        function getActualClickPower() {
-            let base = state.clickPower || 1;
-            let mult = 1;
-            if ((state.achievements || []).includes('ach-1')) {
-                mult += 0.10;
-            }
-            mult *= getMultiplier();
-            if (state.skillDuration > 0) {
-                mult *= 3;
-            }
-            return Math.floor(base * mult);
-        }
-
-        function getActualPassive() {
-            let base = ((state.auto1 || 0) * 1) + ((state.auto2 || 0) * 5) + ((state.auto3 || 0) * 25);
-            let mult = 1;
-            if ((state.achievements || []).includes('ach-2')) {
-                mult += 0.15;
-            }
-            mult *= getMultiplier();
-            return Math.floor(base * mult);
-        }
-
-        function getActualEnergyRegen() {
-            let base = state.energyRegen || 0.5;
-            if ((state.achievements || []).includes('ach-3')) {
-                base += 1.0;
-            }
-            return base;
-        }
-
-        function recalcPassive() {
-            state.passiveTotal = getActualPassive();
-            if (totalPassiveDisplay) totalPassiveDisplay.textContent = state.passiveTotal.toLocaleString();
-            if (passiveDisplay) passiveDisplay.textContent = state.passiveTotal.toLocaleString();
-        }
-
-        // Декларативный рендер кулдауна (страховка от багов кнопок)
-        function updateSkillUI() {
-            const clickBtn = $('clickButton');
-            if (state.skillDuration > 0) {
-                clickBtn.classList.add('overdrive-active');
-                skillBtn.classList.add('cooldown');
-                skillBtn.textContent = `ПЕРЕГРУЗКА АКТИВНА (${state.skillDuration}с)`;
-            } else if (state.skillCooldown > 0) {
-                clickBtn.classList.remove('overdrive-active');
-                skillBtn.classList.add('cooldown');
-                skillBtn.textContent = `ПЕРЕЗАРЯДКА (${state.skillCooldown}с)`;
-            } else {
-                clickBtn.classList.remove('overdrive-active');
-                skillBtn.classList.remove('cooldown');
-                skillBtn.textContent = `🔥 ПЕРЕГРУЗКА ЯДРА`;
-            }
-        }
-
-        // Рендер интерфейса
-        function updateUI() {
-            scoreDisplay.textContent = Math.floor(state.score).toLocaleString();
-            energyDisplay.textContent = Math.floor(state.energy);
-
-            const pct = Math.max(0, Math.min(100, (state.energy / state.maxEnergy) * 100));
-            energyFill.style.width = pct + '%';
-
-            clickPowerLabel.textContent = `+${getActualClickPower()} ⚡`;
-
-            // Обновление ценников
-            clickPriceDisplay.textContent = `${state.clickCost.toLocaleString()} 💎`;
-            energyPriceDisplay.textContent = `${state.energyCost.toLocaleString()} 💎`;
-            regenPriceDisplay.textContent = `${state.regenCost.toLocaleString()} 💎`;
-            auto1PriceDisplay.textContent = `${state.auto1Cost.toLocaleString()} 💎`;
-            auto2PriceDisplay.textContent = `${state.auto2Cost.toLocaleString()} 💎`;
-            auto3PriceDisplay.textContent = `${state.auto3Cost.toLocaleString()} 💎`;
-
-            // Проверка активности апгрейдов
-            checkUpgradeAvailability('click', state.clickCost);
-            checkUpgradeAvailability('energy', state.energyCost);
-            checkUpgradeAvailability('regen', state.regenCost);
-            checkUpgradeAvailability('auto1', state.auto1Cost);
-            checkUpgradeAvailability('auto2', state.auto2Cost);
-            checkUpgradeAvailability('auto3', state.auto3Cost);
-
-            // Расчет и обновление темы Эры (Престижа)
-            const app = $('app');
-            const prestigeLevel = state.prestigeCount || 0;
-            const levelClass = Math.min(prestigeLevel, 5);
-
-            // Переключаем класс темы у приложения
-            for (let i = 0; i <= 5; i++) {
-                app.classList.remove('p-level-' + i);
-            }
-            app.classList.add('p-level-' + levelClass);
-
-            // Текст текущей эры на главном экране
-            const currentEra = ERAS[levelClass] || ERAS[5];
-            $('eraTitle').textContent = `ЭРА ${prestigeLevel}: ${currentEra.name.split(': ')[1]}`;
-
-            // Обновление Нейрочипов и Эры в ШАПКЕ
-            $('chipsHeaderDisplay').textContent = `${(state.nanochips || 0).toLocaleString()} (Lvl ${prestigeLevel})`;
-
-            // Расчет чипов престижа (Панель эволюции)
-            const pending = getPendingChips();
-            $('currentChips').textContent = (state.nanochips || 0).toLocaleString();
-            $('pendingChips').textContent = pending.toLocaleString();
-
-            // Историческая статистика во вкладке престижа
-            $('evoTotalEarnedHistory').textContent = Math.floor(state.totalScoreEarned || 0).toLocaleString();
-
-            // Подсказка следующей эры
-            const nextLevelClass = Math.min(prestigeLevel + 1, 5);
-            const nextEra = ERAS[nextLevelClass] || ERAS[5];
-            $('nextEraTooltip').textContent = `Следующая эра: Lvl ${prestigeLevel + 1} (${nextEra.name.split(': ')[1]})`;
-
-            // Обновление процентных бонусов
-            const currentBonusPct = Math.round((getMultiplier() - 1) * 100);
-            $('evoCurrentBonus').textContent = `+${currentBonusPct}%`;
-
-            const nextChipsTotal = (state.nanochips || 0) + pending;
-            let chipBase = 0.02;
-            if ((state.achievements || []).includes('ach-4')) {
-                chipBase = 0.024;
-            }
-            const nextBonusPct = Math.round((nextChipsTotal * chipBase) * 100);
-            $('evoNextBonus').textContent = `+${nextBonusPct}%`;
-
-            const prestBtn = $('prestigeBtn');
-            if (state.score >= 5000 && pending > 0) {
-                prestBtn.classList.remove('disabled');
-                prestBtn.textContent = `СОВЕРШИТЬ ЭВОЛЮЦИЮ (+${pending} чипов)`;
-            } else {
-                prestBtn.classList.add('disabled');
-                prestBtn.textContent = state.score < 5000 ? "ЭВОЛЮЦИОНИРОВАТЬ (Нужно 5k 💎)" : "Слишком мало новых чипов";
-            }
-
-            // Логи статистики
-            $('statClicks').textContent = (state.clicksCount || 0).toLocaleString();
-            $('statTotalEarned').textContent = Math.floor(state.totalScoreEarned || 0).toLocaleString();
-            $('statEvos').textContent = (state.prestigeCount || 0).toLocaleString();
-            $('statChipsBonus').textContent = `+${currentBonusPct}%`;
-
-            // Тогглы опций
-            if (state.sound) $('soundToggle').classList.add('on'); else $('soundToggle').classList.remove('on');
-            if (state.animations) $('animToggle').classList.add('on'); else $('animToggle').classList.remove('on');
-
-            // Подпись версии в подвале настроек
-            $('versionFooter').innerHTML = `Кибер-Эволюция v${CURRENT_VERSION} • Сингулярность<br>Локальное хранилище синхронизировано.`;
-
-            updateSkillUI();
-            checkAchievements();
-            recalcPassive();
-        }
-
-        function checkUpgradeAvailability(id, cost) {
-            const btn = $(`buy${id.charAt(0).toUpperCase() + id.slice(1)}`);
-            const block = $(`upgrade-${id}`);
-            if (!btn) return;
-
-            if (state.score < cost) {
-                btn.classList.add('locked');
-                if (block) block.classList.add('locked-panel');
-            } else {
-                btn.classList.remove('locked');
-                if (block) block.classList.remove('locked-panel');
-            }
-        }
-
-        // Обработчик достижений
-        function checkAchievements() {
-            const checkAndUnlock = (id, condition) => {
-                if (condition && !(state.achievements || []).includes(id)) {
-                    state.achievements.push(id);
-                    const card = $(id);
-                    if (card) card.classList.add('unlocked');
-                    showFloatingNotification(`🏆 Ачивка открыта!`);
-                    save();
-                } else if ((state.achievements || []).includes(id)) {
-                    const card = $(id);
-                    if (card) card.classList.add('unlocked');
-                }
-            };
-
-            checkAndUnlock('ach-1', state.clicksCount >= 100);
-            checkAndUnlock('ach-2', state.totalScoreEarned >= 25000);
-            checkAndUnlock('ach-3', state.maxEnergy >= 150);
-            checkAndUnlock('ach-4', state.prestigeCount >= 1);
-        }
-
-        function showFloatingNotification(text) {
-            const notif = document.createElement('div');
-            notif.style.cssText = `
-                position: fixed;
-                bottom: 80px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: linear-gradient(135deg, var(--accent), var(--primary));
-                color: white;
-                padding: 8px 16px;
-                border-radius: 20px;
-                font-size: 11px;
-                font-weight: 700;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-                z-index: 1001;
-                pointer-events: none;
-                opacity: 0;
-                transition: opacity 0.3s;
-            `;
-            notif.textContent = text;
-            document.body.appendChild(notif);
-            setTimeout(() => notif.style.opacity = '1', 50);
-            setTimeout(() => {
-                notif.style.opacity = '0';
-                setTimeout(() => notif.remove(), 300);
-            }, 1800);
-        }
-
-        // Клик
-        function handleClick() {
-            const inOverdrive = state.skillDuration > 0;
-
-            if (!inOverdrive && state.energy < 1) {
-                const btn = $('clickButton');
-                btn.style.boxShadow = '0 0 30px rgba(255,50,50,0.8)';
-                setTimeout(() => btn.style.boxShadow = '', 150);
-                return;
-            }
-
-            if (!inOverdrive) {
-                state.energy = Math.max(0, state.energy - 1);
-            }
-
-            const gain = getActualClickPower();
-            state.score += gain;
-            state.totalScoreEarned += gain;
-            state.clicksCount += 1;
             updateUI();
+            syncWithDatabase(); // отправляем обновленные данные рекордов престижа
+            
+            triggerPrestigeCelebration(pending, currentEvos);
+        }
+    }
 
+    $('closeCelebrationBtn').addEventListener('click', () => {
+        const overlay = $('prestigeOverlay');
+        overlay.classList.remove('triggered');
+        setTimeout(() => overlay.style.display = 'none', 500);
+        
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        document.querySelector('[data-tab="upgrades"]').classList.add('active');
+        $('panel-upgrades').classList.add('active');
+    });
+
+    // Смена ника с мгновенным апдейтом в Firebase
+    $('usernameInput').addEventListener('input', function() {
+        let cleanName = this.value.trim().substring(0, 14);
+        if (cleanName) {
+            state.username = cleanName;
+            localStorage.setItem('cyberUsername_v2', cleanName);
+            save();
+            syncWithDatabase();
+        }
+    });
+
+    let activeGlitch = null;
+    function spawnCyberGlitch() {
+        if (activeGlitch) return;
+        
+        const area = $('clickArea');
+        if (!area) return;
+        const glitch = document.createElement('div');
+        glitch.className = 'cyber-glitch';
+        
+        const widthLimit = Math.max(50, area.clientWidth - 50);
+        const heightLimit = Math.max(50, area.clientHeight - 50);
+        glitch.style.left = Math.floor(Math.random() * widthLimit) + 'px';
+        glitch.style.top = Math.floor(Math.random() * heightLimit) + 'px';
+        
+        area.appendChild(glitch);
+        activeGlitch = glitch;
+
+        glitch.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const reward = Math.max(150, Math.floor(getActualPassive() * 25));
+            state.score += reward;
+            state.totalScoreEarned += reward;
+            
             if (state.animations) {
                 const el = document.createElement('div');
                 el.className = 'float-text';
-                el.textContent = `+${gain}`;
-                if (inOverdrive) {
-                    el.style.color = '#ff007f';
-                    el.style.textShadow = '0 0 15px rgba(255, 0, 127, 0.8)';
-                }
-                const rect = $('clickButton').getBoundingClientRect();
-                el.style.left = (rect.left + rect.width / 2 - 20 + (Math.random() - 0.5) * 30) + 'px';
-                el.style.top = (rect.top) + 'px';
+                el.textContent = `⚡ Взлом: +${reward} 💎`;
+                el.style.color = '#ff00ff';
+                el.style.left = e.clientX + 'px';
+                el.style.top = e.clientY + 'px';
                 document.body.appendChild(el);
-                setTimeout(() => el.remove(), 650);
+                setTimeout(() => el.remove(), 1000);
             }
-        }
+            
+            glitch.remove();
+            activeGlitch = null;
+        });
 
-        // Улучшения
-        function buyUpgrade(type) {
-            switch (type) {
-                case 'click': {
-                    if (state.score < state.clickCost) return;
-                    state.score -= state.clickCost;
-                    state.clickPower += 1;
-                    state.clickCost = Math.floor(state.clickCost * 1.5) + 2;
-                    break;
-                }
-                case 'energy': {
-                    if (state.score < state.energyCost) return;
-                    state.score -= state.energyCost;
-                    state.maxEnergy += 10;
-                    state.energy = Math.min(state.energy + 10, state.maxEnergy);
-                    state.energyCost = Math.floor(state.energyCost * 1.6) + 5;
-                    break;
-                }
-                case 'regen': {
-                    if (state.score < state.regenCost) return;
-                    state.score -= state.regenCost;
-                    state.energyRegen += 0.5;
-                    state.regenCost = Math.floor(state.regenCost * 1.7) + 8;
-                    break;
-                }
-                case 'auto1': {
-                    if (state.score < state.auto1Cost) return;
-                    state.score -= state.auto1Cost;
-                    state.auto1 += 1;
-                    state.auto1Cost = Math.floor(state.auto1Cost * 1.4) + 10;
-                    break;
-                }
-                case 'auto2': {
-                    if (state.score < state.auto2Cost) return;
-                    state.score -= state.auto2Cost;
-                    state.auto2 += 1;
-                    state.auto2Cost = Math.floor(state.auto2Cost * 1.5) + 30;
-                    break;
-                }
-                case 'auto3': {
-                    if (state.score < state.auto3Cost) return;
-                    state.score -= state.auto3Cost;
-                    state.auto3 += 1;
-                    state.auto3Cost = Math.floor(state.auto3Cost * 1.6) + 100;
-                    break;
-                }
-            }
-            recalcPassive();
-            updateUI();
-        }
-
-        // Перегрузка
-        function activateSkill() {
-            if (state.skillCooldown > 0) return;
-            state.skillDuration = 10;
-            state.skillCooldown = 60;
-            updateUI();
-        }
-
-        // Сброс (Эволюция)
-        function doPrestige() {
-            const pending = getPendingChips();
-            if (state.score < 5000 || pending < 1) return;
-
-            if (confirm(`Вы уверены? Это сотрет ваши текущие кристаллы и улучшения, но взамен вы получите ${pending} Нейрочипов для постоянного ускорения эволюции!`)) {
-                const currentNanos = (state.nanochips || 0) + pending;
-                const currentEvos = (state.prestigeCount || 0) + 1;
-                const totalEarnedHistory = state.totalScoreEarned;
-                const totalClicksHistory = state.clicksCount;
-                const achievementsSaved = [...(state.achievements || [])];
-
-                // Полный принудительный сброс
-                state = JSON.parse(JSON.stringify(DEFAULT_STATE));
-
-                // Наследование престиж-состояния
-                state.nanochips = currentNanos;
-                state.prestigeCount = currentEvos;
-                state.totalScoreEarned = totalEarnedHistory;
-                state.clicksCount = totalClicksHistory;
-                state.achievements = achievementsSaved;
-
-                save();
-                recalcPassive();
-                updateUI();
-
-                showFloatingNotification("🌌 Эволюция успешно произведена!");
-            }
-        }
-
-        // Глитч-сфера
-        let activeGlitch = null;
-        function spawnCyberGlitch() {
-            if (activeGlitch) return;
-
-            const area = $('clickArea');
-            if (!area) return;
-            const glitch = document.createElement('div');
-            glitch.className = 'cyber-glitch';
-
-            const widthLimit = Math.max(50, area.clientWidth - 50);
-            const heightLimit = Math.max(50, area.clientHeight - 50);
-            glitch.style.left = Math.floor(Math.random() * widthLimit) + 'px';
-            glitch.style.top = Math.floor(Math.random() * heightLimit) + 'px';
-
-            area.appendChild(glitch);
-            activeGlitch = glitch;
-
-            glitch.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const reward = Math.max(150, Math.floor(getActualPassive() * 25));
-                state.score += reward;
-                state.totalScoreEarned += reward;
-
-                if (state.animations) {
-                    const el = document.createElement('div');
-                    el.className = 'float-text';
-                    el.textContent = `⚡ Взлом: +${reward} 💎`;
-                    el.style.color = '#ff00ff';
-                    el.style.left = e.clientX + 'px';
-                    el.style.top = e.clientY + 'px';
-                    document.body.appendChild(el);
-                    setTimeout(() => el.remove(), 1000);
-                }
-
+        setTimeout(() => {
+            if (glitch.parentNode) {
                 glitch.remove();
                 activeGlitch = null;
-            });
-
-            setTimeout(() => {
-                if (glitch.parentNode) {
-                    glitch.remove();
-                    activeGlitch = null;
-                }
-            }, 7000);
-        }
-
-        // Вайп игры
-        function resetGame() {
-            if (confirm('Вы действительно желаете навсегда стереть ВСЮ историю вашей эволюции? Это сотрет все ачивки и чипы.')) {
-                localStorage.removeItem('cyberClicker_v2');
-                state = JSON.parse(JSON.stringify(DEFAULT_STATE));
-                recalcPassive();
-                updateUI();
             }
+        }, 7000);
+    }
+
+    // ============================================================
+    //  ЗАПУСК И ТАЙМЕРЫ ИГРЫ
+    // ============================================================
+
+    load();
+    updateUI();
+    
+    // Включение отклика :active для iOS Safari
+    document.body.addEventListener('touchstart', () => {}, { passive: true });
+    
+    // Запуск профиля и проверка PWA
+    initNetworkProfile();
+    checkPWAUpdates();
+
+    // Системный таймер игры (1 сек)
+    setInterval(() => {
+        state.energy = Math.min(state.maxEnergy, state.energy + getActualEnergyRegen());
+        
+        state.score += (getActualPassive() / 1);
+        state.totalScoreEarned += (getActualPassive() / 1);
+
+        if (state.skillDuration > 0) {
+            state.skillDuration--;
+        } else if (state.skillCooldown > 0) {
+            state.skillCooldown--;
         }
 
-        // ============================================================
-        //  ЗАПУСК И ТАЙМЕРЫ
-        // ============================================================
-
-        load();
         updateUI();
+    }, 1000);
 
-        // Включение отклика :active для iOS Safari на всем документе
-        document.body.addEventListener('touchstart', () => { }, { passive: true });
+    // Автосинхронизация рекорда с Firebase раз в 15 сек
+    setInterval(syncWithDatabase, 15000);
 
-        // При запуске игры на iOS мгновенно стучимся на сервер для проверки новой версии
-        checkPWAUpdates();
+    // Шанс появления глитча
+    setInterval(() => {
+        if (Math.random() < 0.15) {
+            spawnCyberGlitch();
+        }
+    }, 15000);
 
-        // Системный таймер игры (1 сек)
-        setInterval(() => {
-            state.energy = Math.min(state.maxEnergy, state.energy + getActualEnergyRegen());
+    // Слушатели событий
+    $('clickButton').addEventListener('click', handleClick);
+    skillBtn.addEventListener('click', activateSkill);
+    $('prestigeBtn').addEventListener('click', doPrestige);
 
-            state.score += (getActualPassive() / 1);
-            state.totalScoreEarned += (getActualPassive() / 1);
+    $('buyClick').addEventListener('click', () => buyUpgrade('click'));
+    $('buyEnergy').addEventListener('click', () => buyUpgrade('energy'));
+    $('buyRegen').addEventListener('click', () => buyUpgrade('regen'));
+    $('buyAuto1').addEventListener('click', () => buyUpgrade('auto1'));
+    $('buyAuto2').addEventListener('click', () => buyUpgrade('auto2'));
+    $('buyAuto3').addEventListener('click', () => buyUpgrade('auto3'));
 
-            // Расчет времени активной перегрузки и кулдаунов
-            if (state.skillDuration > 0) {
-                state.skillDuration--;
-            } else if (state.skillCooldown > 0) {
-                state.skillCooldown--;
+    // Нижнее меню табов
+    document.querySelectorAll('.tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+            tab.classList.add('active');
+            const panelId = 'panel-' + tab.dataset.tab;
+            const panel = document.getElementById(panelId);
+            if (panel) panel.classList.add('active');
+            
+            // Если игрок открывает вкладку ТОП, подгружаем реальные данные из Firestore
+            if (tab.dataset.tab === 'leaderboard') {
+                fetchLeaderboard();
             }
-
-            updateUI();
-        }, 1000);
-
-        // Шанс появления глитча
-        setInterval(() => {
-            if (Math.random() < 0.15) {
-                spawnCyberGlitch();
-            }
-        }, 15000);
-
-        // Слушатели событий клика (Без конфликтного touchstart)
-        $('clickButton').addEventListener('click', handleClick);
-        skillBtn.addEventListener('click', activateSkill);
-        $('prestigeBtn').addEventListener('click', doPrestige);
-
-        $('buyClick').addEventListener('click', () => buyUpgrade('click'));
-        $('buyEnergy').addEventListener('click', () => buyUpgrade('energy'));
-        $('buyRegen').addEventListener('click', () => buyUpgrade('regen'));
-        $('buyAuto1').addEventListener('click', () => buyUpgrade('auto1'));
-        $('buyAuto2').addEventListener('click', () => buyUpgrade('auto2'));
-        $('buyAuto3').addEventListener('click', () => buyUpgrade('auto3'));
-
-        // Вкладки (Переключение через Bottom Tabs)
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-                tab.classList.add('active');
-                const panelId = 'panel-' + tab.dataset.tab;
-                const panel = document.getElementById(panelId);
-                if (panel) panel.classList.add('active');
-            });
         });
+    });
 
-        // Настройки
-        $('soundToggle').addEventListener('click', function () {
-            state.sound = !state.sound;
-            this.classList.toggle('on');
-        });
-        $('animToggle').addEventListener('click', function () {
-            state.animations = !state.animations;
-            this.classList.toggle('on');
-        });
+    $('soundToggle').addEventListener('click', function() {
+        state.sound = !state.sound;
+        this.classList.toggle('on');
+    });
+    $('animToggle').addEventListener('click', function() {
+        state.animations = !state.animations;
+        this.classList.toggle('on');
+    });
 
-        $('resetBtn').addEventListener('click', resetGame);
+    // Безопасное автосохранение локально
+    setInterval(save, 3000);
 
-        // Автосохранение раз в 3 сек
-        setInterval(save, 3000);
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            save();
+            syncWithDatabase();
+        }
+    });
 
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden) save();
-        });
-
-        console.log(`🚀 Кибер-Эволюция v${CURRENT_VERSION} стабильно работает.`);
+    console.log(`🚀 Облачное ядро Кибер-Эволюции v${CURRENT_VERSION} успешно инициализировано.`);
     </script>
 </body>
 </html>
